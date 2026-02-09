@@ -20,7 +20,6 @@ import img9639 from "../assets/photos/IMG_9639.jpg";
 import img9736 from "../assets/photos/IMG_9736.jpg";
 import img9932 from "../assets/photos/IMG_9932.jpg";
 import img9933 from "../assets/photos/IMG_9933.jpg";
-import pxl20250818 from "../assets/photos/PXL_20250818_160527974_Original.jpg";
 
 const photos = [
   { src: img0001, alt: "Photo 1" },
@@ -43,7 +42,6 @@ const photos = [
   { src: img9736, alt: "Photo 18" },
   { src: img9932, alt: "Photo 19" },
   { src: img9933, alt: "Photo 20" },
-  { src: pxl20250818, alt: "Photo 21" },
 ];
 
 export default function Photos() {
