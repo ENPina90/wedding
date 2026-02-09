@@ -10,7 +10,6 @@ import img2177 from "../assets/photos/IMG_2177.jpg";
 import img2415 from "../assets/photos/IMG_2415.jpg";
 import img3220 from "../assets/photos/IMG_3220.jpg";
 import img3294 from "../assets/photos/IMG_3294.jpg";
-import img3311 from "../assets/photos/IMG_3311.JPG";
 import img3781 from "../assets/photos/IMG_3781.jpg";
 import img3972 from "../assets/photos/IMG_3972.jpg";
 import img4848 from "../assets/photos/IMG_4848.jpg";
@@ -21,7 +20,7 @@ import img9639 from "../assets/photos/IMG_9639.jpg";
 import img9736 from "../assets/photos/IMG_9736.jpg";
 import img9932 from "../assets/photos/IMG_9932.jpg";
 import img9933 from "../assets/photos/IMG_9933.jpg";
-import pxl20250818 from "../assets/photos/PXL_20250818_160527974_Original.JPG";
+import pxl20250818 from "../assets/photos/PXL_20250818_160527974_Original.jpg";
 
 const photos = [
   { src: img0001, alt: "Photo 1" },
@@ -34,18 +33,17 @@ const photos = [
   { src: img2415, alt: "Photo 8" },
   { src: img3220, alt: "Photo 9" },
   { src: img3294, alt: "Photo 10" },
-  { src: img3311, alt: "Photo 11" },
-  { src: img3781, alt: "Photo 12" },
-  { src: img3972, alt: "Photo 13" },
-  { src: img4848, alt: "Photo 14" },
-  { src: img4881, alt: "Photo 15" },
-  { src: img8381, alt: "Photo 16" },
-  { src: img9571, alt: "Photo 17" },
-  { src: img9639, alt: "Photo 18" },
-  { src: img9736, alt: "Photo 19" },
-  { src: img9932, alt: "Photo 20" },
-  { src: img9933, alt: "Photo 21" },
-  { src: pxl20250818, alt: "Photo 22" },
+  { src: img3781, alt: "Photo 11" },
+  { src: img3972, alt: "Photo 12" },
+  { src: img4848, alt: "Photo 13" },
+  { src: img4881, alt: "Photo 14" },
+  { src: img8381, alt: "Photo 15" },
+  { src: img9571, alt: "Photo 16" },
+  { src: img9639, alt: "Photo 17" },
+  { src: img9736, alt: "Photo 18" },
+  { src: img9932, alt: "Photo 19" },
+  { src: img9933, alt: "Photo 20" },
+  { src: pxl20250818, alt: "Photo 21" },
 ];
 
 export default function Photos() {
