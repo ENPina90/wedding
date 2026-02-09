@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors from Figma branding
+   * Design: https://www.figma.com/design/IyYJYCa42PYiOLcg1OqMAA/wedding-bells
+   */
+  --color-burgundy: #3f0013;
+  --color-plum: #894864;
+  --color-pink: #edbee4;
+  --color-blue-gray: #a1a8be;
+  --color-olive: #5f5420;
+  --color-sage: rgba(136, 153, 68, 0.7);
+  --color-coral: #ea785b;
+  --color-coral-hover: #e65b38;
+  --color-coral-active: #b74c30;
+  --color-peach: #f3d0c3;
+  --color-cream: #fdf8f5;
+  --color-beige: #f5f1eb;
+
+  /* Fonts from Figma branding */
+  --font-display: "Shrikhand", serif;
+  --font-nav: "Vollkorn SC", serif;
+  --font-body: "Averia Serif Libre", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  color: var(--color-burgundy);
+  background-color: var(--color-beige);
+}
+
+/* Decorative floral divider */
+.floral-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--color-plum);
+  opacity: 0.6;
+}
+
+.floral-divider::before,
+.floral-divider::after {
+  content: "";
+  flex: 1;
+  max-width: 10rem;
+  height: 1px;
+  background: var(--color-plum);
+  opacity: 0.4;
+}
