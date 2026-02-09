@@ -1,0 +1,94 @@
+import SectionDivider from "../components/SectionDivider";
+import proposalPhoto from "../assets/proposal-photo.png";
+import sparkleIcon from "../assets/sparkle.svg";
+
+export default function Home() {
+  return (
+    <div className="max-w-3xl mx-auto px-6">
+      {/* Hero Image */}
+      <div className="relative mx-auto mt-12 mb-16 max-w-xl">
+        <div className="rounded-[5px] overflow-hidden">
+          <img
+            src={proposalPhoto}
+            alt="Proposal moment"
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Announcement */}
+      <div className="text-center">
+        <h2 className="font-display text-plum text-3xl md:text-4xl tracking-[2.24px] italic">
+          We're gettin' hitched!
+        </h2>
+
+        {/* Date with sparkles */}
+        <div className="mt-10 mb-3">
+          <p className="font-nav text-plum/70 text-sm tracking-[1.4px] uppercase">
+            wedding date
+          </p>
+        </div>
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <img
+            src={sparkleIcon}
+            alt=""
+            className="w-5 h-5"
+            style={{ fontSize: '24px', width: '35px', height: '35px' }}
+          />
+          <p className="font-display text-burgundy text-2xl md:text-3xl tracking-[2px] italic">
+            November 21, 2026
+          </p>
+          <img
+            src={sparkleIcon}
+            alt=""
+            className="w-5 h-5"
+            style={{ fontSize: '24px', width: '35px', height: '35px' }}
+          />
+        </div>
+
+        {/* RSVP Button */}
+        <div className="mt-12">
+          <a
+            href="https://withjoy.com/kirsten-and-nic/rsvp"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-pink hover:bg-pink/80 active:bg-plum active:text-white text-burgundy font-body font-bold text-base tracking-[1.92px] px-8 py-4 rounded-lg transition-colors"
+          >
+            RSVP Here
+          </a>
+        </div>
+      </div>
+
+      <SectionDivider />
+
+      {/* Our Story Section */}
+      <div className="text-center mb-20">
+        <h3 className="font-display text-plum text-2xl tracking-[1.68px] italic mb-10">
+          Our Story
+        </h3>
+        <div className="font-body text-plum/80 text-base leading-7 text-left max-w-2xl mx-auto space-y-6">
+          <p>
+            It all started with a chance meeting and a spark that neither of us
+            could ignore. From our very first conversation, we knew something
+            special was unfolding — a connection built on laughter, shared
+            dreams, and an unwavering sense of adventure.
+          </p>
+          <p>
+            Through every season, every late-night talk, every quiet morning
+            together, our love has grown into something we never imagined
+            possible. Now, surrounded by the beauty of the world and the people
+            we cherish most, we're ready to take the next step on this
+            incredible journey.
+          </p>
+          <p>
+            We can't wait to celebrate with you — the people who have supported
+            us, cheered us on, and filled our lives with so much joy. Thank you
+            for being part of our story.
+          </p>
+        </div>
+      </div>
+
+      <SectionDivider />
+    </div>
+  );
+}
