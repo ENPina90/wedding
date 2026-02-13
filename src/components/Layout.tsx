@@ -12,48 +12,42 @@ const navLinks = [
 ];
 
 // Easily editable positioning values for corner flowers
-// Left corner flower positioning
-const leftFlowerX = -9; // px
-const leftFlowerY = 0; // px
+// Both use fixed positioning so they stay at viewport edges on resize and don't interfere with content
+// Left corner flower
+const leftFlowerLeft = -145; // px from left (negative = off-screen edge)
+const leftFlowerY = 0; // px from top
 const leftFlowerRotation = 357; // degrees
-const leftFlowerWidth = 350; // px (base width, responsive sizes below)
+const leftFlowerWidth = 350; // px
 
-// Right corner flower positioning
-const rightFlowerX = -9; // px (right position offset, matching left flower)
-const rightFlowerY = 293; // px (top position)
+// Right corner flower — mobile uses left: 95; larger screens use right: -9
+const rightFlowerRightDesktop = -9; // px from right on larger screens
+const rightFlowerLeftMobile = 95; // px from left on mobile only
+const rightFlowerY = 293; // px from top
 const rightFlowerRotation = 289; // degrees
-const rightFlowerWidth = 350; // px (base width, responsive sizes below)
-const rightFlowerScaleX = -1; // scaleX value
-const rightFlowerScaleY = -1; // scaleY value
+const rightFlowerWidth = 350; // px
+const rightFlowerScaleX = -1;
+const rightFlowerScaleY = -1;
+
+const MOBILE_BREAKPOINT = 640; // Tailwind sm
 
 export default function Layout() {
-  // Responsive styling for left flower on lg screens (768-1023px)
-  const [isLgScreen, setIsLgScreen] = useState(false);
-
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    const checkScreenSize = () => {
-      const width = window.innerWidth;
-      setIsLgScreen(width >= 768 && width < 1024);
-    };
-
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
+    const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Left flower positioning: absolute with left: -105px for lg screens, fixed with left: -9px otherwise
-  const leftFlowerPosition = isLgScreen ? 'absolute' : 'fixed';
-  const leftFlowerLeft = isLgScreen ? -105 : leftFlowerX;
-
   return (
-    <div className="min-h-screen flex flex-col bg-beige relative">
+    <div className="min-h-screen flex flex-col bg-beige relative overflow-x-hidden">
       {/* Corner floral decorations */}
       <img
         src={flowerCorners}
         alt=""
         className="pointer-events-none z-0 h-auto"
         style={{
-          position: leftFlowerPosition,
+          ...(isMobile ? { position: "absolute" } : { position: "fixed" }),
           left: `${leftFlowerLeft}px`,
           top: `${leftFlowerY}px`,
           width: `${leftFlowerWidth}px`,
@@ -66,27 +60,29 @@ export default function Layout() {
         alt=""
         className="pointer-events-none z-0 h-auto"
         style={{
-          position: 'fixed',
-          right: `${rightFlowerX}px`,
+          ...(isMobile ? { position: "absolute" } : { position: "fixed" }),
+          ...(isMobile
+            ? { left: `${rightFlowerLeftMobile}px` }
+            : { right: `${rightFlowerRightDesktop}px` }),
           top: `${rightFlowerY}px`,
           width: `${rightFlowerWidth}px`,
           transform: `rotate(${rightFlowerRotation}deg) scaleX(${rightFlowerScaleX}) scaleY(${rightFlowerScaleY})`,
-          transformOrigin: 'top right'
+          transformOrigin: "top right"
         }}
       />
 
       {/* Header */}
-      <header className="relative z-10 pt-16 pb-6 text-center">
+      <header className="relative z-10 pt-32 sm:pt-12 md:pt-16 pb-4 sm:pb-6 text-center px-4">
         <NavLink to="/">
-          <h1 className="font-display text-plum text-5xl md:text-6xl tracking-[4.48px] italic">
+          <h1 className="font-display text-plum text-4xl sm:text-5xl md:text-6xl tracking-[4.48px] italic">
             Kirsten & Nic
           </h1>
         </NavLink>
       </header>
 
       {/* Navigation */}
-      <nav className="relative z-10 flex justify-center py-6">
-        <ul className="flex flex-wrap justify-center gap-x-7 gap-y-2 font-nav text-plum text-sm md:text-lg tracking-[1.68px] uppercase">
+      <nav className="relative z-10 flex justify-center py-4 sm:py-6 px-4">
+        <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-x-7 font-nav text-plum text-xs sm:text-sm md:text-lg tracking-[1.68px] uppercase">
           {navLinks.map((link) => (
             <li key={link.to}>
               {link.external ? (
@@ -123,7 +119,7 @@ export default function Layout() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 text-center py-16 text-plum/60 font-body text-sm tracking-wide">
+      <footer className="relative z-10 text-center py-10 sm:py-12 md:py-16 text-plum/60 font-body text-xs sm:text-sm tracking-wide px-4">
         <p>Kirsten & Nic &middot; November 21, 2026</p>
       </footer>
     </div>
