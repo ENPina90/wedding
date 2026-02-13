@@ -46,22 +46,22 @@ const photos = [
 
 export default function Photos() {
   return (
-    <div className="max-w-5xl mx-auto px-6 pb-16">
-      {/* Flower logos above header */}
-      <div className="flex justify-center items-center gap-6 md:gap-8 pt-6 pb-4">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
+      {/* Flower logos above header - smaller on mobile */}
+      <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-3 sm:pb-4">
         <img
           src={flowerLogosGreen}
           alt=""
-          className="h-16 md:h-20 w-auto object-contain"
+          className="h-12 sm:h-16 md:h-20 w-auto object-contain"
         />
       </div>
 
       {/* Photo Gallery header */}
-      <div className="text-center pb-8">
-        <h2 className="font-display text-plum text-3xl md:text-4xl tracking-[2.24px] italic">
+      <div className="text-center pb-6 sm:pb-8">
+        <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic">
           Photo Gallery
         </h2>
-        <p className="font-body text-plum/70 text-lg mt-3">
+        <p className="font-body text-plum/70 text-base sm:text-lg mt-2 sm:mt-3">
           Moments from our journey together
         </p>
       </div>
@@ -70,11 +70,11 @@ export default function Photos() {
       <SectionDivider />
 
       {/* Masonry-style grid */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 sm:gap-4 space-y-3 sm:space-y-4">
         {photos.map((photo, index) => (
           <div
             key={index}
-            className="rounded-xl overflow-hidden border border-pink/20 break-inside-avoid mb-4"
+            className="rounded-lg sm:rounded-xl overflow-hidden border border-pink/20 break-inside-avoid mb-3 sm:mb-4"
           >
             <img
               src={photo.src}
@@ -87,12 +87,12 @@ export default function Photos() {
       </div>
 
       {/* Upload prompt */}
-      <div className="text-center mt-12 p-8 bg-cream rounded-xl border border-pink/30">
-        <span className="text-3xl block mb-3">📸</span>
-        <h3 className="font-display text-plum text-xl tracking-[1.68px] italic mb-2">
+      <div className="text-center mt-8 sm:mt-12 p-5 sm:p-8 bg-cream rounded-xl border border-pink/30">
+        <span className="text-2xl sm:text-3xl block mb-2 sm:mb-3">📸</span>
+        <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.68px] italic mb-2">
           Share Your Photos
         </h3>
-        <p className="font-body text-plum/70 text-base leading-7 max-w-md mx-auto mb-4">
+        <p className="font-body text-plum/70 text-sm sm:text-base leading-7 max-w-md mx-auto mb-3 sm:mb-4">
           Took some great shots at the wedding? We'd love to see them! Upload
           your photos to our shared album.
         </p>
