@@ -4,9 +4,9 @@ import sparkleIcon from "../assets/sparkle.svg";
 
 export default function Home() {
   return (
-    <div className="max-w-3xl mx-auto px-6">
-      {/* Hero Image */}
-      <div className="relative mx-auto mt-12 mb-16 max-w-xl">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6">
+      {/* Hero Image - mobile: less margin, full width */}
+      <div className="relative mx-auto mt-6 sm:mt-10 md:mt-12 mb-10 sm:mb-14 md:mb-16 max-w-xl">
         <div className="rounded-[5px] overflow-hidden">
           <img
             src={proposalPhoto}
@@ -18,41 +18,39 @@ export default function Home() {
 
       {/* Announcement */}
       <div className="text-center">
-        <h2 className="font-display text-plum text-3xl md:text-4xl tracking-[2.24px] italic">
+        <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic">
           We're gettin' hitched!
         </h2>
 
         {/* Date with sparkles */}
-        <div className="mt-10 mb-3">
-          <p className="font-nav text-plum/70 text-sm tracking-[1.4px] uppercase">
+        <div className="mt-6 sm:mt-8 md:mt-10 mb-2 sm:mb-3">
+          <p className="font-nav text-plum/70 text-xs sm:text-sm tracking-[1.4px] uppercase">
             wedding date
           </p>
         </div>
-        <div className="flex items-center justify-center gap-4 mt-4">
+        <div className="flex items-center justify-center gap-3 sm:gap-4 mt-3 sm:mt-4">
           <img
             src={sparkleIcon}
             alt=""
-            className="w-5 h-5"
-            style={{ fontSize: '24px', width: '35px', height: '35px' }}
+            className="w-7 h-7 sm:w-9 sm:h-9 shrink-0"
           />
-          <p className="font-display text-burgundy text-2xl md:text-3xl tracking-[2px] italic">
+          <p className="font-display text-burgundy text-xl sm:text-2xl md:text-3xl tracking-[2px] italic">
             November 21, 2026
           </p>
           <img
             src={sparkleIcon}
             alt=""
-            className="w-5 h-5"
-            style={{ fontSize: '24px', width: '35px', height: '35px' }}
+            className="w-7 h-7 sm:w-9 sm:h-9 shrink-0"
           />
         </div>
 
-        {/* RSVP Button */}
-        <div className="mt-12">
+        {/* RSVP Button - full width on mobile for touch target */}
+        <div className="mt-8 sm:mt-10 md:mt-12 px-2 sm:px-0">
           <a
             href="https://withjoy.com/kirsten-and-nic/rsvp"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-pink hover:bg-pink/80 active:bg-plum active:text-white text-burgundy font-body font-bold text-base tracking-[1.92px] px-8 py-4 rounded-lg transition-colors"
+            className="block sm:inline-block text-center bg-pink hover:bg-pink/80 active:bg-plum active:text-white text-burgundy font-body font-bold text-base tracking-[1.92px] px-6 py-4 sm:px-8 min-h-[48px] flex items-center justify-center rounded-lg transition-colors"
           >
             RSVP Here
           </a>
@@ -62,11 +60,11 @@ export default function Home() {
       <SectionDivider />
 
       {/* Our Story Section */}
-      <div className="text-center mb-20">
-        <h3 className="font-display text-plum text-2xl tracking-[1.68px] italic mb-10">
+      <div className="text-center mb-12 sm:mb-16 md:mb-20">
+        <h3 className="font-display text-plum text-xl sm:text-2xl tracking-[1.68px] italic mb-6 sm:mb-8 md:mb-10">
           Our Story
         </h3>
-        <div className="font-body text-plum/80 text-base leading-7 text-left max-w-2xl mx-auto space-y-6">
+        <div className="font-body text-plum/80 text-sm sm:text-base leading-7 text-left max-w-2xl mx-auto space-y-4 sm:space-y-6 px-1">
           <p>
             It all started with a chance meeting and a spark that neither of us
             could ignore. From our very first conversation, we knew something

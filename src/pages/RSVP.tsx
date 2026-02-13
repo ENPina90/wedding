@@ -22,12 +22,12 @@ export default function RSVP() {
 
   if (submitted) {
     return (
-      <div className="max-w-2xl mx-auto px-6 text-center py-16">
-        <span className="text-5xl block mb-4">💌</span>
-        <h2 className="font-display text-plum text-3xl tracking-[2.24px] italic mb-4">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center py-12 sm:py-16">
+        <span className="text-4xl sm:text-5xl block mb-3 sm:mb-4">💌</span>
+        <h2 className="font-display text-plum text-2xl sm:text-3xl tracking-[2.24px] italic mb-3 sm:mb-4">
           Thank You!
         </h2>
-        <p className="font-body text-plum/75 text-lg">
+        <p className="font-body text-plum/75 text-base sm:text-lg">
           Your RSVP has been received. We can't wait to celebrate with you!
         </p>
         <button
@@ -52,13 +52,13 @@ export default function RSVP() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-6 pb-16">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
       <PageHeader
         title="RSVP"
         subtitle="Please respond by October 1, 2026"
       />
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
         {/* Name */}
         <div>
           <label className="block font-nav text-plum text-sm tracking-[1.2px] uppercase mb-2">
@@ -207,11 +207,11 @@ export default function RSVP() {
           />
         </div>
 
-        {/* Submit Button */}
+        {/* Submit Button - full width on mobile for touch target */}
         <div className="text-center pt-4">
           <button
             type="submit"
-            className="bg-coral hover:bg-coral-hover active:bg-coral-active text-white font-body font-bold text-base tracking-[1.92px] px-10 py-4 rounded-lg transition-colors"
+            className="w-full sm:w-auto bg-coral hover:bg-coral-hover active:bg-coral-active text-white font-body font-bold text-base tracking-[1.92px] px-10 py-4 min-h-[48px] rounded-lg transition-colors"
           >
             SEND RSVP
           </button>

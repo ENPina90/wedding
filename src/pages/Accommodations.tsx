@@ -17,17 +17,17 @@ function AccommodationCard({
   phone,
 }: AccommodationCardProps) {
   return (
-    <div className="bg-cream rounded-xl p-6 md:p-8 border border-pink/30">
-      <h3 className="font-display text-plum text-xl tracking-[1.68px] italic mb-2">
+    <div className="bg-cream rounded-xl p-4 sm:p-6 md:p-8 border border-pink/30">
+      <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.68px] italic mb-2">
         {name}
       </h3>
-      <p className="font-nav text-plum/60 text-xs tracking-[1px] uppercase mb-3">
+      <p className="font-nav text-plum/60 text-xs tracking-[1px] uppercase mb-2 sm:mb-3">
         {distance} from venue
       </p>
-      <p className="font-body text-plum/75 text-base leading-7 mb-4">
+      <p className="font-body text-plum/75 text-sm sm:text-base leading-7 mb-3 sm:mb-4">
         {description}
       </p>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2 sm:gap-3">
         {website && (
           <a
             href={website}
@@ -53,22 +53,22 @@ function AccommodationCard({
 
 export default function Accommodations() {
   return (
-    <div className="max-w-3xl mx-auto px-6 pb-16">
-      {/* Flower logos above header */}
-      <div className="flex justify-center items-center gap-6 md:gap-8 pt-6 pb-4">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
+      {/* Flower logos above header - smaller on mobile */}
+      <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-3 sm:pb-4">
         <img
           src={flowerLogos}
           alt=""
-          className="h-16 md:h-20 w-auto object-contain"
+          className="h-12 sm:h-16 md:h-20 w-auto object-contain"
         />
       </div>
 
       {/* Accommodations header */}
-      <div className="text-center pb-8">
-        <h2 className="font-display text-plum text-3xl md:text-4xl tracking-[2.24px] italic">
+      <div className="text-center pb-6 sm:pb-8">
+        <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic">
           Accommodations
         </h2>
-        <p className="font-body text-plum/70 text-lg mt-3">
+        <p className="font-body text-plum/70 text-base sm:text-lg mt-2 sm:mt-3">
           Places to stay near the venue
         </p>
       </div>
@@ -104,11 +104,11 @@ export default function Accommodations() {
       <SectionDivider />
 
       {/* Transportation Info */}
-      <div className="text-center">
-        <h3 className="font-display text-plum text-xl md:text-2xl tracking-[1.68px] italic mb-4">
+      <div className="text-center px-1">
+        <h3 className="font-display text-plum text-lg sm:text-xl md:text-2xl tracking-[1.68px] italic mb-3 sm:mb-4">
           Getting Around
         </h3>
-        <p className="font-body text-plum/75 text-base leading-7 max-w-xl mx-auto">
+        <p className="font-body text-plum/75 text-sm sm:text-base leading-7 max-w-xl mx-auto text-left sm:text-center">
           While Uber and Lyft are available on the Cape, they can be less
           reliable than in the city. We recommend arranging rides with fellow
           guests or booking a car service in advance. Shuttle information will
