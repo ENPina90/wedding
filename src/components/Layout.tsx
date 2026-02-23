@@ -1,89 +1,105 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
 import flowerCorners from "../assets/flower_corners.png";
+import "./flower-corners.css";
+import "./layout.css";
 
-const navLinks = [
-  { to: "/", label: "home", external: false },
-  { to: "https://withjoy.com/kirsten-and-nic/rsvp", label: "rsvp", external: true },
-  { to: "/info", label: "info", external: false },
-  { to: "/accommodations", label: "accommodations", external: false },
-  { to: "https://withjoy.com/kirsten-and-nic/registry", label: "registry", external: true },
-  { to: "/photos", label: "photos", external: false },
-];
+const navLinks = {
+  row1: [
+    { to: "/", label: "home", external: false },
+    { to: "https://withjoy.com/kirsten-and-nic/rsvp", label: "rsvp", external: true },
+    { to: "/info", label: "info", external: false },
+  ],
+  row2: [{ to: "/accommodations", label: "accommodations", external: false }],
+  row3: [
+    { to: "https://withjoy.com/kirsten-and-nic/registry", label: "registry", external: true },
+    { to: "/photos", label: "photos", external: false },
+    { to: "/faq", label: "faq", external: false },
+  ],
+};
 
-// Easily editable positioning values for corner flowers
-// Both use fixed positioning so they stay at viewport edges on resize and don't interfere with content
-// Left corner flower
-const leftFlowerLeft = -145; // px from left (negative = off-screen edge)
-const leftFlowerY = 0; // px from top
-const leftFlowerRotation = 357; // degrees
-const leftFlowerWidth = 350; // px
+const allNavLinks = [...navLinks.row1, ...navLinks.row2, ...navLinks.row3];
 
-// Right corner flower — mobile uses left: 95; larger screens use right: -9
-const rightFlowerRightDesktop = -9; // px from right on larger screens
-const rightFlowerLeftMobile = 95; // px from left on mobile only
-const rightFlowerY = 293; // px from top
-const rightFlowerRotation = 289; // degrees
-const rightFlowerWidth = 350; // px
-const rightFlowerScaleX = -1;
-const rightFlowerScaleY = -1;
-
-const MOBILE_BREAKPOINT = 640; // Tailwind sm
+function NavLinkItem({
+  link,
+}: {
+  link: { to: string; label: string; external: boolean };
+}) {
+  const baseClass =
+    "font-nav text-plum text-xs max-[430px]:text-sm sm:text-sm md:text-lg tracking-[1.68px] uppercase transition-colors hover:text-burgundy";
+  if (link.external) {
+    return (
+      <a
+        href={link.to}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={baseClass}
+      >
+        {link.label}
+      </a>
+    );
+  }
+  return (
+    <NavLink
+      to={link.to}
+      className={({ isActive }) =>
+        `${baseClass} ${
+          isActive ? "text-burgundy underline underline-offset-4 font-bold" : ""
+        }`
+      }
+    >
+      {link.label}
+    </NavLink>
+  );
+}
 
 export default function Layout() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
   return (
     <div className="min-h-screen flex flex-col bg-beige relative overflow-x-hidden">
-      {/* Corner floral decorations */}
+      {/* Corner floral decorations - styles in flower-corners.css */}
       <img
         src={flowerCorners}
         alt=""
-        className="pointer-events-none z-0 h-auto"
-        style={{
-          ...(isMobile ? { position: "absolute" } : { position: "fixed" }),
-          left: `${leftFlowerLeft}px`,
-          top: `${leftFlowerY}px`,
-          width: `${leftFlowerWidth}px`,
-          transform: `rotate(${leftFlowerRotation}deg)`,
-          transformOrigin: 'top left'
-        }}
+        className="flower-corner-left pointer-events-none z-0 h-auto"
       />
       <img
         src={flowerCorners}
         alt=""
-        className="pointer-events-none z-0 h-auto"
-        style={{
-          ...(isMobile ? { position: "absolute" } : { position: "fixed" }),
-          ...(isMobile
-            ? { left: `${rightFlowerLeftMobile}px` }
-            : { right: `${rightFlowerRightDesktop}px` }),
-          top: `${rightFlowerY}px`,
-          width: `${rightFlowerWidth}px`,
-          transform: `rotate(${rightFlowerRotation}deg) scaleX(${rightFlowerScaleX}) scaleY(${rightFlowerScaleY})`,
-          transformOrigin: "top right"
-        }}
+        className="flower-corner-right pointer-events-none z-0 h-auto"
       />
 
       {/* Header */}
       <header className="relative z-10 pt-32 sm:pt-12 md:pt-16 pb-4 sm:pb-6 text-center px-4">
         <NavLink to="/">
           <h1 className="font-display text-plum text-4xl sm:text-5xl md:text-6xl tracking-[4.48px] italic">
-            Kirsten & Nic
+            <span className="hidden max-[430px]:inline">Kirsten<br />& Nic</span>
+            <span className="max-[430px]:hidden">Kirsten & Nic</span>
           </h1>
         </NavLink>
       </header>
 
       {/* Navigation */}
-      <nav className="relative z-10 flex justify-center py-4 sm:py-6 px-4">
-        <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-x-7 font-nav text-plum text-xs sm:text-sm md:text-lg tracking-[1.68px] uppercase">
-          {navLinks.map((link) => (
+      <nav className="relative z-10 flex justify-center pt-4 pb-0 sm:pt-6 sm:pb-0 px-4">
+        {/* Mobile: 3-1-3 layout per Figma Mobile - Home */}
+        <div className="nav-mobile flex flex-col items-center gap-y-3 max-[430px]:gap-y-6 sm:hidden">
+          <div className="nav-row flex justify-center gap-x-4 max-[430px]:gap-x-7 sm:gap-x-7">
+            {navLinks.row1.map((link) => (
+              <NavLinkItem key={link.to} link={link} />
+            ))}
+          </div>
+          <div className="nav-row flex justify-center">
+            {navLinks.row2.map((link) => (
+              <NavLinkItem key={link.to} link={link} />
+            ))}
+          </div>
+          <div className="nav-row flex justify-center gap-x-4 max-[430px]:gap-x-7 sm:gap-x-7">
+            {navLinks.row3.map((link) => (
+              <NavLinkItem key={link.to} link={link} />
+            ))}
+          </div>
+        </div>
+        {/* Desktop: single row */}
+        <ul className="nav-desktop hidden flex-wrap justify-center gap-x-4 gap-y-2 sm:flex sm:gap-x-7 font-nav text-plum text-xs sm:text-sm md:text-lg tracking-[1.68px] uppercase">
+          {allNavLinks.map((link) => (
             <li key={link.to}>
               {link.external ? (
                 <a

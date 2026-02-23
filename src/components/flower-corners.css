@@ -1,0 +1,127 @@
+/* Corner flower decorations - each breakpoint is fully independent.
+ * Edit one block without affecting the others. Add more @media blocks as needed.
+ *
+ * Breakpoints (Tailwind): sm 640px, md 768px, lg 1024px, xl 1280px
+ */
+
+/* ========== MOBILE (< 640px) ========== */
+.flower-corner-left {
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 350px;
+  transform: rotate(357deg);
+  transform-origin: left top;
+}
+
+.flower-corner-right {
+  position: absolute;
+  left: 95px;
+  top: 293px;
+  width: 350px;
+  transform: rotate(289deg) scaleX(-1) scaleY(-1);
+  transform-origin: top right;
+}
+
+/* ========== PHONE (430px and below) ========== */
+@media (max-width: 430px) {
+  .flower-corner-left {
+    left: -113px;
+  }
+
+  .flower-corner-right {
+    left: 47px;
+    top: 306px;
+  }
+}
+
+/* ========== SM and up (640px+) ========== */
+@media (min-width: 640px) {
+  .flower-corner-left {
+    position: fixed;
+    left: -145px;
+    top: 0;
+    width: 350px;
+    transform: rotate(357deg);
+    transform-origin: left top;
+  }
+
+  .flower-corner-right {
+    position: fixed;
+    left: auto;
+    right: -9px;
+    top: 293px;
+    width: 350px;
+    transform: rotate(289deg) scaleX(-1) scaleY(-1);
+    transform-origin: top right;
+  }
+}
+
+/* ========== MD (768px+) - add if you need tablet-specific styles ========== */
+/* @media (min-width: 768px) { ... } */
+
+/* ========== LG (1024px-1280px) - Medium - corner flowers ========== */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .flower-corner-left {
+    position: absolute;
+    left: -9px;
+    top: 0;
+    width: 350px;
+    transform: rotate(357deg);
+    transform-origin: left top;
+  }
+
+  .flower-corner-right {
+    position: absolute;
+    left: auto;
+    right: -9px;
+    top: 293px;
+    width: 350px;
+    transform: rotate(289deg) scaleX(-1) scaleY(-1);
+    transform-origin: top right;
+  }
+}
+
+/* ========== XL (1280px-1536px) - Desktop - corner flowers ========== */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .flower-corner-left {
+    position: absolute;
+    left: -9px;
+    top: 0;
+    width: 350px;
+    transform: rotate(357deg);
+    transform-origin: left top;
+  }
+
+  .flower-corner-right {
+    position: absolute;
+    left: auto;
+    right: -9px;
+    top: 293px;
+    width: 350px;
+    transform: rotate(289deg) scaleX(-1) scaleY(-1);
+    transform-origin: top right;
+  }
+}
+
+/* ========== 2XL (1536px+) - Extra large - flowers pinned to screen edges ========== */
+@media (min-width: 1536px) {
+  .flower-corner-left {
+    position: absolute;
+    left: -9px;
+    top: 0;
+    width: 350px;
+    transform: rotate(357deg);
+    transform-origin: left top;
+  }
+
+  .flower-corner-right {
+    position: absolute;
+    left: auto;
+    right: -9px;
+    top: 293px;
+    width: 350px;
+    transform: rotate(289deg) scaleX(-1) scaleY(-1);
+    transform-origin: top right;
+  }
+}
