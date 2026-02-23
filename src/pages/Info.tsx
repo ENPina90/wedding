@@ -1,5 +1,5 @@
 import SectionDivider from "../components/SectionDivider";
-import flowerLogosBlue from "../assets/flower_logos_blue.png";
+import FlowerLogo from "../components/FlowerLogo";
 
 interface EventBlockProps {
   title: string;
@@ -36,11 +36,7 @@ export default function Info() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6">
       {/* Flower logos above header - smaller on mobile */}
       <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-3 sm:pb-4">
-        <img
-          src={flowerLogosBlue}
-          alt=""
-          className="h-12 sm:h-16 md:h-20 w-auto object-contain"
-        />
+        <FlowerLogo color="blue" />
       </div>
 
       {/* Event Info header */}
@@ -50,7 +46,7 @@ export default function Info() {
         </h2>
       </div>
 
-      {/* Section divider with flowers_center.png */}
+      {/* Section divider with flower_center.svg */}
       <SectionDivider />
 
       <EventBlock
