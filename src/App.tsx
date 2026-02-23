@@ -6,6 +6,7 @@ import Info from "./pages/Info";
 import Accommodations from "./pages/Accommodations";
 import Registry from "./pages/Registry";
 import Photos from "./pages/Photos";
+import FAQ from "./pages/FAQ";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/accommodations" element={<Accommodations />} />
           <Route path="/registry" element={<Registry />} />
           <Route path="/photos" element={<Photos />} />
+          <Route path="/faq" element={<FAQ />} />
         </Route>
       </Routes>
     </BrowserRouter>
