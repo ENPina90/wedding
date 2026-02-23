@@ -18,39 +18,39 @@ export default function Home() {
 
       {/* Announcement */}
       <div className="text-center">
-        <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic">
+        <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic -mt-6 -mb-6">
           We're gettin' hitched!
         </h2>
 
         {/* Date with sparkles */}
-        <div className="mt-6 sm:mt-8 md:mt-10 mb-2 sm:mb-3">
-          <p className="font-nav text-plum/70 text-xs sm:text-sm tracking-[1.4px] uppercase">
+        <div className="mt-16 mb-2 sm:mb-3">
+          <p className="font-nav text-plum font-medium text-xs sm:text-sm tracking-[1.4px] uppercase pt-4">
             wedding date
           </p>
         </div>
-        <div className="flex items-center justify-center gap-3 sm:gap-4 mt-3 sm:mt-4">
+        <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6">
           <img
             src={sparkleIcon}
             alt=""
-            className="w-7 h-7 sm:w-9 sm:h-9 shrink-0"
+            className="w-12 h-12 shrink-0"
           />
-          <p className="font-display text-burgundy text-xl sm:text-2xl md:text-3xl tracking-[2px] italic">
+          <p className="font-display text-plum text-xl sm:text-2xl md:text-3xl tracking-[2px] italic">
             November 21, 2026
           </p>
           <img
             src={sparkleIcon}
             alt=""
-            className="w-7 h-7 sm:w-9 sm:h-9 shrink-0"
+            className="w-12 h-12 shrink-0"
           />
         </div>
 
         {/* RSVP Button - full width on mobile for touch target */}
-        <div className="mt-8 sm:mt-10 md:mt-12 px-2 sm:px-0">
+        <div className="mt-6 px-2 sm:px-0">
           <a
             href="https://withjoy.com/kirsten-and-nic/rsvp"
             target="_blank"
             rel="noopener noreferrer"
-            className="block sm:inline-block text-center bg-pink hover:bg-pink/80 active:bg-plum active:text-white text-burgundy font-body font-bold text-base tracking-[1.92px] px-6 py-4 sm:px-8 min-h-[48px] flex items-center justify-center rounded-lg transition-colors"
+            className="block sm:inline-block text-center bg-pink hover:bg-[#E193D2] active:bg-[#B762A7] active:text-white text-burgundy font-body font-bold text-base tracking-[1.92px] px-6 py-4 sm:px-8 min-h-[48px] flex items-center justify-center rounded-lg transition-colors"
           >
             RSVP Here
           </a>
@@ -61,8 +61,8 @@ export default function Home() {
 
       {/* Our Story Section */}
       <div className="text-center mb-12 sm:mb-16 md:mb-20">
-        <h3 className="font-display text-plum text-xl sm:text-2xl tracking-[1.68px] italic mb-6 sm:mb-8 md:mb-10">
-          Our Story
+        <h3 className="font-nav text-plum font-medium text-xs sm:text-sm tracking-[1.4px] uppercase pt-0 pb-6">
+          our story
         </h3>
         <div className="font-body text-plum/80 text-sm sm:text-base leading-7 text-left max-w-2xl mx-auto space-y-4 sm:space-y-6 px-1">
           <p>
