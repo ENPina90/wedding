@@ -1,5 +1,5 @@
 import SectionDivider from "../components/SectionDivider";
-import flowerLogos from "../assets/flower_logos.png";
+import FlowerLogo from "../components/FlowerLogo";
 
 interface AccommodationCardProps {
   name: string;
@@ -56,11 +56,7 @@ export default function Accommodations() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
       {/* Flower logos above header - smaller on mobile */}
       <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-3 sm:pb-4">
-        <img
-          src={flowerLogos}
-          alt=""
-          className="h-12 sm:h-16 md:h-20 w-auto object-contain"
-        />
+        <FlowerLogo color="base" />
       </div>
 
       {/* Accommodations header */}
@@ -73,7 +69,7 @@ export default function Accommodations() {
         </p>
       </div>
 
-      {/* Section divider with flowers_center.png */}
+      {/* Section divider with flower_center.svg */}
       <SectionDivider />
 
       <div className="space-y-6">

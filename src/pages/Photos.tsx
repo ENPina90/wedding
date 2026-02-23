@@ -1,5 +1,5 @@
 import SectionDivider from "../components/SectionDivider";
-import flowerLogosGreen from "../assets/flower_logos_green.png";
+import FlowerLogo from "../components/FlowerLogo";
 import img0001 from "../assets/photos/IMG_0001.jpg";
 import img0276 from "../assets/photos/IMG_0276.jpg";
 import img1025 from "../assets/photos/IMG_1025.jpg";
@@ -49,11 +49,7 @@ export default function Photos() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
       {/* Flower logos above header - smaller on mobile */}
       <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-3 sm:pb-4">
-        <img
-          src={flowerLogosGreen}
-          alt=""
-          className="h-12 sm:h-16 md:h-20 w-auto object-contain"
-        />
+        <FlowerLogo color="green" />
       </div>
 
       {/* Photo Gallery header */}
@@ -66,7 +62,7 @@ export default function Photos() {
         </p>
       </div>
 
-      {/* Section divider with flowers_center.png */}
+      {/* Section divider with flower_center.svg */}
       <SectionDivider />
 
       {/* Masonry-style grid */}

@@ -11,6 +11,12 @@
   --color-olive: #5f5420;
   --color-sage: rgba(136, 153, 68, 0.7);
   --color-coral: #ea785b;
+  /* Flower logo color variants */
+  --color-flower-base: #EA785B;
+  --color-flower-blue: #626D8D;
+  --color-flower-green: #889944;
+  --color-flower-pink: #E193D2;
+  --color-flower-purple: #894864;
   --color-coral-hover: #e65b38;
   --color-coral-active: #b74c30;
   --color-peach: #f3d0c3;
