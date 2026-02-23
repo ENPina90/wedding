@@ -1,4 +1,4 @@
-import flowersCenter from "../assets/flowers_center.png";
+import flowerCenter from "../assets/flower_center.svg";
 
 export default function SectionDivider() {
   return (
@@ -11,7 +11,7 @@ export default function SectionDivider() {
 
       {/* Center flower image */}
       <img
-        src={flowersCenter}
+        src={flowerCenter}
         alt=""
         className="max-w-[60px] sm:max-w-[80px] md:max-w-[100px] lg:max-w-[120px] h-auto object-contain flex-shrink-0"
       />
