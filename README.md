@@ -29,23 +29,30 @@ The development server includes Hot Module Replacement (HMR), so changes to your
 
 ### Cloudinary Photo Gallery Setup
 
-The Photos page uploads from the browser and loads gallery photos through a server-side `/api/photos` endpoint.
+The Photos page uploads from the browser and loads gallery photos through server-side `/api/photos` endpoints.
+Uploads are tagged as pending and only appear publicly after approval on `/photos/admin`.
 
 1. Copy `.env.example` to `.env.local`.
 2. Set:
    - `VITE_CLOUDINARY_CLOUD_NAME`
    - `VITE_CLOUDINARY_UPLOAD_PRESET`
    - `VITE_CLOUDINARY_GALLERY_TAG` (optional; defaults to `wedding-gallery`)
+   - `VITE_CLOUDINARY_PENDING_TAG` (optional; defaults to `${VITE_CLOUDINARY_GALLERY_TAG}-pending`)
    - `CLOUDINARY_CLOUD_NAME`
    - `CLOUDINARY_API_KEY`
    - `CLOUDINARY_API_SECRET`
    - `CLOUDINARY_GALLERY_TAG` (optional; defaults to `wedding-gallery`)
+   - `CLOUDINARY_PENDING_TAG` (optional; defaults to `${CLOUDINARY_GALLERY_TAG}-pending`)
+   - `PHOTOS_ADMIN_KEY` (required for admin approve/delete actions via `X-Admin-Key`)
 3. In Cloudinary, create an **unsigned** upload preset and allow uploads to the intended folder/tag.
 
 Important:
 - Do not put `API_SECRET` in frontend env vars.
 - `VITE_` variables are public in the browser by design.
 - On Railway, set both `VITE_*` and `CLOUDINARY_*` variables in service environment settings.
+- Keep `PHOTOS_ADMIN_KEY` server-only; do not expose it in `VITE_*` vars.
+- Use `/photos/admin` with your admin key to approve pending uploads into the public gallery.
+- On `/photos/admin`, drag and drop approved photos to set their display order on `/photos`.
 
 ### Upload Existing Repo Photos to Cloudinary
 
