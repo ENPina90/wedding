@@ -1,5 +1,6 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import flowerCorners from "../assets/flower_corners.png";
+import SectionDivider from "./SectionDivider";
 import "./flower-corners.css";
 import "./layout.css";
 
@@ -53,6 +54,9 @@ function NavLinkItem({
 }
 
 export default function Layout() {
+  const location = useLocation();
+  const isFaqPage = location.pathname === "/faq";
+
   return (
     <div className="min-h-screen flex flex-col bg-beige relative overflow-x-hidden">
       {/* Corner floral decorations - styles in flower-corners.css */}
@@ -129,10 +133,21 @@ export default function Layout() {
         </ul>
       </nav>
 
-      {/* Page Content */}
-      <main className="relative z-10 flex-1 text-sm">
-        <Outlet />
-      </main>
+      {/* Page Content - FAQ renders between nav and main per design */}
+      {isFaqPage ? (
+        <div className="relative z-10 flex-1">
+          <Outlet />
+        </div>
+      ) : (
+        <main className="relative z-10 flex-1 text-sm">
+          <Outlet />
+        </main>
+      )}
+
+      {/* Section divider above footer - on every page (same container as page content for consistent rendering) */}
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 w-full">
+        <SectionDivider />
+      </div>
 
       {/* Footer */}
       <footer className="relative z-10 text-center py-10 sm:py-12 md:py-16 text-plum/60 font-body text-xs sm:text-sm tracking-wide px-4">
