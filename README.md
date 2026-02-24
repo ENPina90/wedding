@@ -27,6 +27,42 @@ A wedding website built with React, TypeScript, and Vite.
 
 The development server includes Hot Module Replacement (HMR), so changes to your code will automatically refresh in the browser.
 
+### Cloudinary Photo Gallery Setup
+
+The Photos page uploads from the browser and loads gallery photos through a server-side `/api/photos` endpoint.
+
+1. Copy `.env.example` to `.env.local`.
+2. Set:
+   - `VITE_CLOUDINARY_CLOUD_NAME`
+   - `VITE_CLOUDINARY_UPLOAD_PRESET`
+   - `VITE_CLOUDINARY_GALLERY_TAG` (optional; defaults to `wedding-gallery`)
+   - `CLOUDINARY_CLOUD_NAME`
+   - `CLOUDINARY_API_KEY`
+   - `CLOUDINARY_API_SECRET`
+   - `CLOUDINARY_GALLERY_TAG` (optional; defaults to `wedding-gallery`)
+3. In Cloudinary, create an **unsigned** upload preset and allow uploads to the intended folder/tag.
+
+Important:
+- Do not put `API_SECRET` in frontend env vars.
+- `VITE_` variables are public in the browser by design.
+- On Railway, set both `VITE_*` and `CLOUDINARY_*` variables in service environment settings.
+
+### Upload Existing Repo Photos to Cloudinary
+
+To migrate the current `src/assets/photos` files into Cloudinary:
+
+1. In `.env.local`, set:
+   - `CLOUDINARY_CLOUD_NAME`
+   - `CLOUDINARY_API_KEY`
+   - `CLOUDINARY_API_SECRET`
+   - Optional: `CLOUDINARY_GALLERY_TAG`, `CLOUDINARY_GALLERY_FOLDER`, `CLOUDINARY_SOURCE_DIR`
+2. Run:
+   ```bash
+   npm run cloudinary:upload-local
+   ```
+
+Uploaded files are tagged (default `wedding-gallery`) so the Photos page can load them from Cloudinary.
+
 ### Building for Production
 
 To create a production build:
