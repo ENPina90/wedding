@@ -43,6 +43,25 @@ body {
   overflow-x: hidden;
 }
 
+/* Default paragraph font sizes */
+p {
+  font-size: 15px;
+}
+
+@media (min-width: 768px) {
+  p {
+    font-size: 17px;
+  }
+}
+
+.sub-header {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
 /* Decorative floral divider */
 .floral-divider {
   display: flex;

@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import flowerCorners from "../assets/flower_corners.png";
+import flowerCorner from "../assets/flower_corner.svg";
 import SectionDivider from "./SectionDivider";
 import "./flower-corners.css";
 import "./layout.css";
@@ -20,13 +20,17 @@ const navLinks = {
 
 const allNavLinks = [...navLinks.row1, ...navLinks.row2, ...navLinks.row3];
 
+// Tablet (768–1024px): row1 = 5 links, row2 = 2 links
+const navTabletRow1 = [...navLinks.row1, ...navLinks.row2, navLinks.row3[0]];
+const navTabletRow2 = navLinks.row3.slice(1);
+
 function NavLinkItem({
   link,
 }: {
   link: { to: string; label: string; external: boolean };
 }) {
   const baseClass =
-    "font-nav text-plum text-xs max-[430px]:text-sm sm:text-sm md:text-lg tracking-[1.68px] uppercase transition-colors hover:text-burgundy";
+    "font-nav text-plum text-[22px] tracking-[1.68px] uppercase";
   if (link.external) {
     return (
       <a
@@ -44,7 +48,7 @@ function NavLinkItem({
       to={link.to}
       className={({ isActive }) =>
         `${baseClass} ${
-          isActive ? "text-burgundy underline underline-offset-4 font-bold" : ""
+          isActive ? "underline underline-offset-4 font-bold" : ""
         }`
       }
     >
@@ -61,31 +65,31 @@ export default function Layout() {
     <div className="min-h-screen flex flex-col bg-beige relative overflow-x-hidden">
       {/* Corner floral decorations - styles in flower-corners.css */}
       <img
-        src={flowerCorners}
+        src={flowerCorner}
         alt=""
-        className="flower-corner-left pointer-events-none z-0 h-auto"
+        className="flower-corner-left cursor-default z-0 h-auto"
       />
       <img
-        src={flowerCorners}
+        src={flowerCorner}
         alt=""
-        className="flower-corner-right pointer-events-none z-0 h-auto"
+        className="flower-corner-right cursor-default z-0 h-auto"
       />
 
       {/* Header */}
       <header className="relative z-10 pt-32 sm:pt-12 md:pt-16 pb-4 sm:pb-6 text-center px-4">
-        <NavLink to="/">
-          <h1 className="font-display text-plum text-4xl sm:text-5xl md:text-6xl tracking-[4.48px] italic">
-            <span className="hidden max-[430px]:inline">Kirsten<br />& Nic</span>
-            <span className="max-[430px]:hidden">Kirsten & Nic</span>
+        <NavLink to="/" className="cursor-default">
+          <h1 className="font-display text-plum text-[54px] sm:text-[64px] tracking-[4.48px] italic">
+            <span className="hidden max-[767px]:inline">Kirsten<br />& Nic</span>
+            <span className="max-[767px]:hidden">Kirsten & Nic</span>
           </h1>
         </NavLink>
       </header>
 
       {/* Navigation */}
       <nav className="relative z-10 flex justify-center pt-4 pb-0 sm:pt-6 sm:pb-0 px-4">
-        {/* Mobile: 3-1-3 layout per Figma Mobile - Home */}
-        <div className="nav-mobile flex flex-col items-center gap-y-3 max-[430px]:gap-y-6 sm:hidden">
-          <div className="nav-row flex justify-center gap-x-4 max-[430px]:gap-x-7 sm:gap-x-7">
+        {/* Mobile: 3-1-3 layout per Figma Mobile - Home (< 768px) */}
+        <div className="nav-mobile flex flex-col items-center gap-y-3 md:hidden">
+          <div className="nav-row flex justify-center gap-x-4 max-[767px]:gap-x-7">
             {navLinks.row1.map((link) => (
               <NavLinkItem key={link.to} link={link} />
             ))}
@@ -95,14 +99,27 @@ export default function Layout() {
               <NavLinkItem key={link.to} link={link} />
             ))}
           </div>
-          <div className="nav-row flex justify-center gap-x-4 max-[430px]:gap-x-7 sm:gap-x-7">
+          <div className="nav-row flex justify-center gap-x-4 max-[767px]:gap-x-7">
             {navLinks.row3.map((link) => (
               <NavLinkItem key={link.to} link={link} />
             ))}
           </div>
         </div>
-        {/* Desktop: single row */}
-        <ul className="nav-desktop hidden flex-wrap justify-center gap-x-4 gap-y-2 sm:flex sm:gap-x-7 font-nav text-plum text-xs sm:text-sm md:text-lg tracking-[1.68px] uppercase">
+        {/* Tablet (768–1024px): two rows, 5 links + 2 links */}
+        <div className="nav-tablet hidden flex-col items-center gap-y-3 md:flex lg:hidden">
+          <div className="flex justify-center gap-x-7">
+            {navTabletRow1.map((link) => (
+              <NavLinkItem key={link.to} link={link} />
+            ))}
+          </div>
+          <div className="flex justify-center gap-x-7">
+            {navTabletRow2.map((link) => (
+              <NavLinkItem key={link.to} link={link} />
+            ))}
+          </div>
+        </div>
+        {/* Desktop: single row (1024px+) */}
+        <ul className="nav-desktop hidden flex-wrap justify-center gap-x-4 gap-y-2 lg:flex lg:gap-x-7 font-nav text-plum text-[22px] tracking-[1.68px] uppercase">
           {allNavLinks.map((link) => (
             <li key={link.to}>
               {link.external ? (
@@ -110,7 +127,7 @@ export default function Layout() {
                   href={link.to}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors hover:text-burgundy"
+                  className=""
                 >
                   {link.label}
                 </a>
@@ -118,9 +135,9 @@ export default function Layout() {
                 <NavLink
                   to={link.to}
                   className={({ isActive }) =>
-                    `transition-colors hover:text-burgundy ${
+                    `${
                       isActive
-                        ? "text-burgundy underline underline-offset-4 font-bold"
+                        ? "underline underline-offset-4 font-bold"
                         : ""
                     }`
                   }

@@ -24,7 +24,7 @@ export default function RSVP() {
     return (
       <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center py-12 sm:py-16">
         <span className="text-4xl sm:text-5xl block mb-3 sm:mb-4">💌</span>
-        <h2 className="font-display text-plum text-2xl sm:text-3xl tracking-[2.24px] italic mb-3 sm:mb-4">
+        <h2 className="font-display text-plum tracking-[2.24px] italic mb-3 sm:mb-4">
           Thank You!
         </h2>
         <p className="font-body text-plum/75 text-base sm:text-lg">

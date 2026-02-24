@@ -87,10 +87,10 @@ function FaqItem({
 }) {
   return (
     <div className="mb-8 sm:mb-10 last:mb-0">
-      <h3 className="font-display text-plum text-lg sm:text-xl md:text-2xl tracking-[1.68px] italic mb-2 sm:mb-3">
+      <p className="font-body font-bold text-plum text-lg sm:text-xl md:text-2xl tracking-[1.68px] mb-2 sm:mb-3">
         {question}
-      </h3>
-      <p className="font-body text-plum/75 text-sm sm:text-base leading-7 text-left">
+      </p>
+      <p className="font-body text-plum/75 leading-7 text-left">
         {answer}
       </p>
     </div>
@@ -108,19 +108,19 @@ function FaqDivider() {
 export default function FAQ() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
-      <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-3 sm:pb-4">
+      <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-[35px]">
         <FlowerLogo color="pink" />
       </div>
 
       <div className="text-center pb-6 sm:pb-8">
-        <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic">
+        <h2 className="font-display text-plum tracking-[2.24px] italic">
           FAQ
         </h2>
       </div>
 
       {/* Intro */}
       <div className="text-center mb-10 sm:mb-12 px-1">
-        <p className="font-body text-plum/75 text-sm sm:text-base leading-7 max-w-2xl mx-auto text-left sm:text-center">
+        <p className="sub-header font-body text-plum/75 leading-7 max-w-2xl mx-auto text-left sm:text-center">
           To all our friends and family with plenty of questions, please take a
           look here. If you still have questions, you're always welcome to
           reach out to either me at{" "}

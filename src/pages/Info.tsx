@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SectionDivider from "../components/SectionDivider";
 import FlowerLogo from "../components/FlowerLogo";
 
@@ -10,13 +11,13 @@ interface EventBlockProps {
 function EventBlock({ title, datetime, description }: EventBlockProps) {
   return (
     <div className="text-center mb-8 sm:mb-10 px-1">
-      <h3 className="font-display text-plum text-lg sm:text-xl md:text-2xl tracking-[1.68px] italic">
+      <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
         {title}
       </h3>
-      <p className="font-nav text-burgundy text-xs sm:text-sm tracking-[1px] mt-2 sm:mt-3 uppercase">
+      <p className="font-nav text-plum text-xs sm:text-sm tracking-[1px] mt-2 sm:mt-3 uppercase">
         {datetime}
       </p>
-      <p className="font-body text-plum/75 text-sm sm:text-base leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+      <p className="font-body text-plum/75 leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
         {description}
       </p>
     </div>
@@ -35,15 +36,30 @@ export default function Info() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6">
       {/* Flower logos above header - smaller on mobile */}
-      <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-3 sm:pb-4">
+      <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-[35px]">
         <FlowerLogo color="blue" />
       </div>
 
       {/* Event Info header */}
       <div className="text-center pb-6 sm:pb-8">
-        <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic">
+        <h2 className="font-display text-plum tracking-[2.24px] italic">
           Event Info
         </h2>
+      </div>
+
+      {/* Intro */}
+      <div className="text-center mb-10 sm:mb-12 px-1">
+        <p className="sub-header font-body text-plum/75 leading-7 max-w-2xl mx-auto text-left sm:text-center">
+          Here you'll find details and instructions pertaining to all things
+          wedding day. If your question isn't answered here, try the{" "}
+          <Link
+            to="/faq"
+            className="text-plum underline hover:text-burgundy transition-colors"
+          >
+            FAQ
+          </Link>
+          !
+        </p>
       </div>
 
       {/* Section divider with flower_center.svg */}
@@ -74,10 +90,10 @@ export default function Info() {
       {/* Dress Code */}
       <Divider />
       <div className="text-center mb-12 sm:mb-16 px-1">
-        <h3 className="font-display text-plum text-lg sm:text-xl md:text-2xl tracking-[1.68px] italic">
+        <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
           Dress Code
         </h3>
-        <p className="font-body text-plum/75 text-sm sm:text-base leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+        <p className="font-body text-plum/75 leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
           Cocktail attire. Think elegant and comfortable — we want everyone to
           dance the night away!
         </p>

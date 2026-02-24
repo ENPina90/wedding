@@ -1,8 +1,8 @@
-- Remove photo corner rounding
-- Make sure flowers arent clickable
+X- Ensure cursor doesn't change to clickable state when hovering over flower_corner.svg in browser
+X- Make sure flowers arent clickable
 - Move right corner flower farther left
-- Change selected tab color
-- Match color of dividers
+X- Change selected tab color
+X- Match color of dividers
 - Make RSVP modal
 - Change color of date time info on event page
 - Photo upload

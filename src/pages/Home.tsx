@@ -7,7 +7,7 @@ export default function Home() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6">
       {/* Hero Image - mobile: less margin, full width */}
       <div className="relative mx-auto mt-6 sm:mt-10 md:mt-12 mb-10 sm:mb-14 md:mb-16 max-w-xl">
-        <div className="rounded-[5px] overflow-hidden">
+        <div className="overflow-hidden">
           <img
             src={proposalPhoto}
             alt="Proposal moment"
@@ -18,7 +18,7 @@ export default function Home() {
 
       {/* Announcement */}
       <div className="text-center">
-        <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic -mt-6 -mb-6">
+        <h2 className="font-display text-plum tracking-[2.24px] italic -mt-6 -mb-6">
           We're gettin' hitched!
         </h2>
 
@@ -64,7 +64,7 @@ export default function Home() {
         <h3 className="font-nav text-plum font-medium text-xs sm:text-sm tracking-[1.4px] uppercase pt-0 pb-6">
           our story
         </h3>
-        <div className="font-body text-plum/80 text-sm sm:text-base leading-7 text-left max-w-2xl mx-auto space-y-4 sm:space-y-6 px-1">
+        <div className="font-body text-plum/80 leading-7 text-left max-w-2xl mx-auto space-y-4 sm:space-y-6 px-1">
           <p>
             It all started with a chance meeting and a spark that neither of us
             could ignore. From our very first conversation, we knew something

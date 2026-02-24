@@ -47,7 +47,7 @@ export default function Registry() {
         <p className="font-display text-plum text-base sm:text-lg tracking-[1.68px] italic mb-2">
           A Note About Gifts
         </p>
-        <p className="font-body text-plum/70 text-sm sm:text-base leading-7 max-w-md mx-auto text-left sm:text-center">
+        <p className="font-body text-plum/70 leading-7 max-w-md mx-auto text-left sm:text-center">
           If you'd prefer to give a monetary gift, we'd greatly appreciate
           contributions to our honeymoon fund. Every bit helps us create
           unforgettable memories on our first adventure as a married couple!

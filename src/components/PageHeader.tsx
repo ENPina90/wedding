@@ -15,7 +15,7 @@ export default function PageHeader({ title, subtitle }: PageHeaderProps) {
         <span>🌻</span>
       </div>
 
-      <h2 className="font-display text-plum text-2xl sm:text-3xl md:text-4xl tracking-[2.24px] italic">
+      <h2 className="font-display text-plum tracking-[2.24px] italic">
         {title}
       </h2>
 
@@ -27,7 +27,7 @@ export default function PageHeader({ title, subtitle }: PageHeaderProps) {
             <span className="text-xs sm:text-sm">✿</span>
             <div className="flex-1 h-px bg-plum/20" />
           </div>
-          <p className="font-body text-plum/70 text-base sm:text-lg mt-2 sm:mt-3 px-2">{subtitle}</p>
+          <p className="sub-header font-body text-plum/70 mt-2 sm:mt-3 px-2">{subtitle}</p>
         </>
       )}
     </div>
