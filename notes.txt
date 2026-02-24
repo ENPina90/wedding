@@ -1,0 +1,13 @@
+- Remove photo corner rounding
+- Make sure flowers arent clickable
+- Move right corner flower farther left
+- Change selected tab color
+- Match color of dividers
+- Make RSVP modal
+- Change color of date time info on event page
+- Photo upload
+- Align FAQ closer to Figma
+- Check all font sizes to match Figma
+
+Mobile:
+- Reduce linespace between nav lines
