@@ -75,6 +75,7 @@ export default function Layout() {
   const location = useLocation();
   const [isRsvpModalOpen, setIsRsvpModalOpen] = useState(false);
   const isFaqPage = location.pathname === "/faq";
+  const openRsvpModal = () => setIsRsvpModalOpen(true);
 
   return (
     <div className="min-h-screen flex flex-col bg-beige relative overflow-x-hidden">
@@ -109,7 +110,7 @@ export default function Layout() {
               <NavLinkItem
                 key={link.to}
                 link={link}
-                onRsvpClick={() => setIsRsvpModalOpen(true)}
+                onRsvpClick={openRsvpModal}
               />
             ))}
           </div>
@@ -118,7 +119,7 @@ export default function Layout() {
               <NavLinkItem
                 key={link.to}
                 link={link}
-                onRsvpClick={() => setIsRsvpModalOpen(true)}
+                onRsvpClick={openRsvpModal}
               />
             ))}
           </div>
@@ -127,7 +128,7 @@ export default function Layout() {
               <NavLinkItem
                 key={link.to}
                 link={link}
-                onRsvpClick={() => setIsRsvpModalOpen(true)}
+                onRsvpClick={openRsvpModal}
               />
             ))}
           </div>
@@ -139,7 +140,7 @@ export default function Layout() {
               <NavLinkItem
                 key={link.to}
                 link={link}
-                onRsvpClick={() => setIsRsvpModalOpen(true)}
+                onRsvpClick={openRsvpModal}
               />
             ))}
           </div>
@@ -148,7 +149,7 @@ export default function Layout() {
               <NavLinkItem
                 key={link.to}
                 link={link}
-                onRsvpClick={() => setIsRsvpModalOpen(true)}
+                onRsvpClick={openRsvpModal}
               />
             ))}
           </div>
@@ -159,7 +160,7 @@ export default function Layout() {
             <li key={link.to}>
               <NavLinkItem
                 link={link}
-                onRsvpClick={() => setIsRsvpModalOpen(true)}
+                onRsvpClick={openRsvpModal}
               />
             </li>
           ))}
@@ -169,11 +170,11 @@ export default function Layout() {
       {/* Page Content - FAQ renders between nav and main per design */}
       {isFaqPage ? (
         <div className="relative z-10 flex-1">
-          <Outlet />
+          <Outlet context={{ openRsvpModal }} />
         </div>
       ) : (
         <main className="relative z-10 flex-1 text-sm">
-          <Outlet />
+          <Outlet context={{ openRsvpModal }} />
         </main>
       )}
 
@@ -215,8 +216,8 @@ export default function Layout() {
               A Small Step Before We Begin
             </h3>
             <p className="font-body text-plum/85 text-[20px] leading-[1.45] max-w-2xl mx-auto mb-8">
-              Kindly enter your first and last name on the next page exactly as
-              enclosed in your Save the Date. Using the same format ensures we
+              Kindly enter your first and last name on the next page <span className="font-bold">exactly as
+                enclosed in your Save the Date.</span> Using the same format ensures we
               can locate your invitation properly and display your full party ♡
             </p>
 

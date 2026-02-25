@@ -1,8 +1,11 @@
+import { useOutletContext } from "react-router-dom";
 import SectionDivider from "../components/SectionDivider";
 import proposalPhoto from "../assets/proposal-photo.png";
 import sparkleIcon from "../assets/sparkle.svg";
 
 export default function Home() {
+  const { openRsvpModal } = useOutletContext<{ openRsvpModal: () => void }>();
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6">
       {/* Hero Image - mobile: less margin, full width */}
@@ -46,14 +49,13 @@ export default function Home() {
 
         {/* RSVP Button - full width on mobile for touch target */}
         <div className="mt-6 px-2 sm:px-0">
-          <a
-            href="https://withjoy.com/kirsten-and-nic/rsvp"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={openRsvpModal}
             className="block sm:inline-block text-center bg-pink hover:bg-[#E193D2] active:bg-[#B762A7] active:text-white text-burgundy font-body font-bold text-base tracking-[1.92px] px-6 py-4 sm:px-8 min-h-[48px] flex items-center justify-center rounded-lg transition-colors"
           >
             RSVP Here
-          </a>
+          </button>
         </div>
       </div>
 
