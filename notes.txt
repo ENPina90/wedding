@@ -1,14 +1,4 @@
-X- Ensure cursor doesn't change to clickable state when hovering over flower_corner.svg in browser
-X- Make sure flowers arent clickable
-X- Move right corner flower farther left
-X- Change selected tab color
-X- Match color of dividers
-X- Make RSVP modal
-X- Change color of date time info on event page
-X- Photo upload
-X- Align FAQ closer to Figma
-X- Check all font sizes to match Figma
-
-Mobile:
-X- Reduce linespace between nav lines
-X- tighten linespacing between names
+-On hoverfont-nav links should bolden and underline (just like the selected one)
+-Cursor should change to hand when hovering over the RSVP links and over X on the modal
+-The picture hover font size should 22px, and color opacity should be 65%
+-
