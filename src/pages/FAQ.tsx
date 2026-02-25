@@ -1,5 +1,6 @@
 import SectionDivider from "../components/SectionDivider";
 import FlowerLogo from "../components/FlowerLogo";
+import doubleArrowLeft from "../assets/double-arrow-left.svg";
 
 const faqs = [
   {
@@ -87,9 +88,17 @@ function FaqItem({
 }) {
   return (
     <div className="mb-8 sm:mb-10 last:mb-0">
-      <p className="font-body font-bold text-plum text-lg sm:text-xl md:text-2xl tracking-[1.68px] mb-2 sm:mb-3">
-        {question}
-      </p>
+      <div className="mb-2 sm:mb-3 flex items-start gap-2">
+        <img
+          src={doubleArrowLeft}
+          alt=""
+          aria-hidden="true"
+          className="mt-1 h-4 w-4 shrink-0"
+        />
+        <p className="font-body font-bold text-plum text-lg sm:text-xl md:text-2xl tracking-[1.68px]">
+          {question}
+        </p>
+      </div>
       <p className="font-body text-plum/75 leading-7 text-left">
         {answer}
       </p>
