@@ -26,13 +26,13 @@ type PhotosProps = {
 };
 
 const photoTintColors = [
-  "var(--color-burgundy)",
-  "var(--color-plum)",
-  "var(--color-pink)",
-  "var(--color-blue-gray)",
-  "var(--color-olive)",
-  "var(--color-sage)",
-  "var(--color-coral)",
+  "rgba(63, 0, 19, 0.65)",
+  "rgba(137, 72, 100, 0.65)",
+  "rgba(237, 190, 228, 0.65)",
+  "rgba(161, 168, 190, 0.65)",
+  "rgba(95, 84, 32, 0.65)",
+  "rgba(136, 153, 68, 0.65)",
+  "rgba(234, 120, 91, 0.65)",
 ];
 
 const getRandomPhotoTintColor = () =>
@@ -706,7 +706,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                     loading="lazy"
                   />
                   <div
-                    className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-70 group-focus-within:opacity-70"
+                    className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
                     style={{
                       backgroundColor:
                         tintColorByAssetId.get(photo.asset_id) || photoTintColors[0],
@@ -714,7 +714,10 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                   />
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
                     {overlayText && (
-                      <p className="font-display whitespace-pre-line text-white text-3xl sm:text-4xl tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
+                      <p
+                        className="font-display whitespace-pre-line text-white leading-tight tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
+                        style={{ fontSize: "22px" }}
+                      >
                         {overlayText}
                       </p>
                     )}
