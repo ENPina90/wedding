@@ -91,17 +91,26 @@ const updateCloudinaryTag = async ({
   command,
   publicId,
 }) => {
-  const endpoint =
-    `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/tags/${encodeURIComponent(tag)}`;
-  const authHeader = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
-  const body = new URLSearchParams();
-  body.append("command", command);
-  body.append("public_ids[]", publicId);
+  const endpoint = `https://api.cloudinary.com/v1_1/${cloudName}/image/tags`;
+  const timestamp = Math.floor(Date.now() / 1000);
+  const signaturePayload =
+    `command=${command}&public_ids=${publicId}&tag=${tag}&timestamp=${timestamp}${apiSecret}`;
+  const signature = crypto
+    .createHash("sha1")
+    .update(signaturePayload)
+    .digest("hex");
+  const body = new URLSearchParams({
+    api_key: apiKey,
+    command,
+    public_ids: publicId,
+    signature,
+    tag,
+    timestamp: String(timestamp),
+  });
 
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
-      Authorization: `Basic ${authHeader}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: body.toString(),

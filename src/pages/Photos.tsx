@@ -25,9 +25,39 @@ type PhotosProps = {
   showAdminControls?: boolean;
 };
 
+const photoTintColors = [
+  "var(--color-burgundy)",
+  "var(--color-plum)",
+  "var(--color-pink)",
+  "var(--color-blue-gray)",
+  "var(--color-olive)",
+  "var(--color-sage)",
+  "var(--color-coral)",
+];
+
+const getRandomPhotoTintColor = () =>
+  photoTintColors[Math.floor(Math.random() * photoTintColors.length)];
+
+const getResponseErrorMessage = async (
+  response: Response,
+  fallbackMessage: string,
+) => {
+  try {
+    const payload = (await response.json()) as { error?: string };
+    if (typeof payload.error === "string" && payload.error.trim()) {
+      return payload.error;
+    }
+  } catch {
+    // Ignore invalid error payloads and fall back to default messaging.
+  }
+
+  return fallbackMessage;
+};
+
 export default function Photos({ showAdminControls = false }: PhotosProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragStartOrderRef = useRef<string[]>([]);
+  const tintColorByAssetIdRef = useRef<Map<string, string>>(new Map());
 
   const [photos, setPhotos] = useState<CloudinaryListResource[]>([]);
   const [pendingPhotos, setPendingPhotos] = useState<CloudinaryListResource[]>([]);
@@ -258,15 +288,26 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
       });
 
       if (!response.ok) {
-        throw new Error("Approve failed");
+        const apiMessage = await getResponseErrorMessage(
+          response,
+          "Approve failed.",
+        );
+        throw new Error(apiMessage);
       }
 
-      setPendingPhotos((current) =>
-        current.filter((currentPhoto) => currentPhoto.asset_id !== photo.asset_id),
-      );
-      setPhotos((current) => [...current, photo]);
-    } catch {
-      setErrorMessage("Approve failed. Verify the admin key and try again.");
+      const [approved, pending] = await Promise.all([
+        loadApprovedPhotos(),
+        loadPendingPhotos(adminKey.trim()),
+      ]);
+      setPhotos(approved);
+      setPendingPhotos(pending);
+      setStatusMessage("Photo approved.");
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Approve failed. Verify the admin key and try again.";
+      setErrorMessage(message);
     } finally {
       setApprovingPublicId(null);
     }
@@ -496,6 +537,20 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
 
   const getPhotoAlt = (photo: CloudinaryListResource, index: number) =>
     photo.alt_text?.trim() || `Photo ${index + 1}`;
+  const getPhotoOverlayText = (photo: CloudinaryListResource) =>
+    (photo.alt_text?.trim() || "").split(/\s+/).filter(Boolean).join("\n");
+
+  const tintColorByAssetId = useMemo(() => {
+    const next = new Map<string, string>();
+
+    photos.forEach((photo) => {
+      const existingColor = tintColorByAssetIdRef.current.get(photo.asset_id);
+      next.set(photo.asset_id, existingColor ?? getRandomPhotoTintColor());
+    });
+
+    tintColorByAssetIdRef.current = next;
+    return next;
+  }, [photos]);
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
@@ -612,10 +667,12 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
             </p>
           ) : (
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 sm:gap-4 space-y-3 sm:space-y-4">
-              {photos.map((photo, index) => (
+              {photos.map((photo, index) => {
+                const overlayText = getPhotoOverlayText(photo);
+                return (
                 <div
                   key={photo.asset_id}
-                  className={`rounded-lg sm:rounded-xl overflow-hidden border border-pink/20 break-inside-avoid mb-3 sm:mb-4 relative ${showAdminControls ? "cursor-move" : ""}`}
+                  className={`group rounded-lg sm:rounded-xl overflow-hidden border border-pink/20 break-inside-avoid mb-3 sm:mb-4 relative ${showAdminControls ? "cursor-move" : ""}`}
                   draggable={showAdminControls}
                   onDragStart={() => handleApprovedDragStart(photo.public_id)}
                   onDragOver={(event) => handleApprovedDragOver(event, photo.public_id)}
@@ -633,8 +690,23 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                     className="w-full h-auto object-cover"
                     loading="lazy"
                   />
+                  <div
+                    className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-70 group-focus-within:opacity-70"
+                    style={{
+                      backgroundColor:
+                        tintColorByAssetId.get(photo.asset_id) || photoTintColors[0],
+                    }}
+                  />
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                    {overlayText && (
+                      <p className="font-display whitespace-pre-line text-white text-3xl sm:text-4xl tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
+                        {overlayText}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </>
