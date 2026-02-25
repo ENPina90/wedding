@@ -73,6 +73,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
   const [savingCaptionPublicId, setSavingCaptionPublicId] = useState<string | null>(null);
 
   const [adminKey, setAdminKey] = useState("");
+  const [isAdminAuthorized, setIsAdminAuthorized] = useState(false);
   const [captionDraft, setCaptionDraft] = useState("");
   const [captionStatus, setCaptionStatus] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -127,6 +128,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
 
   useEffect(() => {
     if (!showAdminControls) {
+      setIsAdminAuthorized(true);
       return;
     }
 
@@ -145,6 +147,12 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
   }, [adminKey, showAdminControls]);
 
   useEffect(() => {
+    if (showAdminControls && !isAdminAuthorized) {
+      setPhotos([]);
+      setIsLoading(false);
+      return;
+    }
+
     let isMounted = true;
 
     const loadPhotos = async () => {
@@ -172,7 +180,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [showAdminControls, isAdminAuthorized]);
 
   useEffect(() => {
     if (!showAdminControls) {
@@ -181,6 +189,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
 
     if (!adminKey.trim()) {
       setPendingPhotos([]);
+      setIsAdminAuthorized(false);
       return;
     }
 
@@ -191,10 +200,14 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
       try {
         const pending = await loadPendingPhotos(adminKey.trim());
         if (isMounted) {
+          setIsAdminAuthorized(true);
           setPendingPhotos(pending);
+          setErrorMessage("");
         }
       } catch {
         if (isMounted) {
+          setIsAdminAuthorized(false);
+          setPendingPhotos([]);
           setErrorMessage("Unable to load pending photos. Verify your admin key.");
         }
       } finally {
@@ -552,6 +565,8 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
     return next;
   }, [photos]);
 
+  const showAdminContent = !showAdminControls || isAdminAuthorized;
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
       <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-[35px]">
@@ -592,7 +607,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
         </div>
       )}
 
-      {showAdminControls && (
+      {showAdminControls && showAdminContent && (
         <div className="mb-8">
           <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.2px] italic mb-3 text-center">
             Pending Approvals
@@ -651,15 +666,15 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
         </div>
       )}
 
-      {showAdminControls && (
+      {showAdminControls && showAdminContent && (
         <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.2px] italic mb-3 text-center">
           Approved Photos
         </h3>
       )}
 
-      {isLoading ? (
+      {showAdminContent && isLoading ? (
         <p className="font-body text-center text-plum/80 mt-6">Loading photos...</p>
-      ) : (
+      ) : showAdminContent ? (
         <>
           {photos.length === 0 ? (
             <p className="font-body text-center text-plum/80 mt-6">
@@ -710,43 +725,45 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
             </div>
           )}
         </>
-      )}
+      ) : null}
 
-      <div className="text-center mt-8 sm:mt-12 p-5 sm:p-8 bg-cream rounded-xl border border-pink/30">
-        <span className="text-2xl sm:text-3xl block mb-2 sm:mb-3">📸</span>
-        <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.68px] italic mb-2">
-          Share Your Photos
-        </h3>
-        <p className="font-body text-plum/70 leading-7 max-w-md mx-auto mb-3 sm:mb-4">
-          Upload your photos to our shared album. New uploads are reviewed before
-          appearing in the public gallery.
-        </p>
-        <button
-          type="button"
-          onClick={onUploadClick}
-          disabled={Boolean(uploadConfigError) || isUploading}
-          className="inline-block bg-coral hover:bg-coral-hover active:bg-coral-active disabled:opacity-60 disabled:cursor-not-allowed text-white font-body font-bold text-sm tracking-[1.92px] px-6 py-3 rounded-lg transition-colors"
-        >
-          {isUploading ? "UPLOADING..." : "UPLOAD PHOTOS"}
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          className="hidden"
-          onChange={handleUpload}
-        />
-        {statusMessage && (
-          <p className="font-body text-sm text-plum/80 mt-3">{statusMessage}</p>
-        )}
-        {errorMessage && (
-          <p className="font-body text-sm text-plum/80 mt-3">{errorMessage}</p>
-        )}
-        {uploadConfigError && (
-          <p className="font-body text-sm text-plum/80 mt-3">{uploadConfigError}</p>
-        )}
-      </div>
+      {showAdminContent && (
+        <div className="text-center mt-8 sm:mt-12 p-5 sm:p-8 bg-cream rounded-xl border border-pink/30">
+          <span className="text-2xl sm:text-3xl block mb-2 sm:mb-3">📸</span>
+          <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.68px] italic mb-2">
+            Share Your Photos
+          </h3>
+          <p className="font-body text-plum/70 leading-7 max-w-md mx-auto mb-3 sm:mb-4">
+            Upload your photos to our shared album. New uploads are reviewed before
+            appearing in the public gallery.
+          </p>
+          <button
+            type="button"
+            onClick={onUploadClick}
+            disabled={Boolean(uploadConfigError) || isUploading}
+            className="inline-block bg-coral hover:bg-coral-hover active:bg-coral-active disabled:opacity-60 disabled:cursor-not-allowed text-white font-body font-bold text-sm tracking-[1.92px] px-6 py-3 rounded-lg transition-colors"
+          >
+            {isUploading ? "UPLOADING..." : "UPLOAD PHOTOS"}
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={handleUpload}
+          />
+          {statusMessage && (
+            <p className="font-body text-sm text-plum/80 mt-3">{statusMessage}</p>
+          )}
+          {errorMessage && (
+            <p className="font-body text-sm text-plum/80 mt-3">{errorMessage}</p>
+          )}
+          {uploadConfigError && (
+            <p className="font-body text-sm text-plum/80 mt-3">{uploadConfigError}</p>
+          )}
+        </div>
+      )}
 
       {showAdminControls && selectedApprovedPhoto && (
         <div
