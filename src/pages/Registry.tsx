@@ -18,7 +18,7 @@ function RegistryLink({ store, icon, url }: RegistryLinkProps) {
       <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.68px] italic group-hover:text-burgundy transition-colors">
         {store}
       </h3>
-      <p className="font-body text-plum/50 text-xs sm:text-sm mt-2 tracking-wide">
+      <p className="font-body text-plum text-xs sm:text-sm mt-2 tracking-wide">
         View Registry →
       </p>
     </a>
@@ -30,7 +30,7 @@ export default function Registry() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
       <PageHeader title="Registry" />
 
-      <p className="text-center font-body text-plum/75 text-base sm:text-lg leading-7 max-w-xl mx-auto mb-8 sm:mb-10 px-1">
+      <p className="text-center font-body text-plum text-base sm:text-lg leading-7 max-w-xl mx-auto mb-8 sm:mb-10 px-1">
         Your presence at our wedding is the greatest gift of all. However, if
         you wish to honor us with a gift, we've registered at the following
         stores.
@@ -47,7 +47,7 @@ export default function Registry() {
         <p className="font-display text-plum text-base sm:text-lg tracking-[1.68px] italic mb-2">
           A Note About Gifts
         </p>
-        <p className="font-body text-plum/70 leading-7 max-w-md mx-auto text-left sm:text-center">
+        <p className="font-body text-plum leading-7 max-w-md mx-auto text-left sm:text-center">
           If you'd prefer to give a monetary gift, we'd greatly appreciate
           contributions to our honeymoon fund. Every bit helps us create
           unforgettable memories on our first adventure as a married couple!

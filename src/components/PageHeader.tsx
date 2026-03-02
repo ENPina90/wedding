@@ -22,12 +22,12 @@ export default function PageHeader({ title, subtitle }: PageHeaderProps) {
       {subtitle && (
         <>
           {/* Decorative divider below title */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mt-3 sm:mt-4 max-w-xs mx-auto text-plum/40 px-4">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mt-3 sm:mt-4 max-w-xs mx-auto text-plum px-4">
             <div className="flex-1 h-px bg-plum/20" />
             <span className="text-xs sm:text-sm">✿</span>
             <div className="flex-1 h-px bg-plum/20" />
           </div>
-          <p className="sub-header font-body text-plum/70 mt-2 sm:mt-3 px-2">{subtitle}</p>
+          <p className="sub-header font-body text-plum mt-2 sm:mt-3 px-2">{subtitle}</p>
         </>
       )}
     </div>

@@ -66,7 +66,7 @@ export default function Home() {
         <h3 className="font-nav text-plum font-medium text-xs sm:text-sm tracking-[1.4px] uppercase pt-0 pb-6">
           our story
         </h3>
-        <div className="font-body text-plum/80 leading-7 text-left max-w-2xl mx-auto space-y-4 sm:space-y-6 px-1">
+        <div className="font-body text-plum leading-7 text-left max-w-2xl mx-auto space-y-4 sm:space-y-6 px-1">
           <p>
             It all started with a chance meeting and a spark that neither of us
             could ignore. From our very first conversation, we knew something

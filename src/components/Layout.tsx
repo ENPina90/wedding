@@ -28,6 +28,35 @@ const allNavLinks = [...navLinks.row1, ...navLinks.row2, ...navLinks.row3];
 const navTabletRow1 = [...navLinks.row1, ...navLinks.row2, navLinks.row3[0]];
 const navTabletRow2 = navLinks.row3.slice(1);
 
+const navLinkBaseClass =
+  "font-nav text-plum text-[22px] tracking-[1.68px] uppercase cursor-pointer group";
+
+/* Invisible bold span reserves space so hover/active font-bold doesn't shift layout.
+ * Underline must be on the visible span - the invisible span hides text-decoration too.
+ */
+function NavLinkLabel({
+  label,
+  isActive,
+}: {
+  label: string;
+  isActive?: boolean;
+}) {
+  return (
+    <span className="relative inline-block">
+      <span className="font-bold invisible select-none" aria-hidden>
+        {label}
+      </span>
+      <span
+        className={`absolute left-0 top-0 group-hover:underline group-hover:underline-offset-4 ${
+          isActive ? "font-bold underline underline-offset-4" : "font-normal group-hover:font-bold"
+        }`}
+      >
+        {label}
+      </span>
+    </span>
+  );
+}
+
 function NavLinkItem({
   link,
   onRsvpClick,
@@ -35,12 +64,10 @@ function NavLinkItem({
   link: { to: string; label: string; external: boolean; opensModal?: boolean };
   onRsvpClick: () => void;
 }) {
-  const baseClass =
-    "font-nav text-plum text-[22px] tracking-[1.68px] uppercase";
   if (link.opensModal) {
     return (
-      <button type="button" onClick={onRsvpClick} className={baseClass}>
-        {link.label}
+      <button type="button" onClick={onRsvpClick} className={navLinkBaseClass}>
+        <NavLinkLabel label={link.label} />
       </button>
     );
   }
@@ -51,22 +78,18 @@ function NavLinkItem({
         href={link.to}
         target="_blank"
         rel="noopener noreferrer"
-        className={baseClass}
+        className={navLinkBaseClass}
       >
-        {link.label}
+        <NavLinkLabel label={link.label} />
       </a>
     );
   }
   return (
     <NavLink
       to={link.to}
-      className={({ isActive }) =>
-        `${baseClass} ${
-          isActive ? "underline underline-offset-4 font-bold" : ""
-        }`
-      }
+      className={navLinkBaseClass}
     >
-      {link.label}
+      {({ isActive }) => <NavLinkLabel label={link.label} isActive={isActive} />}
     </NavLink>
   );
 }
@@ -184,8 +207,8 @@ export default function Layout() {
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 text-center py-10 sm:py-12 md:py-16 text-plum/60 font-body text-xs sm:text-sm tracking-wide px-4">
-        <p>Kirsten & Nic &middot; November 21, 2026</p>
+      <footer className="relative z-10 text-center py-10 sm:py-12 md:py-16 text-plum font-body text-xs sm:text-sm tracking-wide px-4">
+        <p>Designed by Kirsten &middot; Built by Nic &middot; 2026</p>
       </footer>
 
       {isRsvpModalOpen && (
@@ -200,7 +223,7 @@ export default function Layout() {
             <button
               type="button"
               onClick={() => setIsRsvpModalOpen(false)}
-              className="absolute top-4 right-4 text-plum/80 hover:text-plum font-body text-3xl leading-none"
+              className="absolute top-4 right-4 text-plum font-body text-3xl leading-none"
               aria-label="Close RSVP modal"
             >
               ×
@@ -215,7 +238,7 @@ export default function Layout() {
             <h3 className="font-display text-plum text-[32px] tracking-[1.2px] italic mb-4">
               A Small Step Before We Begin
             </h3>
-            <p className="font-body text-plum/85 text-[20px] leading-[1.45] max-w-2xl mx-auto mb-8">
+            <p className="font-body text-plum text-[20px] leading-[1.45] max-w-2xl mx-auto mb-8">
               Kindly enter your first and last name on the next page <span className="font-bold">exactly as
                 enclosed in your Save the Date.</span> Using the same format ensures we
               can locate your invitation properly and display your full party ♡

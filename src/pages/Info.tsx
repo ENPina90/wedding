@@ -17,7 +17,7 @@ function EventBlock({ title, datetime, description }: EventBlockProps) {
       <p className="font-nav text-plum text-xs sm:text-sm tracking-[1px] mt-2 sm:mt-3 uppercase">
         {datetime}
       </p>
-      <p className="font-body text-plum/75 leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+      <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
         {description}
       </p>
     </div>
@@ -49,7 +49,7 @@ export default function Info() {
 
       {/* Intro */}
       <div className="text-center mb-10 sm:mb-12 px-1">
-        <p className="sub-header font-body text-plum/75 leading-7 max-w-2xl mx-auto text-left sm:text-center">
+        <p className="sub-header font-body text-plum leading-7 max-w-2xl mx-auto text-left sm:text-center">
           Here you'll find details and instructions pertaining to all things
           wedding day. If your question isn't answered here, try the{" "}
           <Link
@@ -93,7 +93,7 @@ export default function Info() {
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
           Dress Code
         </h3>
-        <p className="font-body text-plum/75 leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
           Cocktail attire. Think elegant and comfortable — we want everyone to
           dance the night away!
         </p>

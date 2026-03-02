@@ -577,7 +577,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
         <h2 className="font-display text-plum tracking-[2.24px] italic">
           Photo Gallery
         </h2>
-        <p className="font-body text-plum/70 text-base sm:text-lg mt-2 sm:mt-3">
+        <p className="font-body text-plum text-base sm:text-lg mt-2 sm:mt-3">
           Moments from our journey together
         </p>
       </div>
@@ -589,7 +589,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
           <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.2px] italic mb-2">
             Admin Moderation
           </h3>
-          <label htmlFor="admin-key" className="block font-body text-xs text-plum/75 mb-1">
+          <label htmlFor="admin-key" className="block font-body text-xs text-plum mb-1">
             Admin Key
           </label>
           <input
@@ -601,7 +601,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
             placeholder="Enter admin key"
             autoComplete="off"
           />
-          <p className="font-body text-xs text-plum/70 mt-2">
+          <p className="font-body text-xs text-plum mt-2">
             Pending uploads appear below. Approve to publish on /photos.
           </p>
         </div>
@@ -613,9 +613,9 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
             Pending Approvals
           </h3>
           {isLoadingPending ? (
-            <p className="font-body text-plum/80">Loading pending photos...</p>
+            <p className="font-body text-plum">Loading pending photos...</p>
           ) : pendingPhotos.length === 0 ? (
-            <p className="font-body text-plum/80">No pending photos.</p>
+            <p className="font-body text-plum">No pending photos.</p>
           ) : (
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 sm:gap-4 space-y-3 sm:space-y-4">
               {pendingPhotos.map((photo) => (
@@ -673,11 +673,11 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
       )}
 
       {showAdminContent && isLoading ? (
-        <p className="font-body text-center text-plum/80 mt-6">Loading photos...</p>
+        <p className="font-body text-center text-plum mt-6">Loading photos...</p>
       ) : showAdminContent ? (
         <>
           {photos.length === 0 ? (
-            <p className="font-body text-center text-plum/80 mt-6">
+            <p className="font-body text-center text-plum mt-6">
               No approved photos yet.
             </p>
           ) : (
@@ -736,7 +736,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
           <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.68px] italic mb-2">
             Share Your Photos
           </h3>
-          <p className="font-body text-plum/70 leading-7 max-w-md mx-auto mb-3 sm:mb-4">
+          <p className="font-body text-plum leading-7 max-w-md mx-auto mb-3 sm:mb-4">
             Upload your photos to our shared album. New uploads are reviewed before
             appearing in the public gallery.
           </p>
@@ -757,13 +757,13 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
             onChange={handleUpload}
           />
           {statusMessage && (
-            <p className="font-body text-sm text-plum/80 mt-3">{statusMessage}</p>
+            <p className="font-body text-sm text-plum mt-3">{statusMessage}</p>
           )}
           {errorMessage && (
-            <p className="font-body text-sm text-plum/80 mt-3">{errorMessage}</p>
+            <p className="font-body text-sm text-plum mt-3">{errorMessage}</p>
           )}
           {uploadConfigError && (
-            <p className="font-body text-sm text-plum/80 mt-3">{uploadConfigError}</p>
+            <p className="font-body text-sm text-plum mt-3">{uploadConfigError}</p>
           )}
         </div>
       )}
@@ -833,7 +833,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                 className="w-full border border-pink/40 rounded-md px-3 py-2 text-sm font-body text-plum bg-white"
                 placeholder="add caption"
               />
-              <p className="mt-2 font-body text-xs text-plum/80">
+              <p className="mt-2 font-body text-xs text-plum">
                 {savingCaptionPublicId === selectedApprovedPhoto.public_id
                   ? "Saving..."
                   : captionStatus}

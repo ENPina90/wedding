@@ -39,18 +39,18 @@ function HotelCard({
   mapImage,
 }: HotelCardProps) {
   return (
-    <div className="bg-cream rounded-xl p-4 sm:p-6 md:p-8 border border-pink/30 flex flex-col">
+    <div className="bg-cream rounded-lg p-4 sm:p-6 md:p-8 border border-[#a1a8be]/50 [border-image:none] flex flex-col">
       {/* Fixed-height header so map window aligns across all cards; title centered */}
       <div className="h-[8.5rem] sm:h-[9rem] flex flex-col shrink-0 justify-center items-center text-center">
         <h3 className="font-display text-[#6e799b] text-lg sm:text-xl tracking-[1.68px] italic mb-2">
           {name}
         </h3>
-        <p className="font-nav text-plum/60 text-xs tracking-[1px] uppercase mb-2 sm:mb-3">
+        <p className="font-nav text-[#626D8D] text-[15px] tracking-[1px] uppercase mb-2 sm:mb-3">
           {distance}
           {distanceSuffix}
         </p>
         {note && (
-          <p className="font-body text-plum/70 text-xs sm:text-sm mb-2 sm:mb-3 italic">
+          <p className="font-body text-plum text-xs sm:text-sm mb-2 sm:mb-3 italic">
             {note}
           </p>
         )}
@@ -69,7 +69,7 @@ function HotelCard({
               className="w-full h-full object-cover"
             />
           ) : (
-            <span className="font-body text-plum/70 text-xs sm:text-sm font-bold tracking-[1px]">
+            <span className="font-body text-plum text-xs sm:text-sm font-bold tracking-[1px]">
               View on Google Maps
             </span>
           )}
@@ -103,7 +103,7 @@ function HotelCard({
 
 function SubHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h4 className="font-nav text-plum/80 text-xs sm:text-sm tracking-[1px] uppercase mb-2 sm:mb-3 mt-4 sm:mt-6 first:mt-0 text-center">
+    <h4 className="font-nav text-plum text-xs sm:text-sm tracking-[1px] uppercase mb-2 sm:mb-3 mt-4 sm:mt-6 first:mt-0 text-center">
       {children}
     </h4>
   );
@@ -111,7 +111,7 @@ function SubHeading({ children }: { children: React.ReactNode }) {
 
 function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="list-disc list-inside font-body text-plum/75 leading-7 space-y-1 mb-4">
+    <ul className="list-disc list-inside font-body text-plum leading-7 space-y-1 mb-4 text-left">
       {items.map((item, i) => (
         <li key={i}>{item}</li>
       ))}
@@ -132,7 +132,7 @@ export default function Accommodations() {
         <h2 className="font-display text-plum tracking-[2.24px] italic">
           Accommodations
         </h2>
-        <p className="font-body text-plum/70 text-base sm:text-lg mt-2 sm:mt-3 max-w-xl mx-auto text-left sm:text-center">
+        <p className="font-body text-plum text-base sm:text-lg mt-2 sm:mt-3 max-w-xl mx-auto text-left sm:text-center">
           Everything you need to know about your overnight stay. Reach out to us
           for help with bookings anytime at{" "}
           <a
@@ -152,7 +152,7 @@ export default function Accommodations() {
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
           Hotel Recommendations
         </h3>
-        <p className="font-body text-plum/75 leading-7">
+        <p className="font-body text-plum leading-7">
           Unfortunately we are not able to secure room blockings for only one
           night stays in Dripping Springs, so if you are planning on staying in
           a hotel in Dripping Springs, please do so as soon as possible as
@@ -212,20 +212,20 @@ export default function Accommodations() {
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
           On-site Lodging
         </h3>
-        <p className="font-body text-plum/75 leading-7">
+        <p className="font-body text-plum leading-7">
           Those of you who we've spoken with about staying on-site, please book
           as early as possible — latest by August 2nd, 2026.
         </p>
 
         <SubHeading>Address</SubHeading>
-        <p className="font-body text-plum/75 leading-7">
+        <p className="font-body text-plum leading-7">
           <strong>Lucky Arrow Retreat</strong>
           <br />
           <a
             href={LUCKY_ARROW_MAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-plum underline hover:text-burgundy transition-colors"
+            className="text-plum font-normal no-underline hover:text-burgundy transition-colors"
           >
             {LUCKY_ARROW_ADDRESS}, United States
           </a>
@@ -248,7 +248,7 @@ export default function Accommodations() {
         </div>
 
         <SubHeading>Booking instructions</SubHeading>
-        <p className="font-body text-plum/75 leading-7 space-y-3">
+        <p className="font-body text-plum leading-7 space-y-3">
           For those of you booking online, you may{" "}
           <a
             href={BOOKING_INSTRUCTIONS_PDF}
@@ -258,7 +258,7 @@ export default function Accommodations() {
           </a>
           .
         </p>
-        <p className="font-body text-plum/75 leading-7">
+        <p className="font-body text-plum leading-7">
           For those of you who have either been instructed to book by phone or
           would prefer to book by phone, please call Lucky Arrow Retreat at{" "}
           <a
@@ -271,7 +271,7 @@ export default function Accommodations() {
         </p>
 
         <SubHeading>Accommodation details</SubHeading>
-        <ul className="font-body text-plum/75 leading-7 space-y-2 mb-4 text-left">
+        <ul className="font-body text-plum leading-7 space-y-2 mb-4 text-left">
           <li>Check in: 4 P.M.</li>
           <li>Check out: 11 A.M.</li>
           <li>
@@ -316,13 +316,13 @@ export default function Accommodations() {
         </ul>
 
         <SubHeading>Directions</SubHeading>
-        <p className="font-body text-plum/75 leading-7 space-y-3">
+        <p className="font-body text-plum leading-7 space-y-3">
           From Austin: Head west on Highway 290 towards Dripping Springs for
           approximately 28 miles. Turn right (north) on Bell Springs Road and
           travel for 2.6 miles. Lucky Arrow Retreat will be on your left, just
           past Bell Springs Winery.
         </p>
-        <p className="font-body text-plum/75 leading-7">
+        <p className="font-body text-plum leading-7">
           16 miles. Turn right (east) on Highway 290 and continue for 6 miles.
           Turn left (north) onto Bell Springs Road and continue for 2.6 miles.
           Lucky Arrow Retreat will be on your left, just past Bell Springs

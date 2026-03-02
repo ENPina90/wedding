@@ -99,7 +99,7 @@ function FaqItem({
           {question}
         </p>
       </div>
-      <p className="font-body text-plum/75 leading-7 text-left">
+      <p className="font-body text-plum leading-7 text-left">
         {answer}
       </p>
     </div>
@@ -129,7 +129,7 @@ export default function FAQ() {
 
       {/* Intro */}
       <div className="text-center mb-10 sm:mb-12 px-1">
-        <p className="sub-header font-body text-plum/75 leading-7 max-w-2xl mx-auto text-left sm:text-center">
+        <p className="sub-header font-body text-plum leading-7 max-w-2xl mx-auto text-left sm:text-center">
           To all our friends and family with plenty of questions, please take a
           look here. If you still have questions, you're always welcome to
           reach out to either me at{" "}

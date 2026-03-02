@@ -27,7 +27,7 @@ export default function RSVP() {
         <h2 className="font-display text-plum tracking-[2.24px] italic mb-3 sm:mb-4">
           Thank You!
         </h2>
-        <p className="font-body text-plum/75 text-base sm:text-lg">
+        <p className="font-body text-plum text-base sm:text-lg">
           Your RSVP has been received. We can't wait to celebrate with you!
         </p>
         <button

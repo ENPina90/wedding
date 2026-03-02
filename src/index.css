@@ -43,9 +43,10 @@ body {
   overflow-x: hidden;
 }
 
-/* Default paragraph font sizes */
+/* Default paragraph styles (per Figma: light weight unless overridden) */
 p {
   font-size: 15px;
+  font-weight: 300;
 }
 
 @media (min-width: 768px) {
