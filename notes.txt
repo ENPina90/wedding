@@ -1,4 +1,4 @@
--On hoverfont-nav links should bolden and underline (just like the selected one)
--Cursor should change to hand when hovering over the RSVP links and over X on the modal
--The picture hover font size should 22px, and color opacity should be 65%
--
+X-On hover font-nav links should bolden and underline (just like the currently selected one)
+X-Cursor should change to hand when hovering over the RSVP links and over X on the modal
+X-The picture hover font size should 22px, and color opacity should be 65%
+
