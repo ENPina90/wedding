@@ -61,17 +61,119 @@ const parseAltText = (resource: {
   return "";
 };
 
+const parseYearFromText = (value: unknown) => {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  const match = value.match(/\b(19\d{2}|20\d{2})\b/);
+  return match ? match[1] : "";
+};
+
+const parseYearFromTags = (tags: unknown) => {
+  if (!Array.isArray(tags)) {
+    return "";
+  }
+
+  for (const tag of tags) {
+    if (typeof tag !== "string") {
+      continue;
+    }
+
+    const trimmedTag = tag.trim();
+    if (!trimmedTag) {
+      continue;
+    }
+
+    const directYear = trimmedTag.match(/^(19\d{2}|20\d{2})$/);
+    if (directYear) {
+      return directYear[1];
+    }
+
+    const prefixedYear = trimmedTag.match(/^year[-_:]?(19\d{2}|20\d{2})$/i);
+    if (prefixedYear) {
+      return prefixedYear[1];
+    }
+
+    const yearInTag = trimmedTag.match(/\b(19\d{2}|20\d{2})\b/);
+    if (yearInTag && /year|date|taken|trip|photo|moment/i.test(trimmedTag)) {
+      return yearInTag[1];
+    }
+  }
+
+  return "";
+};
+
+const parseYearFromMetadata = (metadata: unknown) => {
+  if (!metadata || typeof metadata !== "object") {
+    return "";
+  }
+
+  const candidates = ["year", "Year", "photo_year", "PhotoYear"];
+  for (const key of candidates) {
+    const value = (metadata as Record<string, unknown>)[key];
+    if (typeof value === "string" || typeof value === "number") {
+      const trimmed = String(value).trim();
+      if (/^(19\d{2}|20\d{2})$/.test(trimmed)) {
+        return trimmed;
+      }
+      const yearInValue = trimmed.match(/\b(19\d{2}|20\d{2})\b/);
+      if (yearInValue) {
+        return yearInValue[1];
+      }
+    }
+  }
+
+  return "";
+};
+
+const parseYear = (resource: {
+  context?: { custom?: { year?: string | number; alt_text?: string; caption?: string } };
+  metadata?: unknown;
+  tags?: unknown;
+}) => {
+  const contextYear = resource.context?.custom?.year;
+  if (typeof contextYear === "string" || typeof contextYear === "number") {
+    const trimmed = String(contextYear).trim();
+    if (/^(19\d{2}|20\d{2})$/.test(trimmed)) {
+      return trimmed;
+    }
+  }
+
+  const metadataYear = parseYearFromMetadata(resource.metadata);
+  if (metadataYear) {
+    return metadataYear;
+  }
+
+  const tagsYear = parseYearFromTags(resource.tags);
+  if (tagsYear) {
+    return tagsYear;
+  }
+
+  return parseYearFromText(parseAltText(resource));
+};
+
 const toPhotoResource = (resource: {
   asset_id: string;
   public_id: string;
   secure_url: string;
-  context?: { custom?: { display_order?: string; alt_text?: string; caption?: string } };
+  context?: {
+    custom?: {
+      display_order?: string;
+      alt_text?: string;
+      caption?: string;
+      year?: string | number;
+    };
+  };
+  metadata?: unknown;
+  tags?: unknown;
 }) => ({
   asset_id: resource.asset_id,
   public_id: resource.public_id,
   secure_url: resource.secure_url,
   display_order: parseDisplayOrder(resource.context?.custom?.display_order),
   alt_text: parseAltText(resource),
+  year: parseYear(resource),
 });
 
 const isRateLimitResponse = (statusCode: number, body: string) =>
@@ -96,7 +198,7 @@ const listTaggedPhotos = async ({
 
   const endpoint =
     `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/tags/${encodeURIComponent(tag)}` +
-    "?max_results=100&direction=desc&context=true";
+    "?max_results=100&direction=desc&context=true&tags=true&metadata=true";
   const authHeader = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
 
   const response = await fetch(endpoint, {
@@ -123,8 +225,11 @@ const listTaggedPhotos = async ({
           display_order?: string;
           alt_text?: string;
           caption?: string;
+          year?: string | number;
         };
       };
+      metadata?: unknown;
+      tags?: unknown[];
     }>;
   };
   const resources = Array.isArray(payload.resources) ? payload.resources : [];
@@ -141,6 +246,7 @@ const sortByDisplayOrder = (
     secure_url: string;
     display_order: number;
     alt_text: string;
+    year: string;
   }>,
 ) =>
   [...resources].sort((a, b) => {
@@ -206,6 +312,7 @@ const updateCloudinaryResourceContext = async ({
   publicId,
   displayOrder,
   altText,
+  year,
 }: {
   cloudName: string;
   apiKey: string;
@@ -213,6 +320,7 @@ const updateCloudinaryResourceContext = async ({
   publicId: string;
   displayOrder: number;
   altText: string;
+  year: string;
 }) => {
   const endpoint =
     `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload/${encodeURIComponent(publicId)}`;
@@ -221,7 +329,8 @@ const updateCloudinaryResourceContext = async ({
     context:
       `display_order=${displayOrder}|` +
       `caption=${escapeCloudinaryContextValue(altText)}|` +
-      `alt_text=${escapeCloudinaryContextValue(altText)}`,
+      `alt_text=${escapeCloudinaryContextValue(altText)}|` +
+      `year=${escapeCloudinaryContextValue(year.trim())}`,
   });
 
   const response = await fetch(endpoint, {
@@ -387,6 +496,9 @@ export default defineConfig({
                 publicId,
                 displayOrder: approvedResources.length,
                 altText: pendingResource?.alt_text || "",
+                year:
+                  pendingResource?.year ||
+                  parseYearFromText(pendingResource?.alt_text || ""),
               });
 
               clearPhotoListCache();
@@ -444,14 +556,24 @@ export default defineConfig({
               const requestBody = (await readJsonBody(req)) as {
                 publicId?: string;
                 altText?: string;
+                year?: string;
               };
               const publicId = requestBody.publicId?.trim() ?? "";
               const altText = requestBody.altText?.trim() ?? "";
+              const hasYearInput = typeof requestBody.year === "string";
+              const yearInput = hasYearInput ? requestBody.year.trim() : "";
 
               if (!publicId) {
                 res.statusCode = 400;
                 res.setHeader("Content-Type", "application/json");
                 res.end(JSON.stringify({ error: "Missing publicId." }));
+                return;
+              }
+
+              if (yearInput && !/^(19\d{2}|20\d{2})$/.test(yearInput)) {
+                res.statusCode = 400;
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify({ error: "Invalid year. Use a 4-digit year like 2024." }));
                 return;
               }
 
@@ -479,6 +601,10 @@ export default defineConfig({
                 publicId,
                 displayOrder: target.display_order,
                 altText,
+                year:
+                  hasYearInput
+                    ? yearInput
+                    : target.year || parseYearFromText(altText),
               });
 
               clearPhotoListCache();
@@ -533,6 +659,7 @@ export default defineConfig({
                     publicId,
                     displayOrder: index,
                     altText: existing?.alt_text || "",
+                    year: existing?.year || parseYearFromText(existing?.alt_text || ""),
                   });
                 }),
               );

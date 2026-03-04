@@ -77,6 +77,34 @@ const parseYearFromTags = (tags) => {
     if (prefixedYear) {
       return prefixedYear[1];
     }
+
+    const yearInTag = trimmedTag.match(/\b(19\d{2}|20\d{2})\b/);
+    if (yearInTag && /year|date|taken|trip|photo|moment/i.test(trimmedTag)) {
+      return yearInTag[1];
+    }
+  }
+
+  return "";
+};
+
+const parseYearFromMetadata = (metadata) => {
+  if (!metadata || typeof metadata !== "object") {
+    return "";
+  }
+
+  const candidates = ["year", "Year", "photo_year", "PhotoYear"];
+  for (const key of candidates) {
+    const value = metadata[key];
+    if (typeof value === "string" || typeof value === "number") {
+      const trimmed = String(value).trim();
+      if (/^(19\d{2}|20\d{2})$/.test(trimmed)) {
+        return trimmed;
+      }
+      const yearInValue = trimmed.match(/\b(19\d{2}|20\d{2})\b/);
+      if (yearInValue) {
+        return yearInValue[1];
+      }
+    }
   }
 
   return "";
@@ -89,6 +117,11 @@ const parseYear = (resource) => {
     if (/^(19\d{2}|20\d{2})$/.test(trimmed)) {
       return trimmed;
     }
+  }
+
+  const yearFromMetadata = parseYearFromMetadata(resource.metadata);
+  if (yearFromMetadata) {
+    return yearFromMetadata;
   }
 
   const yearFromTags = parseYearFromTags(resource.tags);
@@ -133,7 +166,7 @@ const listTaggedPhotos = async ({ cloudName, apiKey, apiSecret, tag }) => {
 
   const endpoint =
     `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/tags/${encodeURIComponent(tag)}` +
-    "?max_results=100&direction=desc&context=true&tags=true";
+    "?max_results=100&direction=desc&context=true&tags=true&metadata=true";
   const authHeader = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
 
   const response = await fetch(endpoint, {
@@ -367,7 +400,7 @@ app.post("/api/photos/approve", async (req, res) => {
       publicId,
       displayOrder: approvedResources.length,
       altText: pendingResource?.alt_text || "",
-      year: pendingResource?.year || "",
+      year: pendingResource?.year || parseYearFromText(pendingResource?.alt_text || ""),
     });
 
     clearPhotoListCache();
@@ -529,7 +562,7 @@ app.post("/api/photos/reorder", async (req, res) => {
           publicId,
           displayOrder: index,
           altText: existing?.alt_text || "",
-          year: existing?.year || "",
+          year: existing?.year || parseYearFromText(existing?.alt_text || ""),
         });
       }),
     );

@@ -458,7 +458,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
         body: JSON.stringify({
           publicId: selectedApprovedPhoto.public_id,
           altText: captionDraft,
-          year: yearDraft.trim(),
+          ...(yearDraft.trim() ? { year: yearDraft.trim() } : {}),
         }),
       });
 
@@ -626,6 +626,33 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
   }, [photos]);
 
   const showAdminContent = !showAdminControls || isAdminAuthorized;
+  const uploadPhotoCard = (
+    <div className="bg-cream rounded-lg p-4 sm:p-6 md:p-8 border border-[#a1a8be]/50 [border-image:none] flex flex-col justify-center text-center min-h-[260px] sm:min-h-[300px]">
+      <span className="text-2xl sm:text-3xl block mb-2 sm:mb-3">📸</span>
+      <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.68px] italic mb-2">
+        Share Your Photos
+      </h3>
+      <p className="font-body text-plum leading-7 max-w-md mx-auto mb-3 sm:mb-4">
+        Upload your photos to our shared album. New uploads are reviewed before
+        appearing in the public gallery.
+      </p>
+      <div>
+        <button
+          type="button"
+          onClick={onUploadClick}
+          disabled={Boolean(uploadConfigError) || isUploading}
+          className="inline-block bg-coral hover:bg-coral-hover active:bg-coral-active disabled:opacity-60 disabled:cursor-not-allowed text-white font-body font-bold text-sm tracking-[1.92px] px-6 py-3 rounded-lg transition-colors"
+        >
+          {isUploading ? "UPLOADING..." : "UPLOAD PHOTOS"}
+        </button>
+      </div>
+      {statusMessage && <p className="font-body text-sm text-plum mt-3">{statusMessage}</p>}
+      {errorMessage && <p className="font-body text-sm text-plum mt-3">{errorMessage}</p>}
+      {uploadConfigError && (
+        <p className="font-body text-sm text-plum mt-3">{uploadConfigError}</p>
+      )}
+    </div>
+  );
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
@@ -736,13 +763,9 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
         <p className="font-body text-center text-plum mt-6">Loading photos...</p>
       ) : showAdminContent ? (
         <>
-          {photos.length === 0 ? (
-            <p className="font-body text-center text-plum mt-6">
-              No approved photos yet.
-            </p>
-          ) : (
-            <>
-              <div className="space-y-3 sm:space-y-4 sm:hidden">
+          <>
+            <div className="space-y-3 sm:space-y-4 sm:hidden">
+              {uploadPhotoCard}
               {approvedColumns1[0].map(({ photo, index }) => {
                 const overlayText = getPhotoOverlayText(photo);
                 return (
@@ -788,14 +811,15 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                   </div>
                 );
               })}
-              </div>
+            </div>
 
-              <div className="hidden sm:grid lg:hidden sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="hidden sm:grid lg:hidden sm:grid-cols-2 gap-3 sm:gap-4">
               {approvedColumns2.map((column, columnIndex) => (
                 <div
                   key={`approved-sm-column-${String(columnIndex)}`}
                   className="space-y-3 sm:space-y-4"
                 >
+                  {columnIndex === 0 && uploadPhotoCard}
                   {column.map(({ photo, index }) => {
                     const overlayText = getPhotoOverlayText(photo);
                     return (
@@ -844,14 +868,15 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                   })}
                 </div>
               ))}
-              </div>
+            </div>
 
-              <div className="hidden lg:grid lg:grid-cols-3 gap-3 sm:gap-4">
+            <div className="hidden lg:grid lg:grid-cols-3 gap-3 sm:gap-4">
               {approvedColumns3.map((column, columnIndex) => (
                 <div
                   key={`approved-lg-column-${String(columnIndex)}`}
                   className="space-y-3 sm:space-y-4"
                 >
+                  {columnIndex === 0 && uploadPhotoCard}
                   {column.map(({ photo, index }) => {
                     const overlayText = getPhotoOverlayText(photo);
                     return (
@@ -900,48 +925,23 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                   })}
                 </div>
               ))}
-              </div>
-            </>
+            </div>
+          </>
+          {photos.length === 0 && (
+            <p className="font-body text-center text-plum mt-6">No approved photos yet.</p>
           )}
         </>
       ) : null}
 
       {showAdminContent && (
-        <div className="text-center mt-8 sm:mt-12 p-5 sm:p-8 bg-cream rounded-xl border border-pink/30">
-          <span className="text-2xl sm:text-3xl block mb-2 sm:mb-3">📸</span>
-          <h3 className="font-display text-plum text-lg sm:text-xl tracking-[1.68px] italic mb-2">
-            Share Your Photos
-          </h3>
-          <p className="font-body text-plum leading-7 max-w-md mx-auto mb-3 sm:mb-4">
-            Upload your photos to our shared album. New uploads are reviewed before
-            appearing in the public gallery.
-          </p>
-          <button
-            type="button"
-            onClick={onUploadClick}
-            disabled={Boolean(uploadConfigError) || isUploading}
-            className="inline-block bg-coral hover:bg-coral-hover active:bg-coral-active disabled:opacity-60 disabled:cursor-not-allowed text-white font-body font-bold text-sm tracking-[1.92px] px-6 py-3 rounded-lg transition-colors"
-          >
-            {isUploading ? "UPLOADING..." : "UPLOAD PHOTOS"}
-          </button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            multiple
-            className="hidden"
-            onChange={handleUpload}
-          />
-          {statusMessage && (
-            <p className="font-body text-sm text-plum mt-3">{statusMessage}</p>
-          )}
-          {errorMessage && (
-            <p className="font-body text-sm text-plum mt-3">{errorMessage}</p>
-          )}
-          {uploadConfigError && (
-            <p className="font-body text-sm text-plum mt-3">{uploadConfigError}</p>
-          )}
-        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          className="hidden"
+          onChange={handleUpload}
+        />
       )}
 
       {showAdminControls && selectedApprovedPhoto && (

@@ -1,3 +1,3 @@
--Change display order of the pictures to be based on year
--Display order should be left to right
--Add photo card should be first tile
+X-Change display order of the pictures to be based on year
+X-Display order should be left to right
+XX-Add photo card should be first tile
