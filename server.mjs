@@ -13,6 +13,8 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distDir = path.join(__dirname, "dist");
+const photoListCache = new Map();
+const photoListCacheTtlMs = Number(process.env.PHOTOS_LIST_CACHE_TTL_MS || "30000");
 
 const getCloudinaryConfig = () => {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
@@ -50,6 +52,11 @@ const toPhotoResource = (resource) => ({
   alt_text: parseAltText(resource),
 });
 
+const isRateLimitResponse = (statusCode, body) =>
+  statusCode === 420 ||
+  statusCode === 429 ||
+  /rate limit exceeded/i.test(body);
+
 const sortByDisplayOrder = (resources) =>
   [...resources].sort((a, b) => {
     if (a.display_order !== b.display_order) {
@@ -62,6 +69,12 @@ const escapeCloudinaryContextValue = (value) =>
   value.replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/=/g, "\\=");
 
 const listTaggedPhotos = async ({ cloudName, apiKey, apiSecret, tag }) => {
+  const cached = photoListCache.get(tag);
+  const now = Date.now();
+  if (cached && now - cached.fetchedAt <= photoListCacheTtlMs) {
+    return cached.resources;
+  }
+
   const endpoint =
     `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/tags/${encodeURIComponent(tag)}` +
     "?max_results=100&direction=desc&context=true";
@@ -75,12 +88,17 @@ const listTaggedPhotos = async ({ cloudName, apiKey, apiSecret, tag }) => {
 
   if (!response.ok) {
     const body = await response.text();
+    if (cached && isRateLimitResponse(response.status, body)) {
+      return cached.resources;
+    }
     throw new Error(`Cloudinary request failed: ${body}`);
   }
 
   const payload = await response.json();
   const resources = Array.isArray(payload.resources) ? payload.resources : [];
-  return resources.map(toPhotoResource);
+  const mappedResources = resources.map(toPhotoResource);
+  photoListCache.set(tag, { fetchedAt: now, resources: mappedResources });
+  return mappedResources;
 };
 
 const updateCloudinaryTag = async ({
@@ -172,6 +190,10 @@ const requireAdmin = (req, res) => {
   return true;
 };
 
+const clearPhotoListCache = () => {
+  photoListCache.clear();
+};
+
 app.get("/api/photos", async (_req, res) => {
   const { cloudName, apiKey, apiSecret, galleryTag } = getCloudinaryConfig();
 
@@ -188,6 +210,7 @@ app.get("/api/photos", async (_req, res) => {
       tag: galleryTag,
     });
 
+    res.setHeader("Cache-Control", "public, max-age=30, s-maxage=30, stale-while-revalidate=120");
     res.json({ resources: sortByDisplayOrder(resources) });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
@@ -287,6 +310,7 @@ app.post("/api/photos/approve", async (req, res) => {
       altText: pendingResource?.alt_text || "",
     });
 
+    clearPhotoListCache();
     res.status(200).json({ result: "ok" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
@@ -333,6 +357,7 @@ app.post("/api/photos/unapprove", async (req, res) => {
       publicId,
     });
 
+    clearPhotoListCache();
     res.status(200).json({ result: "ok" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
@@ -383,6 +408,7 @@ app.post("/api/photos/caption", async (req, res) => {
       altText,
     });
 
+    clearPhotoListCache();
     res.status(200).json({ result: "ok" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
@@ -439,6 +465,7 @@ app.post("/api/photos/reorder", async (req, res) => {
       }),
     );
 
+    clearPhotoListCache();
     res.status(200).json({ result: "ok" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
@@ -506,6 +533,7 @@ app.delete("/api/photos", async (req, res) => {
       return;
     }
 
+    clearPhotoListCache();
     res.status(200).json({ result: payload.result });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";

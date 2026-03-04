@@ -208,7 +208,7 @@ export default function Layout() {
 
       {/* Footer */}
       <footer className="relative z-10 text-center py-10 sm:py-12 md:py-16 text-plum font-body text-xs sm:text-sm tracking-wide px-4">
-        <p>Designed by Kirsten &middot; Built by Nic &middot; 2026</p>
+        <p>Designed & Illustrated by Kirsten &middot; Built by Nic &middot; 2026</p>
       </footer>
 
       {isRsvpModalOpen && (

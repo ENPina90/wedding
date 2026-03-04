@@ -103,23 +103,31 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
   }, [cloudName, uploadPreset]);
 
   const loadApprovedPhotos = async () => {
-    const response = await fetch(`/api/photos?cb=${Date.now()}`);
+    const response = await fetch("/api/photos");
     if (!response.ok) {
-      throw new Error("Unable to load approved photos.");
+      const apiMessage = await getResponseErrorMessage(
+        response,
+        "Unable to load approved photos.",
+      );
+      throw new Error(apiMessage);
     }
     const data = (await response.json()) as CloudinaryListResponse;
     return data.resources ?? [];
   };
 
   const loadPendingPhotos = async (key: string) => {
-    const response = await fetch(`/api/photos/pending?cb=${Date.now()}`, {
+    const response = await fetch("/api/photos/pending", {
       headers: {
         "X-Admin-Key": key,
       },
     });
 
     if (!response.ok) {
-      throw new Error("Unable to load pending photos.");
+      const apiMessage = await getResponseErrorMessage(
+        response,
+        "Unable to load pending photos.",
+      );
+      throw new Error(apiMessage);
     }
 
     const data = (await response.json()) as CloudinaryListResponse;
@@ -163,11 +171,13 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
         if (isMounted) {
           setPhotos(approved);
         }
-      } catch {
+      } catch (error) {
         if (isMounted) {
-          setErrorMessage(
-            "We could not load the photo gallery right now. Please try again shortly.",
-          );
+          const message =
+            error instanceof Error
+              ? error.message
+              : "We could not load the photo gallery right now. Please try again shortly.";
+          setErrorMessage(message);
         }
       } finally {
         if (isMounted) {
@@ -204,11 +214,15 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
           setPendingPhotos(pending);
           setErrorMessage("");
         }
-      } catch {
+      } catch (error) {
         if (isMounted) {
           setIsAdminAuthorized(false);
           setPendingPhotos([]);
-          setErrorMessage("Unable to load pending photos. Verify your admin key.");
+          const message =
+            error instanceof Error
+              ? error.message
+              : "Unable to load pending photos. Verify your admin key.";
+          setErrorMessage(message);
         }
       } finally {
         if (isMounted) {

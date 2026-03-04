@@ -7,6 +7,8 @@ import type { IncomingMessage } from "node:http";
 
 dotenv.config({ path: ".env.local", quiet: true });
 dotenv.config({ quiet: true });
+const photoListCache = new Map<string, { fetchedAt: number; resources: ReturnType<typeof toPhotoResource>[] }>();
+const photoListCacheTtlMs = Number(process.env.PHOTOS_LIST_CACHE_TTL_MS || "30000");
 
 const readJsonBody = async (req: IncomingMessage): Promise<unknown> =>
   await new Promise((resolve, reject) => {
@@ -72,6 +74,9 @@ const toPhotoResource = (resource: {
   alt_text: parseAltText(resource),
 });
 
+const isRateLimitResponse = (statusCode: number, body: string) =>
+  statusCode === 420 || statusCode === 429 || /rate limit exceeded/i.test(body);
+
 const listTaggedPhotos = async ({
   cloudName,
   apiKey,
@@ -83,6 +88,12 @@ const listTaggedPhotos = async ({
   apiSecret: string;
   tag: string;
 }) => {
+  const cached = photoListCache.get(tag);
+  const now = Date.now();
+  if (cached && now - cached.fetchedAt <= photoListCacheTtlMs) {
+    return cached.resources;
+  }
+
   const endpoint =
     `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/tags/${encodeURIComponent(tag)}` +
     "?max_results=100&direction=desc&context=true";
@@ -96,6 +107,9 @@ const listTaggedPhotos = async ({
 
   if (!response.ok) {
     const body = await response.text();
+    if (cached && isRateLimitResponse(response.status, body)) {
+      return cached.resources;
+    }
     throw new Error(`Cloudinary request failed: ${body}`);
   }
 
@@ -115,7 +129,9 @@ const listTaggedPhotos = async ({
   };
   const resources = Array.isArray(payload.resources) ? payload.resources : [];
 
-  return resources.map(toPhotoResource);
+  const mappedResources = resources.map(toPhotoResource);
+  photoListCache.set(tag, { fetchedAt: now, resources: mappedResources });
+  return mappedResources;
 };
 
 const sortByDisplayOrder = (
@@ -251,6 +267,10 @@ const requireAdmin = (
   return true;
 };
 
+const clearPhotoListCache = () => {
+  photoListCache.clear();
+};
+
 export default defineConfig({
   plugins: [
     react(),
@@ -285,6 +305,10 @@ export default defineConfig({
 
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
+              res.setHeader(
+                "Cache-Control",
+                "public, max-age=30, stale-while-revalidate=120",
+              );
               res.end(JSON.stringify({ resources: sortByDisplayOrder(resources) }));
               return;
             }
@@ -365,6 +389,7 @@ export default defineConfig({
                 altText: pendingResource?.alt_text || "",
               });
 
+              clearPhotoListCache();
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
               res.end(JSON.stringify({ result: "ok" }));
@@ -404,6 +429,7 @@ export default defineConfig({
                 publicId,
               });
 
+              clearPhotoListCache();
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
               res.end(JSON.stringify({ result: "ok" }));
@@ -455,6 +481,7 @@ export default defineConfig({
                 altText,
               });
 
+              clearPhotoListCache();
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
               res.end(JSON.stringify({ result: "ok" }));
@@ -510,6 +537,7 @@ export default defineConfig({
                 }),
               );
 
+              clearPhotoListCache();
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
               res.end(JSON.stringify({ result: "ok" }));
@@ -579,6 +607,7 @@ export default defineConfig({
                 return;
               }
 
+              clearPhotoListCache();
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
               res.end(JSON.stringify({ result: payload.result }));
