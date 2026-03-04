@@ -54,22 +54,6 @@ Important:
 - Use `/photos/admin` with your admin key to approve pending uploads into the public gallery.
 - On `/photos/admin`, drag and drop approved photos to set their display order on `/photos`.
 
-### Upload Existing Repo Photos to Cloudinary
-
-To migrate the current `src/assets/photos` files into Cloudinary:
-
-1. In `.env.local`, set:
-   - `CLOUDINARY_CLOUD_NAME`
-   - `CLOUDINARY_API_KEY`
-   - `CLOUDINARY_API_SECRET`
-   - Optional: `CLOUDINARY_GALLERY_TAG`, `CLOUDINARY_GALLERY_FOLDER`, `CLOUDINARY_SOURCE_DIR`
-2. Run:
-   ```bash
-   npm run cloudinary:upload-local
-   ```
-
-Uploaded files are tagged (default `wedding-gallery`) so the Photos page can load them from Cloudinary.
-
 ### Backfill Photo `year` Context From Captions
 
 If your captions/alt text include years like `Berlin 2015`, you can backfill a `year` context value in Cloudinary:
