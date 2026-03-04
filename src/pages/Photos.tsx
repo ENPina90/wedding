@@ -21,6 +21,11 @@ type CloudinaryListResponse = {
   resources: CloudinaryListResource[];
 };
 
+type OrderedPhoto = {
+  photo: CloudinaryListResource;
+  index: number;
+};
+
 type PhotosProps = {
   showAdminControls?: boolean;
 };
@@ -52,6 +57,20 @@ const getResponseErrorMessage = async (
   }
 
   return fallbackMessage;
+};
+
+const splitIntoColumns = (items: OrderedPhoto[], columnCount: number) => {
+  const safeColumnCount = Math.max(1, columnCount);
+  const columns: OrderedPhoto[][] = Array.from(
+    { length: safeColumnCount },
+    () => [],
+  );
+
+  items.forEach((item, index) => {
+    columns[index % safeColumnCount].push(item);
+  });
+
+  return columns;
 };
 
 export default function Photos({ showAdminControls = false }: PhotosProps) {
@@ -567,6 +586,23 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
   const getPhotoOverlayText = (photo: CloudinaryListResource) =>
     (photo.alt_text?.trim() || "").split(/\s+/).filter(Boolean).join("\n");
 
+  const orderedApprovedPhotos = useMemo(
+    () => photos.map((photo, index) => ({ photo, index })),
+    [photos],
+  );
+  const approvedColumns1 = useMemo(
+    () => splitIntoColumns(orderedApprovedPhotos, 1),
+    [orderedApprovedPhotos],
+  );
+  const approvedColumns2 = useMemo(
+    () => splitIntoColumns(orderedApprovedPhotos, 2),
+    [orderedApprovedPhotos],
+  );
+  const approvedColumns3 = useMemo(
+    () => splitIntoColumns(orderedApprovedPhotos, 3),
+    [orderedApprovedPhotos],
+  );
+
   const tintColorByAssetId = useMemo(() => {
     const next = new Map<string, string>();
 
@@ -695,51 +731,167 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
               No approved photos yet.
             </p>
           ) : (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 sm:gap-4 space-y-3 sm:space-y-4">
-              {photos.map((photo, index) => {
+            <>
+              <div className="space-y-3 sm:space-y-4 sm:hidden">
+              {approvedColumns1[0].map(({ photo, index }) => {
                 const overlayText = getPhotoOverlayText(photo);
                 return (
-                <div
-                  key={photo.asset_id}
-                  className={`group rounded-lg sm:rounded-xl overflow-hidden border border-pink/20 break-inside-avoid mb-3 sm:mb-4 relative ${showAdminControls ? "cursor-move" : ""}`}
-                  draggable={showAdminControls}
-                  onDragStart={() => handleApprovedDragStart(photo.public_id)}
-                  onDragOver={(event) => handleApprovedDragOver(event, photo.public_id)}
-                  onDragEnd={() => void handleApprovedDragEnd()}
-                  onClick={() => {
-                    if (showAdminControls) {
-                      openEditModal(photo);
-                    }
-                  }}
-                >
-                  <img
-                    src={photo.secure_url}
-                    alt={getPhotoAlt(photo, index)}
-                    title={photo.alt_text?.trim() || ""}
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
                   <div
-                    className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
-                    style={{
-                      backgroundColor:
-                        tintColorByAssetId.get(photo.asset_id) || photoTintColors[0],
+                    key={photo.asset_id}
+                    className={`group rounded-lg sm:rounded-xl overflow-hidden border border-pink/20 relative ${showAdminControls ? "cursor-move" : ""}`}
+                    draggable={showAdminControls}
+                    onDragStart={() => handleApprovedDragStart(photo.public_id)}
+                    onDragOver={(event) =>
+                      handleApprovedDragOver(event, photo.public_id)
+                    }
+                    onDragEnd={() => void handleApprovedDragEnd()}
+                    onClick={() => {
+                      if (showAdminControls) {
+                        openEditModal(photo);
+                      }
                     }}
-                  />
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
-                    {overlayText && (
-                      <p
-                        className="font-display whitespace-pre-line text-white leading-tight tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
-                        style={{ fontSize: "22px" }}
-                      >
-                        {overlayText}
-                      </p>
-                    )}
+                  >
+                    <img
+                      src={photo.secure_url}
+                      alt={getPhotoAlt(photo, index)}
+                      title={photo.alt_text?.trim() || ""}
+                      className="w-full h-auto object-cover"
+                      loading="lazy"
+                    />
+                    <div
+                      className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+                      style={{
+                        backgroundColor:
+                          tintColorByAssetId.get(photo.asset_id) || photoTintColors[0],
+                      }}
+                    />
+                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                      {overlayText && (
+                        <p
+                          className="font-display whitespace-pre-line text-white leading-tight tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
+                          style={{ fontSize: "22px" }}
+                        >
+                          {overlayText}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
                 );
               })}
-            </div>
+              </div>
+
+              <div className="hidden sm:grid lg:hidden sm:grid-cols-2 gap-3 sm:gap-4">
+              {approvedColumns2.map((column, columnIndex) => (
+                <div
+                  key={`approved-sm-column-${String(columnIndex)}`}
+                  className="space-y-3 sm:space-y-4"
+                >
+                  {column.map(({ photo, index }) => {
+                    const overlayText = getPhotoOverlayText(photo);
+                    return (
+                      <div
+                        key={photo.asset_id}
+                        className={`group rounded-lg sm:rounded-xl overflow-hidden border border-pink/20 relative ${showAdminControls ? "cursor-move" : ""}`}
+                        draggable={showAdminControls}
+                        onDragStart={() => handleApprovedDragStart(photo.public_id)}
+                        onDragOver={(event) =>
+                          handleApprovedDragOver(event, photo.public_id)
+                        }
+                        onDragEnd={() => void handleApprovedDragEnd()}
+                        onClick={() => {
+                          if (showAdminControls) {
+                            openEditModal(photo);
+                          }
+                        }}
+                      >
+                        <img
+                          src={photo.secure_url}
+                          alt={getPhotoAlt(photo, index)}
+                          title={photo.alt_text?.trim() || ""}
+                          className="w-full h-auto object-cover"
+                          loading="lazy"
+                        />
+                        <div
+                          className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+                          style={{
+                            backgroundColor:
+                              tintColorByAssetId.get(photo.asset_id) ||
+                              photoTintColors[0],
+                          }}
+                        />
+                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                          {overlayText && (
+                            <p
+                              className="font-display whitespace-pre-line text-white leading-tight tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
+                              style={{ fontSize: "22px" }}
+                            >
+                              {overlayText}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+              </div>
+
+              <div className="hidden lg:grid lg:grid-cols-3 gap-3 sm:gap-4">
+              {approvedColumns3.map((column, columnIndex) => (
+                <div
+                  key={`approved-lg-column-${String(columnIndex)}`}
+                  className="space-y-3 sm:space-y-4"
+                >
+                  {column.map(({ photo, index }) => {
+                    const overlayText = getPhotoOverlayText(photo);
+                    return (
+                      <div
+                        key={photo.asset_id}
+                        className={`group rounded-lg sm:rounded-xl overflow-hidden border border-pink/20 relative ${showAdminControls ? "cursor-move" : ""}`}
+                        draggable={showAdminControls}
+                        onDragStart={() => handleApprovedDragStart(photo.public_id)}
+                        onDragOver={(event) =>
+                          handleApprovedDragOver(event, photo.public_id)
+                        }
+                        onDragEnd={() => void handleApprovedDragEnd()}
+                        onClick={() => {
+                          if (showAdminControls) {
+                            openEditModal(photo);
+                          }
+                        }}
+                      >
+                        <img
+                          src={photo.secure_url}
+                          alt={getPhotoAlt(photo, index)}
+                          title={photo.alt_text?.trim() || ""}
+                          className="w-full h-auto object-cover"
+                          loading="lazy"
+                        />
+                        <div
+                          className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+                          style={{
+                            backgroundColor:
+                              tintColorByAssetId.get(photo.asset_id) ||
+                              photoTintColors[0],
+                          }}
+                        />
+                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                          {overlayText && (
+                            <p
+                              className="font-display whitespace-pre-line text-white leading-tight tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
+                              style={{ fontSize: "22px" }}
+                            >
+                              {overlayText}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+              </div>
+            </>
           )}
         </>
       ) : null}
