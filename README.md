@@ -70,6 +70,42 @@ To migrate the current `src/assets/photos` files into Cloudinary:
 
 Uploaded files are tagged (default `wedding-gallery`) so the Photos page can load them from Cloudinary.
 
+### Backfill Photo `year` Context From Captions
+
+If your captions/alt text include years like `Berlin 2015`, you can backfill a `year` context value in Cloudinary:
+
+1. Ensure `.env.local` has:
+   - `CLOUDINARY_CLOUD_NAME`
+   - `CLOUDINARY_API_KEY`
+   - `CLOUDINARY_API_SECRET`
+   - Optional: `CLOUDINARY_GALLERY_TAG`, `CLOUDINARY_PENDING_TAG`
+   - Optional: `CLOUDINARY_BACKFILL_TAGS` as comma-separated tags to scan (defaults to gallery + pending tags)
+2. Run dry-run first:
+   ```bash
+   npm run cloudinary:backfill-years
+   ```
+3. Apply updates:
+   ```bash
+   npm run cloudinary:backfill-years -- --apply
+   ```
+
+The script parses the first 4-digit year (`19xx` or `20xx`) from each photo caption/alt text and writes it into Cloudinary custom context as `year`.
+
+### Reorder Photos Chronologically By `year`
+
+After `year` is present, you can reset `display_order` so oldest year comes first (ties are stable/arbitrary within the same year).
+
+1. Optional tag override:
+   - `CLOUDINARY_REORDER_TAG` (defaults to `CLOUDINARY_GALLERY_TAG`)
+2. Run dry-run first:
+   ```bash
+   npm run cloudinary:reorder-years
+   ```
+3. Apply updates:
+   ```bash
+   npm run cloudinary:reorder-years -- --apply
+   ```
+
 ### Building for Production
 
 To create a production build:

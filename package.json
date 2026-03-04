@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node server.mjs",
-    "cloudinary:upload-local": "node scripts/upload-local-photos-to-cloudinary.mjs"
+    "cloudinary:upload-local": "node scripts/upload-local-photos-to-cloudinary.mjs",
+    "cloudinary:backfill-years": "node scripts/backfill-cloudinary-photo-years.mjs",
+    "cloudinary:reorder-years": "node scripts/reorder-cloudinary-photos-by-year.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",

@@ -44,12 +44,34 @@ const parseAltText = (resource) => {
   return "";
 };
 
+const parseYearFromText = (value) => {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  const match = value.match(/\b(19\d{2}|20\d{2})\b/);
+  return match ? match[1] : "";
+};
+
+const parseYear = (resource) => {
+  const year = resource.context?.custom?.year;
+  if (typeof year === "string") {
+    const trimmed = year.trim();
+    if (/^(19\d{2}|20\d{2})$/.test(trimmed)) {
+      return trimmed;
+    }
+  }
+
+  return parseYearFromText(parseAltText(resource));
+};
+
 const toPhotoResource = (resource) => ({
   asset_id: resource.asset_id,
   public_id: resource.public_id,
   secure_url: resource.secure_url,
   display_order: parseDisplayOrder(resource.context?.custom?.display_order),
   alt_text: parseAltText(resource),
+  year: parseYear(resource),
 });
 
 const isRateLimitResponse = (statusCode, body) =>
@@ -147,15 +169,18 @@ const updateCloudinaryResourceContext = async ({
   publicId,
   displayOrder,
   altText,
+  year,
 }) => {
   const endpoint =
     `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload/${encodeURIComponent(publicId)}`;
   const authHeader = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
+  const safeYear = typeof year === "string" ? year.trim() : "";
   const body = new URLSearchParams({
     context:
       `display_order=${displayOrder}|` +
       `caption=${escapeCloudinaryContextValue(altText)}|` +
-      `alt_text=${escapeCloudinaryContextValue(altText)}`,
+      `alt_text=${escapeCloudinaryContextValue(altText)}|` +
+      `year=${escapeCloudinaryContextValue(safeYear)}`,
   });
 
   const response = await fetch(endpoint, {
@@ -308,6 +333,7 @@ app.post("/api/photos/approve", async (req, res) => {
       publicId,
       displayOrder: approvedResources.length,
       altText: pendingResource?.alt_text || "",
+      year: pendingResource?.year || "",
     });
 
     clearPhotoListCache();
@@ -406,6 +432,7 @@ app.post("/api/photos/caption", async (req, res) => {
       publicId,
       displayOrder: target.display_order,
       altText,
+      year: target.year || parseYearFromText(altText),
     });
 
     clearPhotoListCache();
@@ -461,6 +488,7 @@ app.post("/api/photos/reorder", async (req, res) => {
           publicId,
           displayOrder: index,
           altText: existing?.alt_text || "",
+          year: existing?.year || "",
         });
       }),
     );
