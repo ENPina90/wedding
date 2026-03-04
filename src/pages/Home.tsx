@@ -1,21 +1,66 @@
+import { useEffect, useMemo, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import SectionDivider from "../components/SectionDivider";
 import proposalPhoto from "../assets/proposal-photo.png";
 import sparkleIcon from "../assets/sparkle.svg";
 
+const homeCarouselImageModules = import.meta.glob(
+  "../assets/photos/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WEBP}",
+  {
+    eager: true,
+    import: "default",
+  },
+) as Record<string, string>;
+
 export default function Home() {
   const { openRsvpModal } = useOutletContext<{ openRsvpModal: () => void }>();
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+
+  const heroPhotos = useMemo(() => {
+    const sortedPhotos = Object.entries(homeCarouselImageModules)
+      .sort(([leftPath], [rightPath]) => leftPath.localeCompare(rightPath))
+      .map(([, src]) => src);
+
+    if (sortedPhotos.length === 0) {
+      return [proposalPhoto];
+    }
+
+    return sortedPhotos;
+  }, []);
+
+  useEffect(() => {
+    if (heroPhotos.length <= 1) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActivePhotoIndex((current) => (current + 1) % heroPhotos.length);
+    }, 6000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [heroPhotos]);
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6">
       {/* Hero Image - mobile: less margin, full width */}
       <div className="relative mx-auto mt-6 sm:mt-10 md:mt-12 mb-10 sm:mb-14 md:mb-16 max-w-xl">
-        <div className="overflow-hidden">
+        <div className="relative overflow-hidden">
           <img
-            src={proposalPhoto}
+            src={heroPhotos[0]}
             alt="Proposal moment"
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover opacity-0 select-none pointer-events-none"
+            aria-hidden="true"
           />
+          {heroPhotos.map((photoSrc, index) => (
+            <img
+              key={photoSrc}
+              src={photoSrc}
+              alt="Proposal moment"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1800ms] ${index === activePhotoIndex ? "opacity-100" : "opacity-0"}`}
+            />
+          ))}
         </div>
       </div>
 

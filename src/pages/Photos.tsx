@@ -15,6 +15,7 @@ type CloudinaryListResource = {
   secure_url: string;
   display_order?: number;
   alt_text?: string;
+  year?: string;
 };
 
 type CloudinaryListResponse = {
@@ -94,6 +95,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
   const [adminKey, setAdminKey] = useState("");
   const [isAdminAuthorized, setIsAdminAuthorized] = useState(false);
   const [captionDraft, setCaptionDraft] = useState("");
+  const [yearDraft, setYearDraft] = useState("");
   const [captionStatus, setCaptionStatus] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
@@ -456,6 +458,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
         body: JSON.stringify({
           publicId: selectedApprovedPhoto.public_id,
           altText: captionDraft,
+          year: yearDraft.trim(),
         }),
       });
 
@@ -466,17 +469,17 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
       setPhotos((current) =>
         current.map((photo) =>
           photo.asset_id === selectedApprovedPhoto.asset_id
-            ? { ...photo, alt_text: captionDraft }
+            ? { ...photo, alt_text: captionDraft, year: yearDraft.trim() }
             : photo,
         ),
       );
       setSelectedApprovedPhoto((current) =>
-        current ? { ...current, alt_text: captionDraft } : current,
+        current ? { ...current, alt_text: captionDraft, year: yearDraft.trim() } : current,
       );
       setCaptionStatus("Saved");
-      setStatusMessage("Caption saved.");
+      setStatusMessage("Photo details saved.");
     } catch {
-      setErrorMessage("Could not save caption. Verify admin key and try again.");
+      setErrorMessage("Could not save photo details. Verify admin key and try again.");
     } finally {
       setSavingCaptionPublicId(null);
     }
@@ -569,6 +572,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
   const openEditModal = (photo: CloudinaryListResource) => {
     setSelectedApprovedPhoto(photo);
     setCaptionDraft(photo.alt_text || "");
+    setYearDraft(photo.year || "");
     setCaptionStatus("");
     setErrorMessage("");
   };
@@ -583,8 +587,14 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
 
   const getPhotoAlt = (photo: CloudinaryListResource, index: number) =>
     photo.alt_text?.trim() || `Photo ${index + 1}`;
-  const getPhotoOverlayText = (photo: CloudinaryListResource) =>
-    (photo.alt_text?.trim() || "").split(/\s+/).filter(Boolean).join("\n");
+  const getPhotoOverlayText = (photo: CloudinaryListResource) => {
+    const caption = photo.alt_text?.trim() || "";
+    const year = photo.year?.trim() || "";
+    if (caption && year) {
+      return `${caption}\n${year}`;
+    }
+    return caption || year;
+  };
 
   const orderedApprovedPhotos = useMemo(
     () => photos.map((photo, index) => ({ photo, index })),
@@ -998,6 +1008,24 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                 }}
                 className="w-full border border-pink/40 rounded-md px-3 py-2 text-sm font-body text-plum bg-white"
                 placeholder="add caption"
+              />
+              <input
+                id="photo-year"
+                type="text"
+                value={yearDraft}
+                onChange={(event) => {
+                  setYearDraft(event.target.value);
+                  setCaptionStatus("");
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    void handleSaveCaption();
+                  }
+                }}
+                className="w-full mt-2 border border-pink/40 rounded-md px-3 py-2 text-sm font-body text-plum bg-white"
+                placeholder="year (e.g. 2024)"
+                inputMode="numeric"
               />
               <p className="mt-2 font-body text-xs text-plum">
                 {savingCaptionPublicId === selectedApprovedPhoto.public_id

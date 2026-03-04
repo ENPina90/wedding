@@ -53,13 +53,47 @@ const parseYearFromText = (value) => {
   return match ? match[1] : "";
 };
 
+const parseYearFromTags = (tags) => {
+  if (!Array.isArray(tags)) {
+    return "";
+  }
+
+  for (const tag of tags) {
+    if (typeof tag !== "string") {
+      continue;
+    }
+
+    const trimmedTag = tag.trim();
+    if (!trimmedTag) {
+      continue;
+    }
+
+    const directYear = trimmedTag.match(/^(19\d{2}|20\d{2})$/);
+    if (directYear) {
+      return directYear[1];
+    }
+
+    const prefixedYear = trimmedTag.match(/^year[-_:]?(19\d{2}|20\d{2})$/i);
+    if (prefixedYear) {
+      return prefixedYear[1];
+    }
+  }
+
+  return "";
+};
+
 const parseYear = (resource) => {
   const year = resource.context?.custom?.year;
-  if (typeof year === "string") {
-    const trimmed = year.trim();
+  if (typeof year === "string" || typeof year === "number") {
+    const trimmed = String(year).trim();
     if (/^(19\d{2}|20\d{2})$/.test(trimmed)) {
       return trimmed;
     }
+  }
+
+  const yearFromTags = parseYearFromTags(resource.tags);
+  if (yearFromTags) {
+    return yearFromTags;
   }
 
   return parseYearFromText(parseAltText(resource));
@@ -99,7 +133,7 @@ const listTaggedPhotos = async ({ cloudName, apiKey, apiSecret, tag }) => {
 
   const endpoint =
     `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/tags/${encodeURIComponent(tag)}` +
-    "?max_results=100&direction=desc&context=true";
+    "?max_results=100&direction=desc&context=true&tags=true";
   const authHeader = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
 
   const response = await fetch(endpoint, {
@@ -396,6 +430,8 @@ app.post("/api/photos/caption", async (req, res) => {
   const publicId =
     typeof req.body?.publicId === "string" ? req.body.publicId.trim() : "";
   const altText = typeof req.body?.altText === "string" ? req.body.altText.trim() : "";
+  const hasYearInput = typeof req.body?.year === "string";
+  const yearInput = hasYearInput ? req.body.year.trim() : "";
 
   if (!cloudName || !apiKey || !apiSecret) {
     res.status(500).json({ error: "Cloudinary server configuration is missing." });
@@ -408,6 +444,11 @@ app.post("/api/photos/caption", async (req, res) => {
 
   if (!publicId) {
     res.status(400).json({ error: "Missing publicId." });
+    return;
+  }
+
+  if (yearInput && !/^(19\d{2}|20\d{2})$/.test(yearInput)) {
+    res.status(400).json({ error: "Invalid year. Use a 4-digit year like 2024." });
     return;
   }
 
@@ -432,7 +473,7 @@ app.post("/api/photos/caption", async (req, res) => {
       publicId,
       displayOrder: target.display_order,
       altText,
-      year: target.year || parseYearFromText(altText),
+      year: hasYearInput ? yearInput : target.year || parseYearFromText(altText),
     });
 
     clearPhotoListCache();
