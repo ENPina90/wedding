@@ -561,7 +561,7 @@ export default defineConfig({
               const publicId = requestBody.publicId?.trim() ?? "";
               const altText = requestBody.altText?.trim() ?? "";
               const hasYearInput = typeof requestBody.year === "string";
-              const yearInput = hasYearInput ? requestBody.year.trim() : "";
+              const yearInput = hasYearInput ? (requestBody.year ?? "").trim() : "";
 
               if (!publicId) {
                 res.statusCode = 400;
