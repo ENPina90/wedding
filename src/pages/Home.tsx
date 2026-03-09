@@ -93,7 +93,7 @@ export default function Home() {
         </div>
 
         {/* RSVP Button - full width on mobile for touch target */}
-        <div className="mt-6 px-2 sm:px-0">
+        <div className="mt-6 px-2 sm:px-0 flex justify-center">
           <button
             type="button"
             onClick={openRsvpModal}

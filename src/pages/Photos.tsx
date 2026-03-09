@@ -31,19 +31,6 @@ type PhotosProps = {
   showAdminControls?: boolean;
 };
 
-const photoTintColors = [
-  "rgba(63, 0, 19, 0.65)",
-  "rgba(137, 72, 100, 0.65)",
-  "rgba(237, 190, 228, 0.65)",
-  "rgba(161, 168, 190, 0.65)",
-  "rgba(95, 84, 32, 0.65)",
-  "rgba(136, 153, 68, 0.65)",
-  "rgba(234, 120, 91, 0.65)",
-];
-
-const getRandomPhotoTintColor = () =>
-  photoTintColors[Math.floor(Math.random() * photoTintColors.length)];
-
 const getResponseErrorMessage = async (
   response: Response,
   fallbackMessage: string,
@@ -77,7 +64,6 @@ const splitIntoColumns = (items: OrderedPhoto[], columnCount: number) => {
 export default function Photos({ showAdminControls = false }: PhotosProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragStartOrderRef = useRef<string[]>([]);
-  const tintColorByAssetIdRef = useRef<Map<string, string>>(new Map());
 
   const [photos, setPhotos] = useState<CloudinaryListResource[]>([]);
   const [pendingPhotos, setPendingPhotos] = useState<CloudinaryListResource[]>([]);
@@ -102,6 +88,7 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
   const [draggingApprovedPublicId, setDraggingApprovedPublicId] = useState<
     string | null
   >(null);
+  const [activeOverlayAssetId, setActiveOverlayAssetId] = useState<string | null>(null);
 
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME as
     | string
@@ -613,18 +600,6 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
     [orderedApprovedPhotos],
   );
 
-  const tintColorByAssetId = useMemo(() => {
-    const next = new Map<string, string>();
-
-    photos.forEach((photo) => {
-      const existingColor = tintColorByAssetIdRef.current.get(photo.asset_id);
-      next.set(photo.asset_id, existingColor ?? getRandomPhotoTintColor());
-    });
-
-    tintColorByAssetIdRef.current = next;
-    return next;
-  }, [photos]);
-
   const showAdminContent = !showAdminControls || isAdminAuthorized;
   const uploadPhotoCard = (
     <div className="bg-cream rounded-lg p-4 sm:p-6 md:p-8 border border-[#a1a8be]/50 [border-image:none] flex flex-col justify-center text-center min-h-[260px] sm:min-h-[300px]">
@@ -781,6 +756,10 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                     onClick={() => {
                       if (showAdminControls) {
                         openEditModal(photo);
+                      } else {
+                        setActiveOverlayAssetId((prev) =>
+                          prev === photo.asset_id ? null : photo.asset_id,
+                        );
                       }
                     }}
                   >
@@ -792,13 +771,20 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                       loading="lazy"
                     />
                     <div
-                      className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
-                      style={{
-                        backgroundColor:
-                          tintColorByAssetId.get(photo.asset_id) || photoTintColors[0],
-                      }}
+                      className={`pointer-events-none absolute inset-0 transition-opacity duration-300 ${
+                        activeOverlayAssetId === photo.asset_id
+                          ? "opacity-100"
+                          : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+                      }`}
+                      style={{ backgroundColor: "rgba(95, 84, 32, 0.65)" }}
                     />
-                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                    <div
+                      className={`pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center transition-opacity duration-300 ${
+                        activeOverlayAssetId === photo.asset_id
+                          ? "opacity-100"
+                          : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+                      }`}
+                    >
                       {overlayText && (
                         <p
                           className="font-display whitespace-pre-line text-white leading-tight tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
@@ -835,6 +821,10 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                         onClick={() => {
                           if (showAdminControls) {
                             openEditModal(photo);
+                          } else {
+                            setActiveOverlayAssetId((prev) =>
+                              prev === photo.asset_id ? null : photo.asset_id,
+                            );
                           }
                         }}
                       >
@@ -846,14 +836,20 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                           loading="lazy"
                         />
                         <div
-                          className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
-                          style={{
-                            backgroundColor:
-                              tintColorByAssetId.get(photo.asset_id) ||
-                              photoTintColors[0],
-                          }}
+                          className={`pointer-events-none absolute inset-0 transition-opacity duration-300 ${
+                            activeOverlayAssetId === photo.asset_id
+                              ? "opacity-100"
+                              : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+                          }`}
+                          style={{ backgroundColor: "rgba(95, 84, 32, 0.65)" }}
                         />
-                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                        <div
+                          className={`pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center transition-opacity duration-300 ${
+                            activeOverlayAssetId === photo.asset_id
+                              ? "opacity-100"
+                              : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+                          }`}
+                        >
                           {overlayText && (
                             <p
                               className="font-display whitespace-pre-line text-white leading-tight tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
@@ -892,6 +888,10 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                         onClick={() => {
                           if (showAdminControls) {
                             openEditModal(photo);
+                          } else {
+                            setActiveOverlayAssetId((prev) =>
+                              prev === photo.asset_id ? null : photo.asset_id,
+                            );
                           }
                         }}
                       >
@@ -903,14 +903,20 @@ export default function Photos({ showAdminControls = false }: PhotosProps) {
                           loading="lazy"
                         />
                         <div
-                          className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
-                          style={{
-                            backgroundColor:
-                              tintColorByAssetId.get(photo.asset_id) ||
-                              photoTintColors[0],
-                          }}
+                          className={`pointer-events-none absolute inset-0 transition-opacity duration-300 ${
+                            activeOverlayAssetId === photo.asset_id
+                              ? "opacity-100"
+                              : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+                          }`}
+                          style={{ backgroundColor: "rgba(95, 84, 32, 0.65)" }}
                         />
-                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                        <div
+                          className={`pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center transition-opacity duration-300 ${
+                            activeOverlayAssetId === photo.asset_id
+                              ? "opacity-100"
+                              : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+                          }`}
+                        >
                           {overlayText && (
                             <p
                               className="font-display whitespace-pre-line text-white leading-tight tracking-[1px] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
