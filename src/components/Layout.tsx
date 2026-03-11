@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import backgroundFlowers from "../assets/background_flowers.png";
 import flowerCorner from "../assets/flower_corner.svg";
 import weddingRings from "../assets/wedding_rings.svg";
 import SectionDivider from "./SectionDivider";
@@ -102,6 +103,12 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col bg-beige relative overflow-x-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 top-0 h-screen z-0 opacity-12 bg-no-repeat bg-center bg-[length:100%_100%]"
+        style={{ backgroundImage: `url(${backgroundFlowers})` }}
+      />
+
       {/* Corner floral decorations - styles in flower-corners.css */}
       <img
         src={flowerCorner}
