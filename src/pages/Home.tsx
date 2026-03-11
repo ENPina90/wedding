@@ -3,6 +3,8 @@ import { useOutletContext } from "react-router-dom";
 import SectionDivider from "../components/SectionDivider";
 import proposalPhoto from "../assets/proposal-photo.png";
 import sparkleIcon from "../assets/sparkle.svg";
+import flowerDetailLeft from "../assets/flower_detail_left.png";
+import flowerDetailRight from "../assets/flower_detail_right.png";
 
 const homeCarouselImageModules = import.meta.glob(
   "../assets/photos/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WEBP}",
@@ -46,6 +48,18 @@ export default function Home() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6">
       {/* Hero Image - mobile: less margin, full width */}
       <div className="relative mx-auto mt-6 sm:mt-10 md:mt-12 mb-10 sm:mb-14 md:mb-16 max-w-xl">
+        <img
+          src={flowerDetailLeft}
+          alt=""
+          aria-hidden="true"
+          className="hidden md:block absolute -top-14 -left-14 w-28 lg:w-32 z-20 select-none pointer-events-none"
+        />
+        <img
+          src={flowerDetailRight}
+          alt=""
+          aria-hidden="true"
+          className="hidden md:block absolute -bottom-16 -right-12 w-32 lg:w-36 z-20 select-none pointer-events-none"
+        />
         <div className="relative overflow-hidden">
           <img
             src={heroPhotos[0]}
