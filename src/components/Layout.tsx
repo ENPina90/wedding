@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import backgroundFlowers from "../assets/background_flowers.png";
 import flowerCorner from "../assets/flower_corner.svg";
@@ -98,15 +98,70 @@ function NavLinkItem({
 export default function Layout() {
   const location = useLocation();
   const [isRsvpModalOpen, setIsRsvpModalOpen] = useState(false);
+  const [backgroundOffset, setBackgroundOffset] = useState(0);
+  const [isMobileBackground, setIsMobileBackground] = useState(false);
   const isFaqPage = location.pathname === "/faq";
   const openRsvpModal = () => setIsRsvpModalOpen(true);
+
+  useEffect(() => {
+    const mobileMediaQuery = window.matchMedia("(max-width: 767px)");
+    const reducedMotionMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const syncViewportMode = () => {
+      const shouldUseMobileBackground = mobileMediaQuery.matches;
+      setIsMobileBackground(shouldUseMobileBackground);
+
+      if (shouldUseMobileBackground) {
+        setBackgroundOffset(0);
+      }
+    };
+
+    syncViewportMode();
+
+    mobileMediaQuery.addEventListener("change", syncViewportMode);
+
+    if (mobileMediaQuery.matches || reducedMotionMediaQuery.matches) {
+      return () => {
+        mobileMediaQuery.removeEventListener("change", syncViewportMode);
+      };
+    }
+
+    let frameId = 0;
+
+    const updateParallax = () => {
+      setBackgroundOffset(window.scrollY * 0.12);
+      frameId = 0;
+    };
+
+    const handleScroll = () => {
+      if (frameId === 0) {
+        frameId = window.requestAnimationFrame(updateParallax);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      if (frameId !== 0) {
+        window.cancelAnimationFrame(frameId);
+      }
+      mobileMediaQuery.removeEventListener("change", syncViewportMode);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-beige relative overflow-x-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-x-0 top-0 h-screen z-0 opacity-12 bg-no-repeat bg-center bg-[length:100%_100%]"
-        style={{ backgroundImage: `url(${backgroundFlowers})` }}
+        className={`pointer-events-none fixed inset-x-0 z-0 opacity-12 bg-no-repeat bg-center bg-[length:100%_100%] ${
+          isMobileBackground ? "top-0 h-screen" : "-top-[18vh] h-[132vh] will-change-transform"
+        }`}
+        style={{
+          backgroundImage: `url(${backgroundFlowers})`,
+          transform: isMobileBackground ? undefined : `translate3d(0, ${backgroundOffset}px, 0)`,
+        }}
       />
 
       {/* Corner floral decorations - styles in flower-corners.css */}
