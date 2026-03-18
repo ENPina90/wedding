@@ -1,77 +1,75 @@
 import SectionDivider from "../components/SectionDivider";
 import FlowerLogo from "../components/FlowerLogo";
-import doubleArrowLeft from "../assets/double-arrow-left.svg";
+import WeddingColorSwatches from "../components/WeddingColorSwatches";
 
 const faqs = [
   {
     question: "When is the RSVP Deadline?",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Please RSVP by August 2nd, 2026. If you've been invited to stay on the property, the earlier you can confirm the better ♡",
   },
   {
     question: "Can I bring a guest?",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+      "With so many people we'd love to celebrate with, we've had to keep our numbers tight. If you're unsure whether your invitation includes a guest, check your RSVP link — you'll see the option to add one if it applies to your invitation.",
   },
   {
     question: "Are kids welcome?",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+      "Children named on your invitation are warmly welcome! If you have any questions about whether your kids are included or anything is unclear, please feel free to reach out to us directly.",
   },
   {
     question: "What will the weather be like?",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
+      "Late November in the hill country should be pretty mild, plan for upper 60s°F and anywhere from the 40s to 50s in the evening. Since we'll be mostly outdoors, we'd recommend bringing enough warm layers in case it does get chilly. Of course, it is Texas, so you never can know...! We recommend checking the weather for the weekend as the date nears.",
   },
   {
     question: "Where can I park?",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi ut aliquip ex ea commodo consequat duis aute irure dolor.",
+      "There's plenty of parking around the property, especially near the check-in area (more info TBA). If you're staying on the property with us you can park your car near your accommodation areas which will be better explained to you at check-in.",
   },
   {
     question: "What's the dress code?",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.",
-  },
-  {
-    question: "Is the wedding inside or outside?",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim.",
-  },
-  {
-    question: "What sort of shoes should I wear (or avoid)?",
     answer: (
       <>
-        Ladies, a quick heads up: please don't wear stiletto heels. Seriously,
-        leave the stilettos at home. There are quite a few grassy and muddy
-        spots to walk through, so opt for block heels or sandals instead. We'd
-        hate for you to ruin your lovely shoes—or twist an ankle!
+        Come dressed to celebrate! We're envisioning a semi-formal affair,
+        cocktail dresses, suits, and floor-length gowns are all perfectly at
+        home. Our wedding colors are shared below if you'd like a little
+        inspiration, but wear whatever color you like. The main dress code is
+        feeling your best!
+        <div className="mt-4">
+          <WeddingColorSwatches size="sm" />
+        </div>
       </>
     ),
   },
   {
-    question:
-      "Can we take photos on our phones and cameras during the wedding?",
+    question: "Is the wedding inside or outside?",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "The wedding will take place mainly outdoors, so again please make sure to bring warm layers and be prepared for any weather.",
+  },
+  {
+    question: "What sort of shoes should I wear (or avoid)?",
+    answer:
+      "We recommend shoes that can deal well with gravel. We're not necessarily \"roughing it\" but we will be in the hill country, so just consider that when selecting any heels...and don't forget to be comfortable and ready to dance ♫ ♪ ♬",
   },
   {
     question: "Who should I contact if I have questions?",
     answer: (
       <>
-        You're always welcome to reach out! Email Kirsten at{" "}
+        Always feel free to reach out to Kirsten at{" "}
         <a
           href="mailto:kirschroder@gmail.com"
           className="text-plum underline hover:text-burgundy transition-colors"
         >
           kirschroder@gmail.com
         </a>{" "}
-        or call Nic at{" "}
+        or Nic at{" "}
         <a
           href="tel:+12106433449"
           className="text-plum underline hover:text-burgundy transition-colors"
         >
-          210 643 3449
+          (210) 643 3449
         </a>
         .
       </>
@@ -88,20 +86,10 @@ function FaqItem({
 }) {
   return (
     <div className="mb-8 sm:mb-10 last:mb-0">
-      <div className="mb-2 sm:mb-3 flex items-start gap-2">
-        <img
-          src={doubleArrowLeft}
-          alt=""
-          aria-hidden="true"
-          className="mt-1 h-4 w-4 shrink-0"
-        />
-        <p className="font-body font-bold text-plum text-lg sm:text-xl md:text-2xl tracking-[1.68px]">
-          {question}
-        </p>
-      </div>
-      <p className="font-body text-plum leading-7 text-left">
-        {answer}
+      <p className="font-body font-bold text-plum text-lg sm:text-xl tracking-[1.68px] mb-2 sm:mb-3">
+        {question}
       </p>
+      <div className="font-body text-plum leading-7 text-left">{answer}</div>
     </div>
   );
 }
@@ -113,6 +101,8 @@ function FaqDivider() {
     </div>
   );
 }
+
+const LODGING_FAQ_URL = "https://luckyarrowretreat.com/faq";
 
 export default function FAQ() {
   return (
@@ -160,6 +150,20 @@ export default function FAQ() {
             {index < faqs.length - 1 && <FaqDivider />}
           </div>
         ))}
+      </div>
+
+      <SectionDivider />
+
+      {/* CTA */}
+      <div className="flex justify-center mt-8 sm:mt-10">
+        <a
+          href={LODGING_FAQ_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-center bg-pink hover:bg-pink/80 text-burgundy font-body font-bold text-sm tracking-[1.5px] px-6 py-3 rounded-lg transition-colors"
+        >
+          Lucky Arrow Retreat's Lodging FAQ
+        </a>
       </div>
     </div>
   );
