@@ -1,3 +1,4 @@
-X-Change display order of the pictures to be based on year
-X-Display order should be left to right
-XX-Add photo card should be first tile
+X- Add Kirsten's text and layout changes
+X- Add color swatches
+- Align design with Figma
+- Write "about us"
