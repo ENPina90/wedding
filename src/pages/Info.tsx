@@ -1,49 +1,18 @@
 import { Link } from "react-router-dom";
 import SectionDivider from "../components/SectionDivider";
 import FlowerLogo from "../components/FlowerLogo";
-
-interface EventBlockProps {
-  title: string;
-  datetime: string;
-  description: string;
-}
-
-function EventBlock({ title, datetime, description }: EventBlockProps) {
-  return (
-    <div className="text-center mb-8 sm:mb-10 px-1">
-      <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
-        {title}
-      </h3>
-      <p className="font-nav text-plum text-xs sm:text-sm tracking-[1px] mt-2 sm:mt-3 uppercase">
-        {datetime}
-      </p>
-      <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
-        {description}
-      </p>
-    </div>
-  );
-}
-
-function Divider() {
-  return (
-    <div className="flex justify-center my-4 sm:my-6">
-      <div className="w-24 sm:w-36 h-px bg-plum/20" />
-    </div>
-  );
-}
+import WeddingColorSwatches from "../components/WeddingColorSwatches";
 
 export default function Info() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6">
-      {/* Flower logos above header - smaller on mobile */}
       <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 pt-4 sm:pt-6 pb-[35px]">
         <FlowerLogo color="blue" />
       </div>
 
-      {/* Event Info header */}
       <div className="text-center pb-6 sm:pb-8">
         <h2 className="font-display text-plum tracking-[2.24px] italic">
-          Event Info
+          Event
         </h2>
       </div>
 
@@ -62,40 +31,85 @@ export default function Info() {
         </p>
       </div>
 
-      {/* Section divider with flower_center.svg */}
       <SectionDivider />
 
-      <EventBlock
-        title="Arrival"
-        datetime="Saturday, November 21, 2026 — 4:00 P.M."
-        description="Please arrive by 4:00 PM to get settled before the ceremony begins. Light refreshments will be available as you arrive. We can't wait to welcome you!"
-      />
-
-      <Divider />
-
-      <EventBlock
-        title="Wedding Ceremony & Reception"
-        datetime="Saturday, November 21, 2026 — 4:30 P.M."
-        description="The ceremony will begin promptly at 4:30 PM. Please note that while there are Ubers and car services on the cape, they are less immediate than in the city. Please plan your transportation in advance. More information on transportation on the FAQ page."
-      />
-
-      <Divider />
-
-      <EventBlock
-        title="Farewell Breakfast"
-        datetime="Sunday, November 22, 2026 — 9:30 A.M."
-        description="Join us the morning after for a relaxed farewell breakfast. It's a wonderful chance to say goodbye, share memories from the night before, and enjoy one last meal together before heading home."
-      />
-
-      {/* Dress Code */}
-      <Divider />
-      <div className="text-center mb-12 sm:mb-16 px-1">
-        <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
-          Dress Code
+      {/* Location */}
+      <div className="text-center mb-8 sm:mb-10 px-1">
+        <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
+          Location
         </h3>
+        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-left sm:text-center">
+          <p className="font-bold mb-0">Lucky Arrow Retreat</p>
+          <p>3600 Bell Springs Rd, Dripping Springs, TX 78620, United States</p>
+        </div>
         <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
-          Cocktail attire. Think elegant and comfortable — we want everyone to
-          dance the night away!
+          <span className="font-bold">Attire</span>
+          {`: come dressed to celebrate! We're envisioning a semi-formal affair, cocktail dresses, suits, and floor-length gowns are all perfectly at home. Our wedding colors are shared below if you'd like a little inspiration, but wear whatever color you like!`}
+        </p>
+        <div className="mt-4 sm:mt-5">
+          <WeddingColorSwatches />
+        </div>
+      </div>
+
+      <SectionDivider />
+
+      {/* Wedding Event */}
+      <div className="text-center mb-8 sm:mb-10 px-1">
+        <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
+          Wedding Event
+        </h3>
+        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-left sm:text-center">
+          <p className="mb-0">Saturday, November 21 2026</p>
+          <p>4:00 P.M. - 11:00 P.M.</p>
+        </div>
+        <div className="font-nav text-plum text-base sm:text-lg mt-3 sm:mt-4 space-y-1 text-left sm:text-center max-w-xl mx-auto">
+          <p className="mb-0">
+            <span className="font-bold">arrival</span>: 4:00 p.m.
+          </p>
+          <p className="mb-0">
+            <span className="font-bold">ceremony</span>: 4:30 p.m.
+          </p>
+          <p className="mb-0">
+            <span className="font-bold">cocktail hour</span>: 5:00 p.m.
+          </p>
+          <p>
+            <span className="font-bold">reception</span>: 6:00 p.m.
+          </p>
+        </div>
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+          Please arrive by 4:00 PM to get settled before the ceremony begins.
+          Light refreshments will be available as you arrive. We can't wait to
+          welcome you!
+        </p>
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+          If you're staying at the{" "}
+          <span className="font-bold">Sleep Inn & Suites Dripping Springs</span>{" "}
+          there will be a shuttle provided to the venue for drop off and pick
+          up. More details TBA.
+        </p>
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center italic">
+          For those of you staying on the property with us:
+          <br />
+          Check-in is at 4:00 P.M. — please arrive a little bit earlier since
+          there will be many of you checking in at once.
+        </p>
+      </div>
+
+      <SectionDivider />
+
+      {/* Farewell Breakfast */}
+      <div className="text-center mb-12 sm:mb-16 px-1">
+        <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
+          Farewell Breakfast
+        </h3>
+        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-left sm:text-center">
+          <p className="mb-0">Sunday, November 22 2026</p>
+          <p>9:30 A.M.</p>
+        </div>
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+          For guests staying on property overnight, there will be a small
+          grab-and-go taco breakfast and coffee or tea provided on the lawn in
+          the morning before check-out at 11:00 A.M.
         </p>
       </div>
     </div>
