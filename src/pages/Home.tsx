@@ -126,24 +126,24 @@ export default function Home() {
           our story
         </h3>
         <div className="font-body text-plum leading-7 text-left max-w-2xl mx-auto space-y-4 sm:space-y-6 px-1">
-          <p>
-            It all started with a chance meeting and a spark that neither of us
-            could ignore. From our very first conversation, we knew something
-            special was unfolding — a connection built on laughter, shared
-            dreams, and an unwavering sense of adventure.
-          </p>
-          <p>
-            Through every season, every late-night talk, every quiet morning
-            together, our love has grown into something we never imagined
-            possible. Now, surrounded by the beauty of the world and the people
-            we cherish most, we're ready to take the next step on this
-            incredible journey.
-          </p>
-          <p>
-            We can't wait to celebrate with you — the people who have supported
-            us, cheered us on, and filled our lives with so much joy. Thank you
-            for being part of our story.
-          </p>
+            <p>
+            Where to start our story? We could begin at the beginning of the rest of our lives together. When Nic and friends tricked Kirsten into thinking she was going on a girls trip to Dresden, only to ambush her beneath an arch in the old town with an opera singer, an engagement ring, and a series of cinematic near-misses along the way (a story for another time).
+            </p>
+            <p>
+            Or perhaps ten years earlier, on the night that inspired it all. When we traveled together for the first time to that same city, and on our very first evening happened upon an opera singer performing in that very same arch. Watching tears roll down Kirsten’s face stirred something in Nic’s heart, but then of course, we were still just friends.
+            </p>
+            <p>
+            So maybe we land somewhere in between. When we found ourselves falling into will-they-won’t-they situationship straight out of a sitcom. That is until we unintentionally caught feelings for each other in a plot twist that surprised utterly no one but ourselves. Only for Kirsten to then decide the only solution to said feelings was to end our friendship completely and leave Berlin entirely. But Nic refused to let her go until she saw what was right in front of us the whole time, and we decided to give this whole life together a chance.
+            </p>
+            <p>
+            Or perhaps not long after in the heart of lockdown, when we became each other’s entire worlds and social circles, and what felt like life times were lived in months alone together.
+            </p>
+            <p>
+            But why stop there when we could go all the way back to flirtations at co-op parties and kisses on the Barb’s dance floor circa Austin, 2012.
+            </p>
+            <p>
+            However you choose to tell it, whatever city, whatever year, it turns out we've been falling in love everyday, every fact, feeling, adventure, and tribulation along the way.
+            </p>
         </div>
       </div>
     </div>
