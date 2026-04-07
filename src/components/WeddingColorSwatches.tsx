@@ -33,7 +33,7 @@ export default function WeddingColorSwatches({ size = "md" }: WeddingColorSwatch
   }, [activeIndex]);
 
   return (
-    <div ref={wrapperRef} className="flex flex-wrap justify-center gap-2 sm:gap-2.5">
+    <div ref={wrapperRef} className="flex flex-nowrap justify-center gap-2 sm:gap-2.5">
       {WEDDING_COLORS.map((color, i) => (
         <div key={i} className="relative">
           {activeIndex === i && (

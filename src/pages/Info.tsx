@@ -18,7 +18,7 @@ export default function Info() {
 
       {/* Intro */}
       <div className="text-center mb-10 sm:mb-12 px-1">
-        <p className="sub-header font-body text-plum leading-7 max-w-2xl mx-auto text-left sm:text-center">
+        <p className="sub-header font-body text-plum leading-7 max-w-2xl mx-auto text-center">
           Here you'll find details and instructions pertaining to all things
           wedding day. If your question isn't answered here, try the{" "}
           <Link
@@ -38,11 +38,11 @@ export default function Info() {
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
           Location
         </h3>
-        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-left sm:text-center">
+        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-center">
           <p className="font-bold mb-0">Lucky Arrow Retreat</p>
           <p>3600 Bell Springs Rd, Dripping Springs, TX 78620, United States</p>
         </div>
-        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
           <span className="font-bold">Attire</span>
           {`: come dressed to celebrate! We're envisioning a semi-formal affair, cocktail dresses, suits, and floor-length gowns are all perfectly at home. Our wedding colors are shared below if you'd like a little inspiration, but wear whatever color you like!`}
         </p>
@@ -58,11 +58,11 @@ export default function Info() {
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
           Wedding Event
         </h3>
-        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-left sm:text-center">
+        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-center">
           <p className="mb-0">Saturday, November 21 2026</p>
           <p>4:00 P.M. - 11:00 P.M.</p>
         </div>
-        <div className="font-nav text-plum text-base sm:text-lg mt-3 sm:mt-4 space-y-1 text-left sm:text-center max-w-xl mx-auto">
+        <div className="font-nav text-plum text-base sm:text-lg mt-3 sm:mt-4 space-y-1 text-center max-w-xl mx-auto">
           <p className="mb-0">
             <span className="font-bold">arrival</span>: 4:00 p.m.
           </p>
@@ -76,18 +76,18 @@ export default function Info() {
             <span className="font-bold">reception</span>: 6:00 p.m.
           </p>
         </div>
-        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
           Please arrive by 4:00 PM to get settled before the ceremony begins.
           Light refreshments will be available as you arrive. We can't wait to
           welcome you!
         </p>
-        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
           If you're staying at the{" "}
           <span className="font-bold">Sleep Inn & Suites Dripping Springs</span>{" "}
           there will be a shuttle provided to the venue for drop off and pick
           up. More details TBA.
         </p>
-        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center italic">
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center italic">
           For those of you staying on the property with us:
           <br />
           Check-in is at 4:00 P.M. — please arrive a little bit earlier since
@@ -102,11 +102,11 @@ export default function Info() {
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
           Farewell Breakfast
         </h3>
-        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-left sm:text-center">
+        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-center">
           <p className="mb-0">Sunday, November 22 2026</p>
           <p>9:30 A.M.</p>
         </div>
-        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-left sm:text-center">
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
           For guests staying on property overnight, there will be a small
           grab-and-go taco breakfast and coffee or tea provided on the lawn in
           the morning before check-out at 11:00 A.M.

@@ -44,14 +44,16 @@ body {
 }
 
 /* Default paragraph styles (per Figma: light weight unless overridden) */
-p {
-  font-size: 15px;
-  font-weight: 300;
-}
-
-@media (min-width: 768px) {
+@layer base {
   p {
-    font-size: 17px;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  @media (min-width: 768px) {
+    p {
+      font-size: 17px;
+    }
   }
 }
 

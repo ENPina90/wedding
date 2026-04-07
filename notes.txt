@@ -1,4 +1,6 @@
-X- Add Kirsten's text and layout changes
-X- Add color swatches
-- Align design with Figma
-- Write "about us"
+x- Remove the baby bump fund from registry
+x- Bold The Faq Questions
+x- Center align the text on mobile.
+- Overall realign with Figma.
+
+- take another stab at about us (include us happening to move to Germany at the same time)

@@ -129,7 +129,7 @@ export default function FAQ() {
           >
             kirschroder@gmail.com
           </a>{" "}
-          or call Nic at{" "}
+          or text Nic at{" "}
           <a
             href="tel:+12106433449"
             className="text-plum underline hover:text-burgundy transition-colors"

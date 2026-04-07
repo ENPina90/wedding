@@ -108,7 +108,7 @@ function HotelCard({
 
 function SubHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h4 className="font-nav text-plum text-xs sm:text-sm tracking-[1px] uppercase mb-2 sm:mb-3 mt-4 sm:mt-6 first:mt-0 text-center">
+    <h4 className="font-nav text-plum text-xs sm:text-sm tracking-[1px] uppercase mb-2 sm:mb-3 mt-4 sm:mt-9 first:mt-0 text-center">
       {children}
     </h4>
   );
@@ -125,7 +125,7 @@ export default function Accommodations() {
         <h2 className="font-display text-plum tracking-[2.24px] italic">
           Accommodations
         </h2>
-        <p className="font-body text-plum text-base sm:text-lg mt-2 sm:mt-3 max-w-xl mx-auto text-left sm:text-center">
+        <p className="font-body text-plum text-base sm:text-lg mt-2 sm:mt-3 max-w-xl mx-auto text-center">
           Everything you need to know about your overnight stay, reach out to us
           for help with bookings anytime at{" "}
           <a
@@ -145,7 +145,7 @@ export default function Accommodations() {
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
           Hotel Room Blockings
         </h3>
-        <div className="font-body text-plum leading-7 text-left sm:text-center space-y-3 max-w-2xl mx-auto">
+        <div className="font-body text-plum leading-7 text-center space-y-3 max-w-2xl mx-auto">
           <p>
             We have reserved rooms at{" "}
             <span className="font-bold">
@@ -193,7 +193,7 @@ export default function Accommodations() {
         <h3 className="font-nav text-plum text-xs sm:text-sm tracking-[1px] uppercase">
           additional recommended hotels
         </h3>
-        <p className="font-body text-plum leading-7 text-left sm:text-center max-w-2xl mx-auto">
+        <p className="font-body text-plum leading-7 text-center max-w-2xl mx-auto">
           The following hotels are within 10-15 minutes of Lucky Arrow Retreat if
           you'd prefer to stay elsewhere, there would then be no shuttle
           provided but you should easily be able to book an Uber to and from the
@@ -227,14 +227,14 @@ export default function Accommodations() {
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
           On-site Lodging
         </h3>
-        <p className="font-body text-plum leading-7 text-left sm:text-center max-w-2xl mx-auto">
+        <p className="font-body text-plum leading-7 text-center max-w-2xl mx-auto">
           Those of you who we've spoken with about staying on-site, please book
           as early as possible — latest{" "}
           <span className="font-bold">by August 2nd, 2026.</span>
         </p>
 
         <SubHeading>address</SubHeading>
-        <div className="font-body text-plum leading-7 text-left sm:text-center">
+        <div className="font-body text-plum leading-7 text-center">
           <p className="font-bold mb-0">Lucky Arrow Retreat</p>
           <p>
             <a
@@ -263,7 +263,7 @@ export default function Accommodations() {
         </div>
 
         <SubHeading>booking instructions</SubHeading>
-        <p className="font-body text-plum leading-7 text-left sm:text-center max-w-2xl mx-auto">
+        <p className="font-body text-plum leading-7 text-center max-w-2xl mx-auto">
           For those of you booking online, you may{" "}
           <a
             href={BOOKING_INSTRUCTIONS_PDF}
@@ -273,7 +273,7 @@ export default function Accommodations() {
           </a>
           .
         </p>
-        <p className="font-body text-plum leading-7 text-left sm:text-center max-w-2xl mx-auto">
+        <p className="font-body text-plum leading-7 text-center max-w-2xl mx-auto">
           For those of you who have either been instructed to book by phone or
           would prefer to book by phone, please call Lucky Arrow Retreat at{" "}
           <a
@@ -295,7 +295,7 @@ export default function Accommodations() {
           <li>Check out: 11 A.M.</li>
           <li>
             There are 5 types of lodging on property:
-            <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
+            <ul className="list-[circle] list-inside ml-4 mt-2 space-y-1">
               <li>Breezeway Cabins</li>
               <li>Porchyard Cabins</li>
               <li>Courtyard Cabins</li>
@@ -335,7 +335,7 @@ export default function Accommodations() {
         </ul>
 
         <SubHeading>directions</SubHeading>
-        <div className="font-body text-plum leading-7 space-y-3 text-left sm:text-center max-w-2xl mx-auto">
+        <div className="font-body text-plum leading-7 space-y-3 text-center max-w-2xl mx-auto">
           <p>
             <span className="font-bold">From Austin:</span> Head west on Highway
             290 towards Dripping Springs for approximately 28 miles. Turn right
