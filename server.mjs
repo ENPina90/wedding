@@ -13,8 +13,52 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distDir = path.join(__dirname, "dist");
+const siteOrigin = process.env.PUBLIC_SITE_ORIGIN || "https://www.nickirsten.com";
+const shareTitle = "Nic & Kirsten's Wedding";
+const shareDescription = "Join on us on our special day November 21, 2026!";
+const shareImageUrl = `${siteOrigin}/og-image.jpg`;
 const photoListCache = new Map();
 const photoListCacheTtlMs = Number(process.env.PHOTOS_LIST_CACHE_TTL_MS || "30000");
+
+const isSocialPreviewCrawler = (userAgent = "") =>
+  /bot|crawler|spider|facebookexternalhit|facebot|twitterbot|slackbot|discordbot|whatsapp|telegrambot|linkedinbot|pinterest|skypeuripreview/i.test(
+    userAgent,
+  );
+
+const shouldServeSocialPreview = (req) => {
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    return false;
+  }
+
+  if (req.path === "/og-image.jpg") {
+    return false;
+  }
+
+  return isSocialPreviewCrawler(req.get("user-agent"));
+};
+
+const renderSocialPreviewPage = (url) => `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${shareTitle}</title>
+    <meta name="description" content="${shareDescription}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="${shareTitle}" />
+    <meta property="og:description" content="${shareDescription}" />
+    <meta property="og:url" content="${url}" />
+    <meta property="og:image" content="${shareImageUrl}" />
+    <meta property="og:image:alt" content="Nic and Kirsten" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${shareTitle}" />
+    <meta name="twitter:description" content="${shareDescription}" />
+    <meta name="twitter:image" content="${shareImageUrl}" />
+  </head>
+  <body></body>
+</html>`;
 
 const getCloudinaryConfig = () => {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
@@ -641,6 +685,18 @@ app.delete("/api/photos", async (req, res) => {
     const message = error instanceof Error ? error.message : "Unknown error";
     res.status(500).json({ error: message });
   }
+});
+
+app.use((req, res, next) => {
+  if (!shouldServeSocialPreview(req)) {
+    next();
+    return;
+  }
+
+  const shareUrl = `${siteOrigin}${req.originalUrl}`;
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.setHeader("Cache-Control", "public, max-age=300");
+  res.send(renderSocialPreviewPage(shareUrl));
 });
 
 app.use(express.static(distDir));

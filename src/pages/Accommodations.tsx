@@ -5,7 +5,6 @@ import sleepInnMap from "../assets/google maps/sleep_nn_suites_dripping_springs.
 import holidayInnMap from "../assets/google maps/holiday_inn_express_suites_dripping_springs.png";
 import hillCountryMap from "../assets/google maps/hill_country_casitas.png";
 import luckyArrowMap from "../assets/google maps/lucky_arrow_retreat.png";
-import bookingInstructionsPdf from "../assets/room_booking_guide.pdf";
 
 const EMAIL = "kirschroder@gmail.com";
 const LUCKY_ARROW_PHONE = "(512) 400-4197";
@@ -18,7 +17,8 @@ const SLEEP_INN_BOOKING_URL =
 const GROUP_NAME = "Schroder Piña Wedding";
 const GROUP_CODE = "b969991";
 
-const BOOKING_INSTRUCTIONS_PDF = bookingInstructionsPdf;
+const BOOKING_INSTRUCTIONS_PDF =
+  "https://www.nickirsten.com/assets/room_booking_guide.pdf";
 const LODGING_FAQ_URL = "https://luckyarrowretreat.com/faq";
 const LODGING_TYPES_URL = "https://luckyarrowretreat.com";
 
