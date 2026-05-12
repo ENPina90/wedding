@@ -5,6 +5,7 @@ import sleepInnMap from "../assets/google maps/sleep_nn_suites_dripping_springs.
 import holidayInnMap from "../assets/google maps/holiday_inn_express_suites_dripping_springs.png";
 import hillCountryMap from "../assets/google maps/hill_country_casitas.png";
 import luckyArrowMap from "../assets/google maps/lucky_arrow_retreat.png";
+import bookingInstructionsPdf from "../assets/room_booking_guide.pdf";
 
 const EMAIL = "kirschroder@gmail.com";
 const LUCKY_ARROW_PHONE = "(512) 400-4197";
@@ -17,7 +18,7 @@ const SLEEP_INN_BOOKING_URL =
 const GROUP_NAME = "Schroder Piña Wedding";
 const GROUP_CODE = "b969991";
 
-const BOOKING_INSTRUCTIONS_PDF = "/room_booking_guide.pdf";
+const BOOKING_INSTRUCTIONS_PDF = bookingInstructionsPdf;
 const LODGING_FAQ_URL = "https://luckyarrowretreat.com/faq";
 const LODGING_TYPES_URL = "https://luckyarrowretreat.com";
 
@@ -80,7 +81,7 @@ function HotelCard({
           )}
         </div>
         <span
-          className="absolute top-[108px] left-1/2 -translate-x-1/2 inline-flex w-[172px] h-[42px] items-center justify-center border border-plum/25 bg-cream/95 group-hover:bg-[#FCF2EE] text-[#626D8D] font-body font-bold text-xs tracking-[1.5px] px-4 rounded-lg transition-colors shadow-sm whitespace-nowrap pointer-events-none"
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex w-[172px] h-[42px] items-center justify-center border border-plum/25 bg-cream/95 group-hover:bg-[#FCF2EE] text-[#626D8D] font-body font-bold text-xs tracking-[1.5px] px-4 rounded-lg transition-colors shadow-sm whitespace-nowrap pointer-events-none"
           aria-hidden
         >
           View on Google Maps
@@ -267,6 +268,8 @@ export default function Accommodations() {
           For those of you booking online, you may{" "}
           <a
             href={BOOKING_INSTRUCTIONS_PDF}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-plum underline hover:text-burgundy transition-colors"
           >
             download instructions to book here
@@ -359,7 +362,8 @@ export default function Accommodations() {
       <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
         <a
           href={BOOKING_INSTRUCTIONS_PDF}
-          download="room_booking_guide.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-block text-center bg-pink hover:bg-pink/80 text-burgundy font-body font-bold text-sm tracking-[1.5px] px-6 py-3 rounded-lg transition-colors"
         >
           Download Booking instructions

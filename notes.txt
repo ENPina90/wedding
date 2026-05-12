@@ -1,6 +1,5 @@
-x- Remove the baby bump fund from registry
-x- Bold The Faq Questions
-x- Center align the text on mobile.
+- add image and text for shared link
+- Download instructions pdf not working
 - Overall realign with Figma.
 
 - take another stab at about us (include us happening to move to Germany at the same time)
