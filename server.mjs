@@ -19,6 +19,26 @@ const shareDescription = "Join on us on our special day November 21, 2026!";
 const shareImageUrl = `${siteOrigin}/og-image.jpg`;
 const photoListCache = new Map();
 const photoListCacheTtlMs = Number(process.env.PHOTOS_LIST_CACHE_TTL_MS || "30000");
+const clientRoutes = new Set([
+  "/",
+  "/faq",
+  "/info",
+  "/registry",
+  "/accommodations",
+  "/photos",
+  "/photos/admin",
+]);
+
+const normalizeClientPath = (pathname = "/") => {
+  if (pathname === "/") {
+    return pathname;
+  }
+
+  return pathname.replace(/\/+$/, "");
+};
+
+const isClientRoute = (pathname) =>
+  clientRoutes.has(normalizeClientPath(pathname));
 
 const isSocialPreviewCrawler = (userAgent = "") =>
   /bot|crawler|spider|facebookexternalhit|facebot|twitterbot|slackbot|discordbot|whatsapp|telegrambot|linkedinbot|pinterest|skypeuripreview/i.test(
@@ -31,6 +51,10 @@ const shouldServeSocialPreview = (req) => {
   }
 
   if (req.path === "/og-image.jpg") {
+    return false;
+  }
+
+  if (!isClientRoute(req.path)) {
     return false;
   }
 
@@ -687,6 +711,10 @@ app.delete("/api/photos", async (req, res) => {
   }
 });
 
+app.get("/healthz", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 app.use((req, res, next) => {
   if (!shouldServeSocialPreview(req)) {
     next();
@@ -700,7 +728,12 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static(distDir));
-app.get("/*path", (_req, res) => {
+app.get("/*path", (req, res) => {
+  if (!isClientRoute(req.path)) {
+    res.status(404).type("text/plain").send("Not found");
+    return;
+  }
+
   res.sendFile(path.join(distDir, "index.html"));
 });
 

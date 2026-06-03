@@ -136,7 +136,7 @@ export default function Home() {
             So maybe we land somewhere in between. When we found ourselves falling into will-they-won’t-they situationship straight out of a sitcom. That is until we unintentionally caught feelings for each other in a plot twist that surprised utterly no one but ourselves. Only for Kirsten to then decide the only solution to said feelings was to end our friendship completely and leave Berlin entirely. But Nic refused to let her go until she saw what was right in front of us the whole time, and we decided to give this whole life together a chance.
             </p>
             <p>
-            Or perhaps not long after in the heart of lockdown, when we became each other’s entire worlds and social circles, and what felt like life times were lived in months alone together.
+            Or perhaps not long after in the heart of lockdown, when we became each other’s entire worlds, and what felt like life times were lived in only a matter of months alone together.
             </p>
             <p>
             But why stop there when we could go all the way back to flirtations at co-op parties and kisses on the Barb’s dance floor circa Austin, 2012.

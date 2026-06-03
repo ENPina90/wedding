@@ -13,7 +13,7 @@ const LUCKY_ARROW_MAPS_URL = "https://maps.app.goo.gl/213U9Q74ZMqf5iGK7";
 const LUCKY_ARROW_WEBSITE = "https://luckyarrowretreat.com";
 const SLEEP_INN_PHONE = "(512) 858-2400";
 const SLEEP_INN_BOOKING_URL =
-  "https://www.choicehotels.com/texas/dripping-springs/sleep-inn-hotels/txe80?mc=llgoxxpx";
+  "https://www.choicehotels.com/reservations/groups/cq69r6?checkInDate=2026-11-21&checkOutDate=2026-11-22&ratePlanCode=BQABTX";
 const GROUP_NAME = "Schroder Piña Wedding";
 const GROUP_CODE = "b969991";
 
