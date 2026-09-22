@@ -2,8 +2,6 @@ import SectionDivider from "../components/SectionDivider";
 import FlowerLogo from "../components/FlowerLogo";
 
 import sleepInnMap from "../assets/google maps/sleep_nn_suites_dripping_springs.png";
-import holidayInnMap from "../assets/google maps/holiday_inn_express_suites_dripping_springs.png";
-import hillCountryMap from "../assets/google maps/hill_country_casitas.png";
 import luckyArrowMap from "../assets/google maps/lucky_arrow_retreat.png";
 
 const EMAIL = "kirschroder@gmail.com";
