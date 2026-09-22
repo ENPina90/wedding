@@ -6,7 +6,7 @@ const faqs = [
   {
     question: "When is the RSVP Deadline?",
     answer:
-      "Please RSVP by August 2nd, 2026. If you've been invited to stay on the property, the earlier you can confirm the better ♡",
+      "Please RSVP by September 30th, 2026. If you've been invited to stay on the property, the earlier you can confirm the better ♡",
   },
   {
     question: "Can I bring a guest?",
@@ -32,11 +32,7 @@ const faqs = [
     question: "What's the dress code?",
     answer: (
       <>
-        Come dressed to celebrate! We're envisioning a semi-formal affair,
-        cocktail dresses, suits, and floor-length gowns are all perfectly at
-        home. Our wedding colors are shared below if you'd like a little
-        inspiration, but wear whatever color you like. The main dress code is
-        feeling your best!
+        come dressed to celebrate! We're envisioning a semi-formal affair, cocktail dresses, suits, and floor-length gowns are all perfectly at home, but also feel free to come as creative and/or glamourous as you like. Our wedding colors are shared below if you'd like a little inspiration, but wear whatever color you like!
         <div className="mt-4">
           <WeddingColorSwatches size="sm" />
         </div>
@@ -64,12 +60,12 @@ const faqs = [
         >
           kirschroder@gmail.com
         </a>{" "}
-        or Nic at{" "}
+        or call us at {" "}
         <a
-          href="tel:+12106433449"
+          href="tel:+18328191394"
           className="text-plum underline hover:text-burgundy transition-colors"
         >
-          (210) 643 3449
+          (832) 819-1394
         </a>
         .
       </>
@@ -131,10 +127,10 @@ export default function FAQ() {
           </a>{" "}
           or text Nic at{" "}
           <a
-            href="tel:+12106433449"
+            href="tel:+18328191394"
             className="text-plum underline hover:text-burgundy transition-colors"
           >
-            210 643 3449
+            (832) 819-1394
           </a>
           !
         </p>

@@ -189,40 +189,6 @@ export default function Accommodations() {
 
       <SectionDivider />
 
-      {/* Additional Recommended Hotels */}
-      <div className="space-y-6 text-center">
-        <h3 className="font-nav text-plum text-xs sm:text-sm tracking-[1px] uppercase">
-          additional recommended hotels
-        </h3>
-        <p className="font-body text-plum leading-7 text-center max-w-2xl mx-auto">
-          The following hotels are within 10-15 minutes of Lucky Arrow Retreat if
-          you'd prefer to stay elsewhere, there would then be no shuttle
-          provided but you should easily be able to book an Uber to and from the
-          suggested hotels.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 justify-items-center">
-          <HotelCard
-            name="Holiday Inn Express & Suites Dripping Springs"
-            distance="10 minutes"
-            mapsUrl="https://maps.app.goo.gl/R49uNWSdeLsY4nns6"
-            website="https://www.ihg.com/holidayinnexpress/hotels/us/en/dripping-springs/ausds/hoteldetail"
-            phone="(512) 858-0280"
-            mapImage={holidayInnMap}
-          />
-          <HotelCard
-            name="Hill Country Casitas"
-            distance="14 minutes"
-            mapsUrl="https://maps.app.goo.gl/preEYjggrCYhxNTx5"
-            website="https://www.hillcountrycasitas.com/"
-            phone="(512) 829-1558"
-            mapImage={hillCountryMap}
-          />
-        </div>
-      </div>
-
-      <SectionDivider />
-
       {/* On-site Lodging */}
       <div className="space-y-6 text-center">
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic">
