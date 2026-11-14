@@ -60,32 +60,26 @@ export default function Info() {
         </h3>
         <div className="font-body text-plum leading-7 max-w-xl mx-auto text-center">
           <p className="mb-0">Saturday, November 21 2026</p>
-          <p>4:30 P.M. - 11:00 P.M.</p>
+          <p>4:00 P.M. - 11:00 P.M.</p>
         </div>
         <div className="font-nav text-plum text-base sm:text-lg mt-3 sm:mt-4 space-y-1 text-center max-w-xl mx-auto">
           <p className="mb-0">
-            <span className="font-bold">arrival</span>: 4:30 p.m.
+            <span className="font-bold">arrival</span>: 4:00 p.m.
           </p>
           <p className="mb-0">
-            <span className="font-bold">ceremony</span>: 5:00 p.m.
+            <span className="font-bold">ceremony</span>: 4:30 p.m.
           </p>
           <p className="mb-0">
-            <span className="font-bold">cocktail hour</span>: 5:30 p.m.
+            <span className="font-bold">cocktail hour</span>: 5:00 p.m.
           </p>
           <p>
-            <span className="font-bold">reception</span>: 6:45 - 11:00 p.m.
+            <span className="font-bold">reception</span>: 6:15 - 11:00 p.m.
           </p>
         </div>
         <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
-          Please arrive by 4:30 PM to get settled before the ceremony begins.
+          Please arrive by 4:00 PM to get settled before the ceremony begins.
           Light refreshments will be available as you arrive. We can't wait to
           welcome you!
-        </p>
-        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
-          If you're staying at the{" "}
-          <span className="font-bold">Sleep Inn & Suites Dripping Springs</span>{" "}
-          there will be a shuttle provided to the venue for drop off and pick
-          up. More details TBA.
         </p>
         <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
           <span className="font-bold">🌻 For those of you staying on the property with us 🌻</span>
