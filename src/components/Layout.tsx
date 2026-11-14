@@ -4,6 +4,7 @@ import backgroundFlowers from "../assets/background_flowers.png";
 import flowerCorner from "../assets/flower_corner.svg";
 import weddingRings from "../assets/wedding_rings.svg";
 import SectionDivider from "./SectionDivider";
+import UpdateBanner from "./UpdateBanner";
 import "./flower-corners.css";
 import "./layout.css";
 
@@ -164,114 +165,124 @@ export default function Layout() {
         }}
       />
 
-      {/* Corner floral decorations - styles in flower-corners.css */}
-      <img
-        src={flowerCorner}
-        alt=""
-        className="flower-corner-left cursor-default z-0 h-auto"
-      />
-      <img
-        src={flowerCorner}
-        alt=""
-        className="flower-corner-right cursor-default z-0 h-auto"
-      />
+      {/* Site-wide wedding reminder - must stay before the corner flowers so they render on top */}
+      <UpdateBanner />
 
-      {/* Header */}
-      <header className="relative z-10 pt-32 sm:pt-12 md:pt-16 pb-4 sm:pb-6 text-center px-4">
-        <NavLink to="/" className="cursor-default">
-          <h1 className="font-display text-plum text-[54px] sm:text-[64px] tracking-[4.48px] italic">
-            <span className="hidden max-[767px]:inline-block max-[767px]:leading-[64px] pt-2.5">Kirsten<br />& Nic</span>
-            <span className="max-[767px]:hidden">Kirsten & Nic</span>
-          </h1>
-        </NavLink>
-      </header>
+      {/* Anchors the scrolling (absolute) corner flowers below the banner and clips them so they
+       * don't cover its text on smaller screens. On xl+ the flowers are position: fixed, so they
+       * escape this wrapper and overlap the banner's corners.
+       */}
+      <div className="relative flex-1 flex flex-col overflow-hidden">
 
-      {/* Navigation */}
-      <nav className="relative z-10 flex justify-center pt-4 pb-0 sm:pt-6 sm:pb-0 px-4">
-        {/* Mobile: 3-1-3 layout per Figma Mobile - Home (< 768px) */}
-        <div className="nav-mobile flex flex-col items-center gap-y-3 md:hidden">
-          <div className="nav-row flex justify-center gap-x-4 max-[767px]:gap-x-7">
-            {navLinks.row1.map((link) => (
-              <NavLinkItem
-                key={link.to}
-                link={link}
-                onRsvpClick={openRsvpModal}
-              />
-            ))}
+        {/* Corner floral decorations - styles in flower-corners.css */}
+        <img
+          src={flowerCorner}
+          alt=""
+          className="flower-corner-left cursor-default z-0 h-auto"
+        />
+        <img
+          src={flowerCorner}
+          alt=""
+          className="flower-corner-right cursor-default z-0 h-auto"
+        />
+
+        {/* Header */}
+        <header className="relative z-10 pt-32 sm:pt-12 md:pt-16 pb-4 sm:pb-6 text-center px-4">
+          <NavLink to="/" className="cursor-default">
+            <h1 className="font-display text-plum text-[54px] sm:text-[64px] tracking-[4.48px] italic">
+              <span className="hidden max-[767px]:inline-block max-[767px]:leading-[64px] pt-2.5">Kirsten<br />& Nic</span>
+              <span className="max-[767px]:hidden">Kirsten & Nic</span>
+            </h1>
+          </NavLink>
+        </header>
+
+        {/* Navigation */}
+        <nav className="relative z-10 flex justify-center pt-4 pb-0 sm:pt-6 sm:pb-0 px-4">
+          {/* Mobile: 3-1-3 layout per Figma Mobile - Home (< 768px) */}
+          <div className="nav-mobile flex flex-col items-center gap-y-3 md:hidden">
+            <div className="nav-row flex justify-center gap-x-4 max-[767px]:gap-x-7">
+              {navLinks.row1.map((link) => (
+                <NavLinkItem
+                  key={link.to}
+                  link={link}
+                  onRsvpClick={openRsvpModal}
+                />
+              ))}
+            </div>
+            <div className="nav-row flex justify-center">
+              {navLinks.row2.map((link) => (
+                <NavLinkItem
+                  key={link.to}
+                  link={link}
+                  onRsvpClick={openRsvpModal}
+                />
+              ))}
+            </div>
+            <div className="nav-row flex justify-center gap-x-4 max-[767px]:gap-x-7">
+              {navLinks.row3.map((link) => (
+                <NavLinkItem
+                  key={link.to}
+                  link={link}
+                  onRsvpClick={openRsvpModal}
+                />
+              ))}
+            </div>
           </div>
-          <div className="nav-row flex justify-center">
-            {navLinks.row2.map((link) => (
-              <NavLinkItem
-                key={link.to}
-                link={link}
-                onRsvpClick={openRsvpModal}
-              />
-            ))}
+          {/* Tablet (768–1024px): two rows, 5 links + 2 links */}
+          <div className="nav-tablet hidden flex-col items-center gap-y-3 md:flex lg:hidden">
+            <div className="flex justify-center gap-x-7">
+              {navTabletRow1.map((link) => (
+                <NavLinkItem
+                  key={link.to}
+                  link={link}
+                  onRsvpClick={openRsvpModal}
+                />
+              ))}
+            </div>
+            <div className="flex justify-center gap-x-7">
+              {navTabletRow2.map((link) => (
+                <NavLinkItem
+                  key={link.to}
+                  link={link}
+                  onRsvpClick={openRsvpModal}
+                />
+              ))}
+            </div>
           </div>
-          <div className="nav-row flex justify-center gap-x-4 max-[767px]:gap-x-7">
-            {navLinks.row3.map((link) => (
-              <NavLinkItem
-                key={link.to}
-                link={link}
-                onRsvpClick={openRsvpModal}
-              />
+          {/* Desktop: single row (1024px+) */}
+          <ul className="nav-desktop hidden flex-wrap justify-center gap-x-4 gap-y-2 lg:flex lg:gap-x-7">
+            {allNavLinks.map((link) => (
+              <li key={link.to}>
+                <NavLinkItem
+                  link={link}
+                  onRsvpClick={openRsvpModal}
+                />
+              </li>
             ))}
+          </ul>
+        </nav>
+
+        {/* Page Content - FAQ renders between nav and main per design */}
+        {isFaqPage ? (
+          <div className="relative z-10 flex-1">
+            <Outlet context={{ openRsvpModal }} />
           </div>
+        ) : (
+          <main className="relative z-10 flex-1 text-sm">
+            <Outlet context={{ openRsvpModal }} />
+          </main>
+        )}
+
+        {/* Section divider above footer - on every page (same container as page content for consistent rendering) */}
+        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 w-full">
+          <SectionDivider />
         </div>
-        {/* Tablet (768–1024px): two rows, 5 links + 2 links */}
-        <div className="nav-tablet hidden flex-col items-center gap-y-3 md:flex lg:hidden">
-          <div className="flex justify-center gap-x-7">
-            {navTabletRow1.map((link) => (
-              <NavLinkItem
-                key={link.to}
-                link={link}
-                onRsvpClick={openRsvpModal}
-              />
-            ))}
-          </div>
-          <div className="flex justify-center gap-x-7">
-            {navTabletRow2.map((link) => (
-              <NavLinkItem
-                key={link.to}
-                link={link}
-                onRsvpClick={openRsvpModal}
-              />
-            ))}
-          </div>
-        </div>
-        {/* Desktop: single row (1024px+) */}
-        <ul className="nav-desktop hidden flex-wrap justify-center gap-x-4 gap-y-2 lg:flex lg:gap-x-7">
-          {allNavLinks.map((link) => (
-            <li key={link.to}>
-              <NavLinkItem
-                link={link}
-                onRsvpClick={openRsvpModal}
-              />
-            </li>
-          ))}
-        </ul>
-      </nav>
 
-      {/* Page Content - FAQ renders between nav and main per design */}
-      {isFaqPage ? (
-        <div className="relative z-10 flex-1">
-          <Outlet context={{ openRsvpModal }} />
-        </div>
-      ) : (
-        <main className="relative z-10 flex-1 text-sm">
-          <Outlet context={{ openRsvpModal }} />
-        </main>
-      )}
-
-      {/* Section divider above footer - on every page (same container as page content for consistent rendering) */}
-      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 w-full">
-        <SectionDivider />
+        {/* Footer */}
+        <footer className="relative z-10 text-center py-10 sm:py-12 md:py-16 text-plum font-body text-xs sm:text-sm tracking-wide px-4">
+          <p>Designed & Illustrated by Kirsten &middot; Built by Nic &middot; 2026</p>
+        </footer>
       </div>
-
-      {/* Footer */}
-      <footer className="relative z-10 text-center py-10 sm:py-12 md:py-16 text-plum font-body text-xs sm:text-sm tracking-wide px-4">
-        <p>Designed & Illustrated by Kirsten &middot; Built by Nic &middot; 2026</p>
-      </footer>
 
       {isRsvpModalOpen && (
         <div
