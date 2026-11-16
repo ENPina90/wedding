@@ -4,7 +4,15 @@ import { Link, useLocation } from "react-router-dom";
 const WEDDING_DATE = new Date(2026, 10, 21);
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
-const linkClass = "text-plum underline hover:text-burgundy transition-colors";
+/* Visible gap above and below the banner is 48px (mt-12) on every page. Each page's own
+ * top spacing counts toward the gap below, so the bottom margin makes up the difference:
+ * - Info/Accommodations/Photos/FAQ start with pt-4 sm:pt-6 (16px / 24px).
+ * - Home's hero photo has mt-6 sm:mt-10 md:mt-12, and from md up a flower sprig pokes 56px above it.
+ */
+const PAGE_BOTTOM_MARGIN = "mb-8 sm:mb-6";
+const HOME_BOTTOM_MARGIN = "mb-6 sm:mb-2 md:mb-14";
+
+const linkClass ="text-plum underline hover:text-burgundy transition-colors";
 
 function getDaysUntilWedding(now = new Date()) {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -31,11 +39,11 @@ export default function UpdateBanner() {
   return (
     <aside
       aria-label={isAfterWedding ? "Thank you from Kirsten & Nic" : "Wedding day reminder"}
-      // z-0 + rendered before the corner flowers in Layout, so the flowers paint on top of it.
-      className="relative z-0 w-full bg-cream border-b border-pink/40"
+      className={`relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 mt-12 ${
+        pathname === "/" ? HOME_BOTTOM_MARGIN : PAGE_BOTTOM_MARGIN
+      }`}
     >
-      {/* lg:px-16 keeps the text clear of the fixed corner flowers at 1280px */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-8 lg:px-16 pt-4 sm:pt-5 pb-6 sm:pb-8 text-center">
+      <div className="bg-cream rounded-md border border-pink/40 px-5 sm:px-10 pt-5 sm:pt-6 pb-6 sm:pb-8 text-center">
         <h3 className="font-display text-plum text-[18px] sm:text-[22px] tracking-[1.68px] italic mb-1">
           {getHeading(daysLeft)}
         </h3>
@@ -75,7 +83,7 @@ export default function UpdateBanner() {
               </>
             )}{" "}
             Unfortunately, we weren't able to secure a shuttle service for the
-            evening, but we'd be happy to help you find a.{" "}
+            evening, but we'd be happy to help you find a ride.{" "}
           </p>
         )}
         <p className="font-body text-plum leading-6 sm:leading-7 mb-0">See y'all soon ♡</p>
