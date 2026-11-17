@@ -20,7 +20,7 @@ export default function Info() {
       <div className="text-center mb-10 sm:mb-12 px-1">
         <p className="sub-header font-body text-plum leading-7 max-w-2xl mx-auto text-center">
           Here you'll find details and instructions pertaining to all things
-          wedding day. If your question isn't answered here, try the{" "}
+          wedding. If your question isn't answered here, try the{" "}
           <Link
             to="/faq"
             className="text-plum underline hover:text-burgundy transition-colors"
@@ -49,6 +49,38 @@ export default function Info() {
         <div className="mt-4 sm:mt-5">
           <WeddingColorSwatches />
         </div>
+      </div>
+
+      <SectionDivider />
+
+      {/* Rehearsal Dinner */}
+      <div className="text-center mb-8 sm:mb-10 px-1">
+        <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
+          Rehearsal Dinner
+        </h3>
+        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-center">
+          <p className="mb-0">Friday, November 20 2026</p>
+          <p>5:00 P.M. - 11:00 P.M.</p>
+        </div>
+        <div className="font-nav text-plum text-base sm:text-lg mt-3 sm:mt-4 space-y-1 text-center max-w-xl mx-auto">
+          <p className="mb-0">
+            <span className="font-bold">check-in*</span>: 4:00 p.m.
+          </p>
+          <p className="mb-0">
+            <span className="font-bold">cocktail hour</span>: 5:00 p.m.
+          </p>
+          <p>
+            <span className="font-bold">dinner</span>: 6:15 p.m.
+          </p>
+        </div>
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
+          Join us at the <span className="font-bold">Lucky Arrow Retreat</span>{" "}
+          for cocktails and dinner, followed by s'mores and drinks at the{" "}
+          <span className="font-bold">Social House</span>!
+        </p>
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
+          *If you're staying on the property with us.
+        </p>
       </div>
 
       <SectionDivider />
