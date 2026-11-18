@@ -12,7 +12,7 @@ export default function Info() {
 
       <div className="text-center pb-6 sm:pb-8">
         <h2 className="font-display text-plum tracking-[2.24px] italic">
-          Event
+          The Details
         </h2>
       </div>
 
@@ -53,42 +53,10 @@ export default function Info() {
 
       <SectionDivider />
 
-      {/* Rehearsal Dinner */}
+      {/* The Wedding */}
       <div className="text-center mb-8 sm:mb-10 px-1">
         <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
-          Rehearsal Dinner
-        </h3>
-        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-center">
-          <p className="mb-0">Friday, November 20 2026</p>
-          <p>5:00 P.M. - 11:00 P.M.</p>
-        </div>
-        <div className="font-nav text-plum text-base sm:text-lg mt-3 sm:mt-4 space-y-1 text-center max-w-xl mx-auto">
-          <p className="mb-0">
-            <span className="font-bold">check-in*</span>: 4:00 p.m.
-          </p>
-          <p className="mb-0">
-            <span className="font-bold">cocktail hour</span>: 5:00 p.m.
-          </p>
-          <p>
-            <span className="font-bold">dinner</span>: 6:15 p.m.
-          </p>
-        </div>
-        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
-          Join us at the <span className="font-bold">Lucky Arrow Retreat</span>{" "}
-          for cocktails and dinner, followed by s'mores and drinks at the{" "}
-          <span className="font-bold">Social House</span>!
-        </p>
-        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
-          *If you're staying on the property with us.
-        </p>
-      </div>
-
-      <SectionDivider />
-
-      {/* Wedding Event */}
-      <div className="text-center mb-8 sm:mb-10 px-1">
-        <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
-          Wedding Event
+          The Wedding
         </h3>
         <div className="font-body text-plum leading-7 max-w-xl mx-auto text-center">
           <p className="mb-0">Saturday, November 21 2026</p>
@@ -118,6 +86,50 @@ export default function Info() {
           <br />
           Check-in is at 4:00 P.M. — please arrive a little bit earlier since
           there will be many of you checking in at once.
+        </p>
+      </div>
+
+      <SectionDivider />
+
+      {/* Rehearsal Dinner */}
+      <div className="text-center mb-8 sm:mb-10 px-1">
+        <h3 className="font-display text-plum text-[20px] sm:text-[24px] tracking-[1.68px] italic mb-2 sm:mb-3">
+          Rehearsal Dinner
+        </h3>
+        <p className="font-body italic text-plum leading-7 -mt-1 sm:-mt-2 mb-2 sm:mb-3">
+          by invitation only
+        </p>
+        <div className="font-body text-plum leading-7 max-w-xl mx-auto text-center">
+          <p className="mb-0">Friday, November 20 2026</p>
+          <p>5:00 P.M. - 11:00 P.M.</p>
+        </div>
+        <div className="font-nav text-plum text-base sm:text-lg mt-3 sm:mt-4 space-y-1 text-center max-w-xl mx-auto">
+          <p className="mb-0">
+            <span className="font-bold">check-in*</span>: 4:00 p.m.
+          </p>
+          <p className="mb-0">
+            <span className="font-bold">cocktail hour</span>: 5:00 p.m.
+          </p>
+          <p>
+            <span className="font-bold">dinner</span>: 6:15 p.m.
+          </p>
+        </div>
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
+          For those who received a rehearsal dinner invitation, we'll gather at
+          the <span className="font-bold">Lucky Arrow Retreat</span> for
+          cocktails and dinner, followed by s'mores and drinks at the{" "}
+          <span className="font-bold">Social House</span>. If you're unsure
+          whether you're invited, feel free to{" "}
+          <a
+            href="mailto:kirschroder@gmail.com"
+            className="text-plum underline hover:text-burgundy transition-colors"
+          >
+            reach out to us
+          </a>
+          !
+        </p>
+        <p className="font-body text-plum leading-7 mt-3 sm:mt-4 max-w-xl mx-auto text-center">
+          *If you're staying on the property with us.
         </p>
       </div>
 
